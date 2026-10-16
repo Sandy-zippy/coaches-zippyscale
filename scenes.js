@@ -31,7 +31,7 @@ function fade(o, a) { o.visible = a > .01; o.traverse(n => { if (n.material) n.m
 const paint = (m, c) => m.material.color.copy(c);
 
 let LAST = null; // ponytail: each GL factory calls stage() once; the loop picks it up right after
-function stage({ pad, dy = 0, fit, fitP, dir = [10, 11, 10], look = [0, 0, 0], dark = false, groundY = 0, rotP, rotL, lookP }) {
+function stage({ pad, dy = 0, from = 5, fit, fitP, dir = [10, 11, 10], look = [0, 0, 0], dark = false, groundY = 0, rotP, rotL, lookP }) {
   const scene = new THREE.Scene();
   const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, -100, 200);
   scene.add(new THREE.HemisphereLight(0xffffff, dark ? 0x5a5a66 : 0xd6d1c1, dark ? 1.5 : 1.8));
@@ -41,7 +41,7 @@ function stage({ pad, dy = 0, fit, fitP, dir = [10, 11, 10], look = [0, 0, 0], d
   const ground = new THREE.Mesh(new THREE.PlaneGeometry(80, 80), new THREE.ShadowMaterial({ opacity: dark ? 0 : .13 })); // dark stages: shadows read as floating black boxes
   ground.rotation.x = -Math.PI / 2; ground.position.y = groundY; ground.receiveShadow = true; scene.add(ground);
   const group = new THREE.Group(); scene.add(group);
-  return LAST = { scene, cam, group, pad, dy, fit, fitP, rotP, rotL, dir: new THREE.Vector3(...dir), look: new THREE.Vector3(...look), lookP: lookP && new THREE.Vector3(...lookP) };
+  return LAST = { scene, cam, group, pad, dy, from, fit, fitP, rotP, rotL, dir: new THREE.Vector3(...dir), look: new THREE.Vector3(...look), lookP: lookP && new THREE.Vector3(...lookP) };
 }
 function fitCam(S, w, h, f) {
   const a = w / h, port = a < 1;
@@ -58,7 +58,7 @@ function fitCam(S, w, h, f) {
 const _fb = new THREE.Vector3();
 function bounds(S, f) { // view-space box over the last 3/4 of the scroll (meshes' corners + label pins); the first quarter may enter from outside
   const inv = S.cam.matrixWorldInverse, box = new THREE.Box3(), add = v => box.expandByPoint(v.applyMatrix4(inv));
-  for (let i = 5; i <= 20; i++) {
+  for (let i = S.from; i <= 20; i++) {
     f(i / 20); S.scene.updateMatrixWorld();
     S.group.traverseVisible(n => {
       if (n.isMesh && n.material && n.material.opacity > .05) {
@@ -292,9 +292,9 @@ function scale(el) {
   return p => {
     const out = seg(p, .42, .5);
     parts.forEach((o, i) => {
-      const u = ease(seg(p, .02 + i * .05, .2 + i * .05)), R = lerp(5, 2.4, u);
-      o.m.position.set(Math.cos(o.a) * R, lerp(3, 0, u), Math.sin(o.a) * R);
-      o.m.scale.setScalar(Math.max(.002, 1 - out)); o.o = u * (1 - out);
+      const u = ease(seg(p, .02 + i * .05, .2 + i * .05)), R = lerp(2.8, 2.4, u);
+      o.m.position.set(Math.cos(o.a) * R, lerp(.6, 0, u), Math.sin(o.a) * R);
+      o.m.scale.setScalar(Math.max(.002, (.4 + .6 * u) * (1 - out))); o.o = u * (1 - out);
     });
     prom.o = seg(p, .25, .32) * (1 - out);
     const sIn = ease(seg(p, .48, .56)); sc.scale.setScalar(Math.max(.002, sIn)); sc.visible = sIn > 0;
@@ -311,7 +311,7 @@ function scale(el) {
 
 // ---------- 10 not for: small offers drop through the sieve, high-ticket programs stay on top ----------
 function sieve(el) {
-  const S = stage({ fit: [11, 10.6], fitP: [11, 12], look: [0, 2.2, 0] }), g = S.group; g.scale.setScalar(1.35);
+  const S = stage({ from: 0, fit: [11, 10.6], fitP: [11, 12], look: [0, 2.2, 0] }), g = S.group; g.scale.setScalar(1.35);
   const y0 = 2.4, F = 4.6;
   [[-F / 2, 0, F, .2], [F / 2, 0, F, .2]].forEach(([x]) => g.add(at(block(.2, .2, F, C.cream2), x, y0, 0)));
   [-F / 2, F / 2].forEach(z => g.add(at(block(F, .2, .2, C.cream2), 0, y0, z)));
@@ -325,9 +325,9 @@ function sieve(el) {
   const homeL = [lab(el, 'Under $3k'), pin(g, homes[2].x, -.1, homes[2].z + .9)];
   S.labels = (w, h) => { biz.forEach(b => put(b.e, b.an, S, w, h, b.o)); put(homeL[0], homeL[1], S, w, h, homeL.o); };
   return p => {
-    biz.forEach(b => { const u = easeIn(seg(p, .05 + b.i * .06, .28 + b.i * .06)); b.m.position.set(b.x, lerp(7, y0 + .2, u), b.z); b.o = seg(p, .3 + b.i * .06, .36 + b.i * .06); });
+    biz.forEach(b => { const u = easeIn(seg(p, .05 + b.i * .06, .28 + b.i * .06)); b.m.position.set(b.x, lerp(5.6, y0 + .2, u), b.z); b.o = seg(p, .3 + b.i * .06, .36 + b.i * .06); });
     homes.forEach(o => {
-      const u = easeIn(seg(p, .12 + o.i * .05, .62 + o.i * .05)), y = lerp(7, 0, u);
+      const u = easeIn(seg(p, .12 + o.i * .05, .62 + o.i * .05)), y = lerp(5.6, 0, u);
       o.h.position.set(o.x, y, o.z); o.h.children.forEach(m => paint(m, y < y0 ? GREY : CREAM));
     });
     homeL.o = seg(p, .85, .92);
@@ -336,7 +336,7 @@ function sieve(el) {
 
 // ---------- 13 P.S.: two ads race to one buyer's phone in January; yours lands first ----------
 function race(el) {
-  const S = stage({ fit: [11.5, 6.6], fitP: [8.6, 9], dir: [3, 10, 13], look: [1.3, .9, 0], lookP: [1.2, 1.2, 0] }), g = S.group;
+  const S = stage({ from: 0, fit: [11.5, 6.6], fitP: [8.6, 9], dir: [3, 10, 13], look: [1.3, .9, 0], lookP: [1.2, 1.2, 0] }), g = S.group;
   const bx = 2.4, bld = at(block(1.5, 3, .3, C.cream), bx, 0, 0), cap = at(block(1.2, 2.4, .06, C.cream), bx, .3, .16);
   g.add(bld, cap);
   const env = c => { const m = block(1, .14, .7, c); g.add(m); return m; };
@@ -351,7 +351,7 @@ function race(el) {
     go(ours, uo, 1, bx - 1.5); go(theirs, ut, -1.4, bx - 3.4);
     const won = p > .58;
     paint(cap, won ? LIME : CREAM); setText(tag[0], won ? 'Call booked: Tue 10am' : 'Ready to buy', won);
-    L.you.o = 1 - seg(p, .55, .62); L.them.o = 1 - seg(p, .95, .99);
+    L.you.o = 1; L.them.o = 1 - seg(p, .55, .62); // ours stays named to the end; theirs would collide with the booked tag on phone
   };
 }
 

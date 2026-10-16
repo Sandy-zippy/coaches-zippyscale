@@ -196,12 +196,12 @@ td:first-child{font-weight:600;color:var(--head)}
 .path svg{position:absolute;inset:0;width:100%;height:100%}
 .path .pl{fill:none;stroke:var(--line-2);stroke-width:3}
 .path .pd{fill:none;stroke:var(--lime);stroke-width:6;stroke-linecap:round}
-.stop{position:absolute;transform:translate(-50%,-50%);display:grid;justify-items:center;gap:var(--s2);width:180px;text-align:center}
+.stop{position:absolute;z-index:1;transform:translate(-50%,-24px);display:grid;justify-items:center;gap:var(--s2);width:160px;text-align:center}
 .stop i{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:var(--paper);border:1.5px solid var(--charcoal);font:700 20px/1 var(--display);font-style:normal;color:var(--charcoal);transition:background .2s}
 .stop.on i{background:var(--lime)}
 @media (max-width:1140px){.fx>div{font-size:var(--fs-note)}}
 .stop span{font:600 var(--fs-note)/1.35 var(--sans);color:var(--head)}
-.ptok{position:absolute;left:0;top:0;width:20px;height:20px;margin:-48px 0 0 -10px;border-radius:50%;background:var(--lime);border:1.5px solid var(--charcoal)}
+.ptok{position:absolute;left:0;top:0;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;background:var(--lime);border:1.5px solid var(--charcoal)}
 @media (max-width:720px){
   .path{aspect-ratio:auto;display:grid;gap:var(--s5);justify-items:start;padding-left:var(--s2)}
   .path svg,.ptok{display:none}
@@ -488,10 +488,10 @@ section>.wrap,.hero>.wrap{position:relative;z-index:2}
     <h2>Send 3 videos, get 3 ads</h2>
     <div class="path" id="path" data-scene="path">
       <svg viewBox="0 0 1000 360" preserveAspectRatio="none" aria-hidden="true"><path class="pl" id="pl" d="M80 300 C200 300 200 200 330 200 S470 140 600 140 S760 60 900 60"/><path class="pd" id="pd" d="M80 300 C200 300 200 200 330 200 S470 140 600 140 S760 60 900 60"/></svg>
-      <div class="stop" style="left:8%;top:83%"><i>1</i><span>Pick a time.</span></div>
-      <div class="stop" style="left:33%;top:56%"><i>2</i><span>Send 3 videos you already have.</span></div>
-      <div class="stop" style="left:60%;top:39%"><i>3</i><span>We edit them into 3 ads before the call.</span></div>
-      <div class="stop" style="left:90%;top:17%"><i>4</i><span>On the call, you get the ads and see how 90 days would run.</span></div>
+      <div class="stop" style="left:8%;top:83.3%"><i>1</i><span>Pick a time.</span></div>
+      <div class="stop" style="left:33%;top:55.6%"><i>2</i><span>Send 3 videos you already have.</span></div>
+      <div class="stop" style="left:60%;top:38.9%"><i>3</i><span>We edit them into 3 ads before the call.</span></div>
+      <div class="stop" style="left:90%;top:16.7%"><i>4</i><span>On the call, you get the ads and see how 90 days would run.</span></div>
       <span class="ptok" aria-hidden="true"></span>
     </div>
     <div class="ask">
