@@ -14,23 +14,24 @@ const txt = (e, t) => { if (e.textContent !== t) e.textContent = t; };
 function hero(el) {
   const tm = $(el, '.tm'), wav = $$(el, '.wav i'), ads = $$(el, '.ad'), arw = $$(el, '.arw'), slots = $$(el, '.gr i'), toast = $(el, '.toast'), W = 2;
   const spend = [.55, .7, 1, .45, .35];
+  slots.forEach((s, i) => s.classList.toggle('on', i === 0 || i === 6)); // calls already booked this week
   return t => {
-    const back = 1 - seg(t, .93, .99), rec = seg(t, .04, .3);
+    const back = 1 - seg(t, .95, .99), rec = seg(t, .02, .26);
     txt(tm, String(Math.round(20 * rec)).padStart(2, '0') + ':00');
     wav.forEach((w, i) => w.style.transform = `scaleY(${(rec > 0 && rec < 1 ? .3 + .7 * Math.abs(Math.sin(t * 90 + i * 1.7)) : .25).toFixed(2)})`);
-    arw[0].style.setProperty('--k', ease(seg(t, .28, .34)) * back);
-    const dec = seg(t, .6, .62) > .5;
+    arw[0].style.setProperty('--k', ease(seg(t, .24, .3)) * back);
+    const dec = t > .56 && back > .5;
     ads.forEach((a, i) => {
-      const u = ease(seg(t, .32 + i * .03, .4 + i * .03)) * back;
-      a.style.opacity = .3 + .7 * u; a.classList.toggle('ph', u < .5);
-      const s = i === W ? ease(seg(t, .46, .58)) * .55 + ease(seg(t, .62, .78)) * .45 : ease(seg(t, .46, .58)) * spend[i] * .55;
+      const u = ease(seg(t, .26 + i * .02, .32 + i * .02)); // each new cut lands as the shoot ends
+      a.classList.toggle('fresh', u > 0 && u < 1);
+      const s = (i === W ? ease(seg(t, .34, .5)) * .55 + ease(seg(t, .56, .66)) * .45 : ease(seg(t, .34, .5)) * spend[i] * .55) * back;
       a.querySelector('.sp i').style.transform = `scaleX(${s.toFixed(3)})`;
       a.classList.toggle('off', dec && i !== W); a.classList.toggle('win', dec && i === W);
       const st = a.querySelector('.st'); txt(st, i === W ? 'Winner' : 'Paused'); st.style.opacity = dec ? 1 : 0;
     });
-    arw[1].style.setProperty('--k', ease(seg(t, .64, .7)) * back);
-    const k = ease(seg(t, .68, .73)) * back;
-    show(toast, k, 1); slots.forEach((s, i) => s.classList.toggle('on', i === 3 && k > .5));
+    arw[1].style.setProperty('--k', ease(seg(t, .58, .62)) * back);
+    const k = ease(seg(t, .62, .67)) * back;
+    show(toast, k, 1); slots[3].classList.toggle('on', k > .5);
   };
 }
 
@@ -73,8 +74,7 @@ function creds(el) {
   const ppl = $$(el, '.ppl i'), num = $(el, '.num'), feed = $(el, '.feed'), scr = $(el, '.c-ph .scr'), nts = $$(el, '.nt');
   return p => {
     ppl.forEach((e, i) => e.style.transform = `scale(${ease(seg(p, .02 + i * .025, .1 + i * .025)).toFixed(3)})`);
-    const c = ease(seg(p, .25, .85));
-    txt(num, String(Math.round(912 * c)));
+    const c = ease(seg(p, .1, .8));
     // notifications arrive from the top, newest first: the feed shows the last few to land
     const k = c * nts.length;
     nts.forEach((e, i) => { const o = clamp(k - (nts.length - 1 - i)); e.style.opacity = o; });
@@ -115,7 +115,7 @@ function sieve(el) {
     cards.forEach((c, i) => {
       const ok = c.dataset.ok === '1', a = ease(seg(p, .02 + i * .05, .14 + i * .05)), j = seg(p, .3 + i * .1, .38 + i * .1), fall = ok ? 0 : ease(j);
       c.style.opacity = a;
-      c.style.transform = pt ? `translateY(${((1 - a) * -1).toFixed(2)}em)` : `translateY(${((1 - a) * -2 + fall * 10.6).toFixed(2)}em) rotate(${(fall * (i % 2 ? 4 : -4)).toFixed(1)}deg)`;
+      c.style.transform = pt ? `translateY(${((1 - a) * -1).toFixed(2)}em)` : `translateY(${((1 - a) * -2 + fall * 11.4).toFixed(2)}em) rotate(${(fall * (i % 2 ? 4 : -4)).toFixed(1)}deg)`;
       c.classList.toggle('ok', ok && j > .5); c.classList.toggle('no', !ok && j > .5);
       c.querySelector('.stamp').style.opacity = seg(j, .5, 1);
     });
