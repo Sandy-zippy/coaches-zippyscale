@@ -31,7 +31,7 @@ function fade(o, a) { o.visible = a > .01; o.traverse(n => { if (n.material) n.m
 const paint = (m, c) => m.material.color.copy(c);
 
 let LAST = null; // ponytail: each GL factory calls stage() once; the loop picks it up right after
-function stage({ fit, fitP, dir = [10, 11, 10], look = [0, 0, 0], dark = false, groundY = 0, rotP, rotL, lookP }) {
+function stage({ pad, dy = 0, fit, fitP, dir = [10, 11, 10], look = [0, 0, 0], dark = false, groundY = 0, rotP, rotL, lookP }) {
   const scene = new THREE.Scene();
   const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, -100, 200);
   scene.add(new THREE.HemisphereLight(0xffffff, dark ? 0x5a5a66 : 0xd6d1c1, dark ? 1.5 : 1.8));
@@ -41,14 +41,34 @@ function stage({ fit, fitP, dir = [10, 11, 10], look = [0, 0, 0], dark = false, 
   const ground = new THREE.Mesh(new THREE.PlaneGeometry(80, 80), new THREE.ShadowMaterial({ opacity: dark ? .08 : .13 }));
   ground.rotation.x = -Math.PI / 2; ground.position.y = groundY; ground.receiveShadow = true; scene.add(ground);
   const group = new THREE.Group(); scene.add(group);
-  return LAST = { scene, cam, group, fit, fitP, rotP, rotL, dir: new THREE.Vector3(...dir), look: new THREE.Vector3(...look), lookP: lookP && new THREE.Vector3(...lookP) };
+  return LAST = { scene, cam, group, pad, dy, fit, fitP, rotP, rotL, dir: new THREE.Vector3(...dir), look: new THREE.Vector3(...look), lookP: lookP && new THREE.Vector3(...lookP) };
 }
-function fitCam(S, w, h) {
-  const a = w / h, port = a < 1, [fw, fh] = port && S.fitP ? S.fitP : S.fit, hh = Math.max(fh / 2, fw / 2 / a);
-  Object.assign(S.cam, { left: -hh * a, right: hh * a, top: hh, bottom: -hh }); S.cam.updateProjectionMatrix();
+function fitCam(S, w, h, f) {
+  const a = w / h, port = a < 1;
   if (S.rotP !== undefined || S.rotL !== undefined) S.group.rotation.y = port ? (S.rotP ?? 0) : (S.rotL ?? 0);
   const lk = port && S.lookP ? S.lookP : S.look;
-  S.cam.position.copy(lk).add(S.dir); S.cam.lookAt(lk);
+  S.cam.position.copy(lk).add(S.dir); S.cam.lookAt(lk); S.cam.updateMatrixWorld();
+  // auto-frame: centre the union of every pose's visible content in the stage, with room for labels
+  const key = port ? 'P' : 'L';
+  if (!S.bb || S.bbKey !== key) { S.bb = bounds(S, f); S.bbKey = key; }
+  const b = S.bb, pad = S.pad || (port ? 1.06 : 1.1), cx = (b.min.x + b.max.x) / 2, cy0 = (b.min.y + b.max.y) / 2;
+  const hh = Math.max((b.max.y - b.min.y) / 2, (b.max.x - b.min.x) / 2 / a) * pad, cy = cy0 + hh * S.dy; // dy > 0 pushes content down
+  Object.assign(S.cam, { left: cx - hh * a, right: cx + hh * a, top: cy + hh, bottom: cy - hh }); S.cam.updateProjectionMatrix();
+}
+const _fb = new THREE.Vector3();
+function bounds(S, f) { // view-space box over the settled half of the scroll (meshes' corners + label pins); objects still flying in may clip
+  const inv = S.cam.matrixWorldInverse, box = new THREE.Box3(), add = v => box.expandByPoint(v.applyMatrix4(inv));
+  for (let i = 10; i <= 20; i++) {
+    f(i / 20); S.scene.updateMatrixWorld();
+    S.group.traverseVisible(n => {
+      if (n.isMesh && n.material && n.material.opacity > .05) {
+        if (!n.geometry.boundingBox) n.geometry.computeBoundingBox();
+        const g = n.geometry.boundingBox;
+        for (let k = 0; k < 8; k++) add(_fb.set(k & 1 ? g.max.x : g.min.x, k & 2 ? g.max.y : g.min.y, k & 4 ? g.max.z : g.min.z).applyMatrix4(n.matrixWorld));
+      } else if (n.type === 'Object3D' && !n.children.length) add(_fb.setFromMatrixPosition(n.matrixWorld));
+    });
+  }
+  return box;
 }
 
 // ---------- HTML labels pinned to 3D anchors ----------
@@ -130,7 +150,7 @@ function network(el) {
   const fill = at(block(1.5, 2.6, 1.5, C.lime), tankX, 0, tankZ); g.add(fill);
   const L = {
     you: [lab(el, 'You'), pin(g, cx, 1.3, 0)],
-    tank: [lab(el, 'Your calendar'), pin(g, tankX, 3.5, tankZ)],
+    tank: [lab(el, 'Your calendar'), pin(g, tankX, 4.2, tankZ)],
     none: [lab(el, 'Empty slots'), pin(g, tankX, -.2, tankZ + 1.6)],
   };
   const closed = nodes.filter(o => o.closer >= 0).map(o => [lab(el, 'Enrolled'), pin(g, 0, 0, 0), o]);
@@ -170,9 +190,9 @@ function sweep(el) {
   g.add(out, mt);
   const tok = ball(.24); g.add(tok);
   const L = {
-    sw: [lab(el, 'Weekly test'), pin(g, archX, 3.15, 0)],
-    out: [lab(el, 'Ads live'), pin(g, 3.6, 1.75, 0)],
-    gate: [lab(el, 'Passed qualifier?'), pin(g, gx, 2.65, 0)],
+    sw: [lab(el, 'Weekly test'), pin(g, archX, 3.75, 0)],
+    out: [lab(el, 'Ads live'), pin(g, 3.6, 2.35, 0)],
+    gate: [lab(el, 'Passed qualifier?'), pin(g, gx, 3.25, 0)],
     mt: [lab(el, 'Call held'), pin(g, 8.6, 1, 0)],
   };
   const a = new THREE.Vector3(), b = new THREE.Vector3(), c = new THREE.Vector3();
@@ -205,7 +225,7 @@ function sweep(el) {
 
 // ---------- 6 credentials: 10 coaches rise, a ring of booked calls counts to 912, then turns lime ($70 a call) ----------
 function creds(el) {
-  const S = stage({ fit: [11, 9.8], fitP: [10.5, 11], dir: [2, 11, 13], look: [0, .8, -.4] }), g = S.group, r = rng(5);
+  const S = stage({ pad: 1.35, dy: .12, fit: [11, 9.8], fitP: [10.5, 11], dir: [2, 11, 13], look: [0, .8, -.4] }), g = S.group, r = rng(5);
   const pos = [];
   [[-1.725, 4], [-.575, 2], [.575, 4]].forEach(([z, n]) => { for (let i = 0; i < n; i++) pos.push([(i - (n - 1) / 2) * 1.15, z - .2]); });
   const types = pos.map(([x, z]) => { const m = at(block(.85, .9 + r() * 1.3, .85), x, 0, z); g.add(m); return m; });
@@ -337,7 +357,7 @@ function race(el) {
 
 // ---------- HTML scenes ----------
 function fan(el) {
-  const cards = [...el.querySelectorAll('.fx')], stack = el.querySelector('.stackcard'), tok = el.querySelector('.gtok'), mq = matchMedia('(max-width:1140px)');
+  const cards = [...el.querySelectorAll('.fx')], stack = el.querySelector('.stackcard'), mq = matchMedia('(max-width:1140px)');
   document.documentElement.classList.add('fanon');
   return p => {
     if (mq.matches) { // stacked grid: each card back tips up into place as it arrives
@@ -346,15 +366,11 @@ function fan(el) {
       return;
     }
     cards.forEach(c => c.querySelector('.b').style.transform = '');
-    const spread = ease(seg(p, 0, .16));
-    let cur = -1;
+    const spread = .45 + .55 * ease(seg(p, 0, .1)); // starts part-fanned so the first glance is readable
     cards.forEach((c, i) => {
       const x = (i - 2.5) * 178 * spread - 84, s = .16 + i * .09, fl = ease(seg(p, s, s + .1));
-      if (p >= s) cur = i;
       c.style.transform = `translate3d(${x.toFixed(1)}px,0,0) rotateZ(${((i - 2.5) * 5 * (1 - spread)).toFixed(2)}deg) rotateY(${(fl * 180).toFixed(1)}deg)`;
     });
-    tok.style.transform = `translateX(${cur < 0 ? 0 : (cur - 2.5) * 178}px)`;
-    tok.style.opacity = 1 - seg(p, .78, .86);
     const o = seg(p, .78, .9); stack.style.opacity = o; stack.style.transform = `translateX(-50%) translateY(${((1 - o) * 16).toFixed(1)}px)`;
   };
 }
@@ -441,7 +457,7 @@ function frame(now) {
   renderer.setScissorTest(false); renderer.clear();
   for (const [s, r, p] of todo) {
     const S = s.S;
-    fitCam(S, r.width, r.height); s.f(p);
+    fitCam(S, r.width, r.height, s.f); s.f(p);
     S.scene.updateMatrixWorld(); S.cam.updateMatrixWorld();
     S.boxes = []; S.labels && S.labels(r.width, r.height);
     renderer.setViewport(r.left, vh - r.bottom, r.width, r.height);
