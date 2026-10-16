@@ -72,13 +72,13 @@ section{padding-block:var(--s11);position:relative}
 .icp{font:600 var(--fs-icp)/1.3 var(--display);color:var(--head);max-width:40ch;margin-inline:auto}
 .icp mark{background:var(--lime);color:var(--charcoal);padding:0 6px;border-radius:6px}
 .hero h1{max-width:24ch;margin-inline:auto}
-@media (min-width:1100px){.hero .wrap{display:grid;grid-template-columns:1fr 1fr;column-gap:48px;align-items:center}.hero .top{grid-column:1/-1}.hero .stack{text-align:left;justify-items:start;margin-top:0!important}.hero .icp,.hero h1{margin-inline:0} .hero h1{font-size:clamp(34px,3.3vw,50px);max-width:20ch;text-align:left}.hero .ask{align-items:flex-start;justify-items:start}.hero .prow{justify-content:flex-start}.hero .stage{margin:0;aspect-ratio:auto;height:min(640px,calc(100svh - 120px))}}
+@media (min-width:960px){.hero .wrap{display:grid;grid-template-columns:1fr 1fr;column-gap:48px;align-items:center}.hero .top{grid-column:1/-1}.hero .stack{text-align:left;justify-items:start;margin-top:0!important}.hero .icp,.hero h1{margin-inline:0} .hero h1{font-size:clamp(34px,3.3vw,50px);max-width:20ch;text-align:left}.hero .ask{align-items:flex-start;justify-items:start}.hero .prow{justify-content:flex-start}.hero .stage{margin:0;aspect-ratio:auto;height:min(640px,calc(100svh - 120px))}}
 
 /* scene stages: the 3D draws into a shared canvas over these boxes; labels are HTML on top */
 /* transparent so the fixed WebGL canvas underneath shows through; labels sit above it */
 .stage{position:relative;width:100%;max-width:1100px;margin:var(--s7) auto 0;aspect-ratio:16/9;border-radius:var(--r-card);border:1px solid var(--line);overflow:hidden;isolation:isolate}
 .dark .stage{border-color:var(--border-dark)}
-@media (max-width:640px){.stage{aspect-ratio:4/5}.stage .nm{display:none}#st9 .nm{display:block;font-size:12px}}
+@media (max-width:640px){.stage{aspect-ratio:4/5}#st12{aspect-ratio:3/4.6}.stage .nm{display:none}#st9 .nm{display:block;font-size:12px}}
 .stage .ov{position:absolute;inset:0;z-index:2;pointer-events:none}
 .stage .ov svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .stage .ov line,.stage .ov path{stroke:var(--charcoal);stroke-width:1;fill:none}
@@ -220,7 +220,7 @@ td:first-child{font-weight:600;color:var(--head)}
 .share i{aspect-ratio:9/13;border-radius:.3em;background:var(--sand-2);display:grid;place-items:center;transform:scale(0)} .share svg{width:.9em;fill:var(--charcoal)}
 .keep{position:absolute;right:.4em;bottom:-.8em;font:600 .68em/1 var(--sans);background:var(--lime);color:var(--charcoal);border:1px solid var(--charcoal);border-radius:1em;padding:.35em .6em;opacity:0}
 .tiles{display:grid;grid-template-columns:1fr 1fr;gap:.4em;margin-top:.5em} .tiles i{aspect-ratio:1.5/1;border-radius:.4em;background:var(--sand);display:grid;place-items:center} .tiles svg{width:1.4em;fill:none;stroke:var(--charcoal);stroke-width:1.8}
-@container (orientation:portrait){.fx2{grid-template-columns:1fr 1fr;gap:1em .8em;padding:1.2em 1em;align-content:center} .ui-box{aspect-ratio:1/1;padding:.6em;gap:.35em} .fp{gap:.5em} .fp>p{font-size:.85em} .fl{padding:.3em;font-size:.65em} .fl .th{height:1.8em}}
+@container (orientation:portrait){.fx2{grid-template-columns:1fr 1fr;gap:1em .8em;padding:3.6em 1em 1.2em;align-content:center} .ui-box{aspect-ratio:1/1;padding:.6em;gap:.35em} .fp{gap:.5em} .fp>p{font-size:.85em} .fl{padding:.3em;font-size:.65em} .fl .th{height:1.8em}}
 #cal{max-width:1000px;margin:var(--s6) auto 0;min-height:560px;border:1px dashed var(--line-2);border-radius:var(--r-card);display:grid;place-items:center;background:var(--paper)}
 #cal>p{color:var(--muted);padding:var(--s6)}
 #cal:has(iframe){border:0;display:block}
@@ -421,11 +421,12 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
 .post.you{grid-template-columns:1fr;border:2px solid var(--charcoal)} .post.you .sp{font:700 .62em/1 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
 .post.you .img{background:var(--sand-2);display:grid;place-items:center} .post.you .img svg{width:2em;fill:var(--charcoal)}
 .post .bk{font:600 .8em/1 var(--sans);background:var(--charcoal);color:var(--cream);border-radius:.4em;text-align:center;padding:.6em 0;position:relative}
-.tap{position:absolute;left:82%;top:50%;width:2.4em;height:2.4em;margin:-1.2em 0 0 -1.2em;border-radius:50%;background:rgba(213,235,75,.75);transform:scale(0)}
+.tap{position:absolute;left:84%;top:50%;width:2.4em;height:2.4em;margin:-1.2em 0 0 -1.2em;border-radius:50%;background:rgba(213,235,75,.75);transform:scale(0)}
 .r-ok{position:absolute;inset:0;background:var(--lime);display:grid;place-content:center;justify-items:center;gap:.4em;text-align:center;transform:translateY(101%)}
 .r-ok i{width:3.2em;height:3.2em;border-radius:50%;background:var(--charcoal);color:var(--lime);display:grid;place-items:center} .r-ok svg{width:1.6em;height:1.6em} .r-ok b{font:700 1.6em/1.1 var(--display);color:var(--charcoal)} .r-ok span{font-size:.85em;color:var(--charcoal)}
 @container (orientation:portrait){.rx{grid-template-columns:1fr;padding:1.4em;justify-items:center} .r-st{display:none} .r-ph .scr{width:13.5em}}
-@container (orientation:portrait){.ad.off .st,.fad em,.post .sp,.srow small{display:none}}
+@container (orientation:portrait){.fad em,.post .sp,.srow small{display:none} .tap{left:95%}}
+@container (orientation:portrait) and (max-width:480px){.ad.off .st{display:none}}
 .fad .bk{display:none}
 </style>
 <script>document.documentElement.classList.add('js')</script>
@@ -442,7 +443,7 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
       <p class="lede">We build your funnel, turn your footage into ads, test new ones every week and book the calls. Under 25 qualified calls held in your first 90 days of ads? Your setup fee and first 3 monthly payments come back.</p>
       <div class="ask" style="margin-top:0">
         <a class="btn" href="#book">Book my free call and get 3 ads from my videos</a>
-        <ul class="prow rv"><li><b>912</b> sales calls booked for one coaching company</li><li><b>$250</b> to <b>$70</b> per call</li><li><b data-count="10" data-suf="+">10+</b> coaches helped</li></ul>
+        <ul class="prow rv"><li><b>912</b> sales calls booked for one coaching company</li><li><b>$250</b> to <b>$70</b> per call</li><li><b>10+</b> coaches helped</li></ul>
       </div>
     </div>
     <div class="stage ui" id="st1" data-scene="hero">
