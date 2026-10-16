@@ -22,27 +22,27 @@ function hero(el) {
     const dec = seg(t, .6, .62) > .5;
     ads.forEach((a, i) => {
       const u = ease(seg(t, .32 + i * .03, .4 + i * .03)) * back;
-      a.style.opacity = u; a.style.transform = `translateY(${((1 - u) * 1.2).toFixed(2)}em)`;
+      a.style.opacity = .3 + .7 * u; a.classList.toggle('ph', u < .5);
       const s = i === W ? ease(seg(t, .46, .58)) * .55 + ease(seg(t, .62, .78)) * .45 : ease(seg(t, .46, .58)) * spend[i] * .55;
       a.querySelector('.sp i').style.transform = `scaleX(${s.toFixed(3)})`;
       a.classList.toggle('off', dec && i !== W); a.classList.toggle('win', dec && i === W);
       const st = a.querySelector('.st'); txt(st, i === W ? 'Winner' : 'Paused'); st.style.opacity = dec ? 1 : 0;
     });
     arw[1].style.setProperty('--k', ease(seg(t, .64, .7)) * back);
-    const k = ease(seg(t, .7, .77)) * back;
+    const k = ease(seg(t, .68, .73)) * back;
     show(toast, k, 1); slots.forEach((s, i) => s.classList.toggle('on', i === 3 && k > .5));
   };
 }
 
 // ---------- 2 problem: referrals arrive in month 1, stop, and the calendar empties by month 3 ----------
 function network(el) {
-  const msgs = $$(el, '.msg'), quiet = $(el, '.quiet'), bd = $(el, '.bd'), tabs = $$(el, '.tabs b'), cells = $$(el, '.mc i'), cc = $(el, '.cc b');
+  const msgs = $$(el, '.msg'), quiet = $(el, '.quiet'), bd = $(el, '.bd'), tabs = $$(el, '.tabs b'), cells = $$(el, '.mc i'), cc = $(el, '.cc b'), ccl = $(el, '.cc span');
   const plan = [[0, 1, 3, 4, 6, 7, 8, 10, 11, 13, 15, 16, 18], [2, 8, 12, 17, 19], [11]]; // booked slots per month
   return p => {
     const m = p < .38 ? 0 : p < .7 ? 1 : 2, st = [0, .38, .7][m], f = ease(seg(p, st + .02, st + .2)), n = Math.round(plan[m].length * f);
     tabs.forEach((b, i) => b.classList.toggle('on', i === m));
     const on = new Set(plan[m].slice(0, n)); cells.forEach((c, i) => c.classList.toggle('on', on.has(i)));
-    txt(cc, String(n));
+    txt(cc, String(n)); txt(ccl, n === 1 ? 'call booked' : 'calls booked');
     msgs.forEach((e, i) => show(e, seg(p, .03 + i * .07, .08 + i * .07) * (m ? .45 : 1) + 0, 0));
     txt(bd, m ? '0' : String(msgs.filter((_, i) => p > .06 + i * .07).length));
     show(quiet, seg(p, .42, .48));
@@ -86,19 +86,12 @@ function creds(el) {
 // ---------- 7 proof: the client's own booking sheet, month by month; cost per call ticks from $250 to $70 ----------
 const MONTHS = [21, 31, 45, 40, 33, 57, 51, 12, 34, 17, 22, 34, 28, 21, 26, 13, 7, 38, 9, 16, 23, 8, 6, 29, 11, 11, 24]; // first calls per month, Aug 2024 to Oct 2026
 function proof(el) {
-  const bars = $$(el, '.bars i'), num = $(el, '.num'), mo = $(el, '.mo'), cpl = $(el, '.cpl'), was = $(el, '.p-tk s'), rep = $(el, '.rep'), rb = $(el, '.bars i:last-child b');
-  const cum = MONTHS.reduce((a, v) => (a.push((a.at(-1) || 0) + v), a), []), TOTAL = 912, first = cum.at(-1);
-  const name = i => new Date(2024, 7 + i, 1).toLocaleString('en-US', { month: 'short', year: 'numeric' });
-  bars.forEach((b, i) => b.style.setProperty('--h', (cum[i] / 1000 * 100).toFixed(2) + '%'));
-  rb.style.setProperty('--rh', ((TOTAL - first) / first * 100).toFixed(2) + '%');
+  const bars = $$(el, '.bars i');
+  bars.forEach((b, i) => b.style.setProperty('--h', (MONTHS[i] / 60 * 90).toFixed(2) + '%')); // 60 sits on the top gridline (90%)
   return p => {
     let last = -1;
-    bars.forEach((b, i) => { const u = ease(seg(p, .04 + i * .024, .09 + i * .024)); b.style.transform = `scaleY(${u.toFixed(3)})`; if (u > .5) last = i; });
-    bars.forEach((b, i) => b.classList.toggle('pen', i === last && p < .76));
-    const r = ease(seg(p, .76, .84)); rb.style.transform = `scaleY(${r.toFixed(3)})`; rep.style.opacity = r;
-    txt(num, String(r > 0 ? Math.round(first + (TOTAL - first) * r) : last < 0 ? 0 : cum[last]));
-    txt(mo, r > .5 ? 'with repeat calls' : name(Math.max(0, last)));
-    const c = ease(seg(p, .84, .94)); txt(cpl, '$' + Math.round(lerp(250, 70, c) / 5) * 5); was.style.opacity = c; was.style.display = c > 0 ? '' : 'none';
+    bars.forEach((b, i) => { const u = ease(seg(p, .02 + i * .026, .08 + i * .026)); b.style.transform = `scaleY(${u.toFixed(3)})`; if (u > .5) last = i; });
+    bars.forEach((b, i) => b.classList.toggle('pen', i === last && p < .8));
   };
 }
 
@@ -168,14 +161,10 @@ function week(el) {
   };
 }
 function sheet(el) {
-  const sh = el.querySelector('.sheet'), rows = [...el.querySelectorAll('.row')], env = el.querySelector('.env');
+  const rows = [...el.querySelectorAll('.row')], keep = el.querySelector('.yk');
   return p => {
-    rows.forEach((r, i) => { const o = seg(p, .05 + i * .08, .14 + i * .08); r.style.opacity = o; r.style.transform = `translateX(${((1 - o) * -16).toFixed(1)}px)`; });
-    const f = ease(seg(p, .62, .86));
-    sh.style.transform = `translateY(${(f * 140).toFixed(1)}px) rotateX(${(f * 70).toFixed(1)}deg) scale(${(1 - f * .4).toFixed(3)})`;
-    sh.style.opacity = 1 - seg(p, .8, .9);
-    const eo = seg(p, .7, .84); env.style.opacity = eo; env.style.visibility = eo > 0 ? 'visible' : 'hidden';
-    sh.style.visibility = p < .9 ? 'visible' : 'hidden';
+    rows.forEach((r, i) => { const o = seg(p, .05 + i * .1, .16 + i * .1); r.style.opacity = o; r.style.transform = `translateX(${((1 - o) * -16).toFixed(1)}px)`; });
+    const k = ease(seg(p, .55, .66)); keep.style.opacity = k; keep.style.transform = `scale(${(1.3 - .3 * k).toFixed(3)})`;
   };
 }
 // ---------- 12 the call: pick a time, upload 3 videos, 3 ads get made, the call shows them ----------
@@ -196,7 +185,7 @@ function flow(el) {
 // ---------- loop ----------
 const HT = { hero, network, sweep, creds, proof, scale, sieve, race, fan, week, sheet, flow };
 // still frame for reduced motion, per the storyboard: the payoff state of each scene
-const STILL = { hero: .8, sheet: .45 };
+const STILL = { hero: .8 };
 const list = [...document.querySelectorAll('[data-scene]')].map(el => ({ el, k: el.dataset.scene, f: HT[el.dataset.scene](el) }));
 
 // hero clock: only advances while the hero is on screen and not paused
@@ -219,11 +208,18 @@ function pinSize() {
   for (const s of list) if (s.pin) {
     const h = s.el.offsetHeight, on = h < innerHeight * .9;
     s.pinOn = on; s.pinTop = Math.max(12, (innerHeight - h) / 2);
-    s.pin.style.height = on ? h + innerHeight * .6 + 'px' : '';
+    s.pin.style.height = on ? h + innerHeight * 1.1 + 'px' : '';
     s.el.style.position = on ? 'sticky' : ''; s.el.style.top = on ? s.pinTop + 'px' : '';
   }
 }
-pinSize(); addEventListener('resize', pinSize); addEventListener('load', pinSize);
+// scene labels never render under 11px (they are sized in em off a container-width base)
+function textFloor() {
+  const els = [...document.querySelectorAll('.stage.ui *')].filter(e => [...e.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()));
+  els.forEach(e => e.style.fontSize = '');
+  els.forEach(e => { if (parseFloat(getComputedStyle(e).fontSize) < 11) e.style.fontSize = '11px'; });
+}
+function sizeAll() { textFloor(); pinSize(); }
+sizeAll(); addEventListener('resize', sizeAll); addEventListener('load', sizeAll);
 addEventListener('resize', () => list.forEach(s => s.last = null)); // layouts change at the portrait switch: re-pose
 function frame(now) {
   requestAnimationFrame(frame);
@@ -236,7 +232,7 @@ function frame(now) {
       if (heroLast !== null && !heroPaused) heroMs += now - heroLast;
       heroLast = now; p = RM ? STILL.hero : HERO_T !== null ? +HERO_T : (heroMs % 8000) / 8000;
     } else if (RM || FREEZE !== null) p = RM ? (STILL[s.k] ?? 1) : +FREEZE;
-    else if (s.pinOn) { const w = s.pin.getBoundingClientRect(); p = clamp((s.pinTop - w.top) / ((w.height - r.height) * .85)); } // last 15% of the hold shows the end state
+    else if (s.pinOn) { const w = s.pin.getBoundingClientRect(); p = clamp((.9 * vh - w.top) / ((w.height - r.height) * .85 + .9 * vh - s.pinTop)); } // starts on entry; last 15% of the hold shows the end state
     else p = clamp((.85 * vh - r.top) / (.7 * vh));
     if (p !== s.last) { s.f(p); s.last = p; }
   }
