@@ -56,9 +56,9 @@ function fitCam(S, w, h, f) {
   Object.assign(S.cam, { left: cx - hh * a, right: cx + hh * a, top: cy + hh, bottom: cy - hh }); S.cam.updateProjectionMatrix();
 }
 const _fb = new THREE.Vector3();
-function bounds(S, f) { // view-space box over the settled half of the scroll (meshes' corners + label pins); objects still flying in may clip
+function bounds(S, f) { // view-space box over the last 3/4 of the scroll (meshes' corners + label pins); the first quarter may enter from outside
   const inv = S.cam.matrixWorldInverse, box = new THREE.Box3(), add = v => box.expandByPoint(v.applyMatrix4(inv));
-  for (let i = 10; i <= 20; i++) {
+  for (let i = 5; i <= 20; i++) {
     f(i / 20); S.scene.updateMatrixWorld();
     S.group.traverseVisible(n => {
       if (n.isMesh && n.material && n.material.opacity > .05) {
@@ -435,10 +435,26 @@ pauseBtn.addEventListener('click', () => {
 document.fonts && document.fonts.ready.then(() => document.querySelectorAll('.lab,.tag').forEach(e => e._w = e._h = 0));
 
 const Q = new URLSearchParams(location.search), FREEZE = Q.get('p'), HERO_T = Q.get('t'); // frame-check hooks: ?p=0.5 freezes scroll scenes, ?t=0.5 the hero
+// pin: each scroll scene holds still mid-screen while its animation plays, so the motion happens in full view
+// (unpinned, a 16:9 stage finished animating while still sliding in from the bottom). Skipped for scenes taller than the screen.
+const PIN = !RM && FREEZE === null;
+if (PIN) for (const s of list) if (s.k !== 'hero') {
+  const w = document.createElement('div'); w.className = 'pin'; s.el.before(w); w.appendChild(s.el); s.pin = w;
+  w.style.marginTop = getComputedStyle(s.el).marginTop; s.el.style.marginTop = '0';
+}
+function pinSize() {
+  for (const s of list) if (s.pin) {
+    const h = s.el.offsetHeight, on = h < innerHeight * .9;
+    s.pinOn = on; s.pinTop = Math.max(12, (innerHeight - h) / 2);
+    s.pin.style.height = on ? h + innerHeight * .6 + 'px' : '';
+    s.el.style.position = on ? 'sticky' : ''; s.el.style.top = on ? s.pinTop + 'px' : '';
+  }
+}
+pinSize(); addEventListener('resize', pinSize); addEventListener('load', pinSize);
 let lastSig = '';
 function frame(now) {
   requestAnimationFrame(frame);
-  if (renderer && (renderer.domElement.clientWidth !== innerWidth || renderer.domElement.clientHeight !== innerHeight)) size(); // some viewport changes fire no resize event
+  if (renderer && (renderer.domElement.clientWidth !== innerWidth || renderer.domElement.clientHeight !== innerHeight)) { size(); pinSize(); } // some viewport changes fire no resize event
   const vh = innerHeight, todo = [];
   let sig = innerWidth + 'x' + vh;
   for (const s of list) {
@@ -448,7 +464,9 @@ function frame(now) {
     if (s.k === 'hero') {
       if (heroLast !== null && !heroPaused) heroMs += now - heroLast;
       heroLast = now; p = RM ? STILL.hero : HERO_T !== null ? +HERO_T : (heroMs % 8000) / 8000;
-    } else p = RM ? (STILL[s.k] ?? 1) : FREEZE !== null ? +FREEZE : clamp((.85 * vh - r.top) / (.7 * vh));
+    } else if (RM || FREEZE !== null) p = RM ? (STILL[s.k] ?? 1) : +FREEZE;
+    else if (s.pinOn) { const w = s.pin.getBoundingClientRect(); p = clamp((s.pinTop - w.top) / ((w.height - r.height) * .85)); } // last 15% of the hold shows the end state
+    else p = clamp((.85 * vh - r.top) / (.7 * vh));
     if (!s.gl) { if (p !== s.last) { s.f(p); s.last = p; } continue; }
     todo.push([s, r, p]); sig += `|${s.k}:${p.toFixed(4)}:${r.left.toFixed(1)}:${r.top.toFixed(1)}:${r.width.toFixed(1)}:${r.height.toFixed(1)}`;
   }
