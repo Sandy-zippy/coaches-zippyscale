@@ -191,22 +191,34 @@ td:first-child{font-weight:600;color:var(--head)}
 .faq summary::after{content:"+";margin-left:auto;font:400 26px/1 var(--sans);color:var(--muted)}
 .faq details[open] summary::after{content:"\2212"}
 
-/* scene 12: path */
-.path{position:relative;max-width:1000px;margin:var(--s7) auto 0;aspect-ratio:1000/360}
-.path svg{position:absolute;inset:0;width:100%;height:100%}
-.path .pl{fill:none;stroke:var(--line-2);stroke-width:3}
-.path .pd{fill:none;stroke:var(--lime);stroke-width:6;stroke-linecap:round}
-.stop{position:absolute;z-index:1;transform:translate(-50%,-24px);display:grid;justify-items:center;gap:var(--s2);width:160px;text-align:center}
-.stop i{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:var(--paper);border:1.5px solid var(--charcoal);font:700 20px/1 var(--display);font-style:normal;color:var(--charcoal);transition:background .2s}
-.stop.on i{background:var(--lime)}
 @media (max-width:1140px){.fx>div{font-size:var(--fs-note)}}
-.stop span{font:600 var(--fs-note)/1.35 var(--sans);color:var(--head)}
-.ptok{position:absolute;left:0;top:0;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;background:var(--lime);border:1.5px solid var(--charcoal)}
-@media (max-width:720px){
-  .path{aspect-ratio:auto;display:grid;gap:var(--s5);justify-items:start;padding-left:var(--s2)}
-  .path svg,.ptok{display:none}
-  .stop{position:relative;transform:none;grid-template-columns:48px 1fr;justify-items:start;width:100%;text-align:left;align-items:center;left:auto!important;top:auto!important}
-}
+/* 12 the call steps: each step is the real thing (calendar, upload, ads, the call) */
+.fx2{position:absolute;inset:0;display:grid;grid-template-columns:repeat(4,1fr);gap:1.2em;padding:2.4em 2em;align-items:center;font-size:clamp(11px,1.35cqw,15px);line-height:1.3;color:var(--head);text-align:left}
+.fp{display:grid;gap:.9em;align-content:center}
+.fp>p{font:600 .95em/1.35 var(--sans);display:grid;grid-template-columns:1.9em 1fr;gap:.6em;align-items:start}
+.fp>p b{display:grid;place-items:center;width:1.9em;height:1.9em;border-radius:50%;border:1.5px solid var(--charcoal);font:700 .9em/1 var(--display);background:var(--paper)}
+.fp.on>p b{background:var(--lime)}
+.ui-box{background:var(--paper);border:1px solid var(--line-2);border-radius:.9em;padding:.8em;aspect-ratio:1/1.05;display:grid;align-content:start;gap:.5em;position:relative;transition:box-shadow .3s var(--ease)}
+.fp.on .ui-box{box-shadow:0 0 0 .2em var(--lime),var(--sh-card)}
+.ui-box .hd{display:flex;justify-content:space-between;align-items:center;font-size:.85em}
+.f-cal .dw{display:grid;grid-template-columns:repeat(5,1fr);gap:.3em} .f-cal .dw span{font:700 .65em/1 var(--mono);color:var(--muted);text-align:center}
+.fg{display:grid;grid-template-columns:repeat(5,1fr);gap:.3em} .fg i{aspect-ratio:1.3/1;border-radius:.3em;background:var(--sand);border:1px solid transparent} .fg i.on{background:var(--lime);border-color:var(--charcoal)} .fg i.x{background:var(--line)}
+.ok{justify-self:start;display:inline-flex;align-items:center;gap:.35em;font:600 .75em/1 var(--sans);background:var(--charcoal);color:var(--cream);border-radius:1em;padding:.45em .75em;opacity:0} .ok svg{width:1em;height:1em;color:var(--lime)}
+.fl{display:grid;grid-template-columns:1.8em 1fr 1.3em;gap:.5em;align-items:center;font:600 .75em/1.2 var(--mono);border:1px solid var(--line);border-radius:.5em;padding:.45em}
+.fl .th{width:1.8em;height:2.2em;border-radius:.3em;background:var(--sand-2);display:grid;place-items:center} .fl .th svg{width:.8em;fill:var(--charcoal)}
+.pb{display:block;height:.4em;border-radius:1em;background:var(--sand);overflow:hidden;margin-top:.35em} .pb i{display:block;height:100%;background:var(--charcoal);transform-origin:0 50%;transform:scaleX(0)}
+.fl .dn{width:1.3em;height:1.3em;border-radius:50%;background:var(--lime);display:grid;place-items:center;transform:scale(0)} .fl .dn svg{width:.8em;height:.8em}
+.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:.4em}
+.fad{border:1px solid var(--charcoal);border-radius:.5em;padding:.3em;display:grid;gap:.3em;opacity:0;position:relative}
+.fad .th{aspect-ratio:9/13;border-radius:.3em;background:var(--sand-2);display:grid;place-items:center} .fad .th svg{width:1.1em;fill:var(--charcoal)}
+.fad .ln{display:block;height:.35em;background:var(--line-2);border-radius:1em} .fad .bk{font:600 .5em/1 var(--sans);background:var(--charcoal);color:var(--cream);border-radius:1em;text-align:center;padding:.35em 0;white-space:nowrap;overflow:hidden}
+.fad em{font:700 .55em/1 var(--mono);font-style:normal;text-transform:uppercase;color:var(--muted);text-align:center}
+.live{font:700 .7em/1 var(--mono);color:#E5484D;display:flex;align-items:center;gap:.3em} .live::before{content:"";width:.6em;height:.6em;border-radius:50%;background:#E5484D}
+.share{background:var(--charcoal);border-radius:.5em;padding:.6em .5em;display:grid;grid-template-columns:repeat(3,1fr);gap:.35em;position:relative}
+.share i{aspect-ratio:9/13;border-radius:.3em;background:var(--sand-2);display:grid;place-items:center;transform:scale(0)} .share svg{width:.9em;fill:var(--charcoal)}
+.keep{position:absolute;right:.4em;bottom:-.8em;font:600 .68em/1 var(--sans);background:var(--lime);color:var(--charcoal);border:1px solid var(--charcoal);border-radius:1em;padding:.35em .6em;opacity:0}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:.4em;margin-top:.5em} .tiles i{aspect-ratio:1.5/1;border-radius:.4em;background:var(--sand);display:grid;place-items:center} .tiles svg{width:1.4em;fill:none;stroke:var(--charcoal);stroke-width:1.8}
+@container (orientation:portrait){.fx2{grid-template-columns:1fr 1fr;gap:1em .8em;padding:1.2em 1em;align-content:center} .ui-box{aspect-ratio:1/1;padding:.6em;gap:.35em} .fp{gap:.5em} .fp>p{font-size:.85em} .fl{padding:.3em;font-size:.65em} .fl .th{height:1.8em}}
 #cal{max-width:1000px;margin:var(--s6) auto 0;min-height:560px;border:1px dashed var(--line-2);border-radius:var(--r-card);display:grid;place-items:center;background:var(--paper)}
 #cal>p{color:var(--muted);padding:var(--s6)}
 #cal:has(iframe){border:0;display:block}
@@ -665,14 +677,14 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
 <!-- 12 STEPS + CALENDAR -->
 <section id="book">
   <div class="wrap center">
-    <h2>Send 3 videos, get 3 ads</h2>
-    <div class="path" id="path" data-scene="path">
-      <svg viewBox="0 0 1000 360" preserveAspectRatio="none" aria-hidden="true"><path class="pl" id="pl" d="M80 300 C200 300 200 200 330 200 S470 140 600 140 S760 60 900 60"/><path class="pd" id="pd" d="M80 300 C200 300 200 200 330 200 S470 140 600 140 S760 60 900 60"/></svg>
-      <div class="stop" style="left:8%;top:83.3%"><i>1</i><span>Pick a time.</span></div>
-      <div class="stop" style="left:33%;top:55.6%"><i>2</i><span>Send 3 videos you already have.</span></div>
-      <div class="stop" style="left:60%;top:38.9%"><i>3</i><span>We edit them into 3 ads before the call.</span></div>
-      <div class="stop" style="left:90%;top:16.7%"><i>4</i><span>On the call, you get the ads and see how 90 days would run.</span></div>
-      <span class="ptok" aria-hidden="true"></span>
+    <h2>How your free call works</h2>
+    <div class="stage ui" id="st12" data-scene="flow" role="img" aria-label="Step 1: you pick a time on the calendar. Step 2: you upload 3 videos you already have. Step 3: we edit them into 3 ads before the call. Step 4: on the call you get the 3 ads and see how 90 days would run.">
+      <div class="fx2">
+        <div class="fp"><div class="ui-box f-cal"><div class="hd"><b>Pick a time</b></div><div class="dw"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span></div><div class="fg"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Booked</span></div><p><b>1</b>Pick a time.</p></div>
+        <div class="fp"><div class="ui-box f-up"><div class="hd"><b>Upload 3 videos</b></div><div class="fl"><i class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i><span>reel.mp4<span class="pb"><i></i></span></span><i class="dn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg></i></div><div class="fl"><i class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i><span>podcast-clip.mp4<span class="pb"><i></i></span></span><i class="dn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg></i></div><div class="fl"><i class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i><span>zoom-call.mp4<span class="pb"><i></i></span></span><i class="dn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg></i></div></div><p><b>2</b>Send 3 videos you already have.</p></div>
+        <div class="fp"><div class="ui-box f-ads"><div class="hd"><b>Your 3 ads</b></div><div class="row3"><div class="fad"><div class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><i class="ln"></i><span class="bk">Book a call</span><em>Reel</em></div><div class="fad"><div class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><i class="ln"></i><span class="bk">Book a call</span><em>Podcast</em></div><div class="fad"><div class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><i class="ln"></i><span class="bk">Book a call</span><em>Zoom</em></div></div></div><p><b>3</b>We edit them into 3 ads before the call.</p></div>
+        <div class="fp"><div class="ui-box f-call"><div class="hd"><b>Your call</b><span class="live">Live</span></div><div class="share"><i><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i><i><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i><i><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i><span class="keep">Yours to keep</span></div><div class="tiles"><i><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg></i><i><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg></i></div></div><p><b>4</b>On the call: the ads, and how your 90 days would run.</p></div>
+      </div>
     </div>
     <div class="ask">
       <p class="chip">912 sales calls booked for a coaching company</p>

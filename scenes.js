@@ -178,22 +178,23 @@ function sheet(el) {
     sh.style.visibility = p < .9 ? 'visible' : 'hidden';
   };
 }
-function path(el) {
-  const pd = el.querySelector('#pd'), L = pd.getTotalLength(), stops = [...el.querySelectorAll('.stop')], tok = el.querySelector('.ptok');
-  pd.style.strokeDasharray = L;
-  const sx = [80, 330, 600, 900], th = sx.map(x => { let l = 0; while (l < L && pd.getPointAtLength(l).x < x) l += L / 400; return l / L; });
+// ---------- 12 the call: pick a time, upload 3 videos, 3 ads get made, the call shows them ----------
+function flow(el) {
+  const fp = $$(el, '.fp'), slots = $$(el, '.fg i'), ok = $(el, '.ok'), pbs = $$(el, '.pb i'), dns = $$(el, '.fl .dn'), ads = $$(el, '.fad'), sh = $$(el, '.share i'), keep = $(el, '.keep');
+  [1, 4, 8, 12].forEach(i => slots[i].classList.add('x')); // taken slots
   return p => {
-    const q = ease(seg(p, .05, .9));
-    pd.style.strokeDashoffset = L * (1 - q);
-    stops.forEach((s, i) => s.classList.toggle('on', q >= th[i] - .01));
-    const pt = pd.getPointAtLength(L * q);
-    tok.style.transform = `translate(${(pt.x / 1000 * el.clientWidth).toFixed(1)}px,${(pt.y / 360 * el.clientHeight).toFixed(1)}px)`;
-    tok.style.visibility = q > .97 ? 'hidden' : 'visible'; // arrived: stop 4 lights up instead
+    const st = [0, .24, .48, .72].map(a => seg(p, a, a + .22));
+    fp.forEach((e, i) => e.classList.toggle('on', st[i] > 0 && (i === 3 || st[i + 1] === 0)));
+    slots[7].classList.toggle('on', st[0] > .5); show(ok, seg(st[0], .55, .9), .5);
+    pbs.forEach((b, i) => { const u = ease(seg(st[1], i * .2, .5 + i * .2)); b.style.transform = `scaleX(${u.toFixed(3)})`; dns[i].style.transform = `scale(${u >= 1 ? 1 : 0})`; });
+    ads.forEach((a, i) => { const u = ease(seg(st[2], i * .25, .4 + i * .25)); a.style.opacity = .22 + .78 * u; a.style.borderStyle = u > .5 ? 'solid' : 'dashed'; });
+    sh.forEach((e, i) => e.style.transform = `scale(${ease(seg(st[3], .1 + i * .15, .4 + i * .15)).toFixed(3)})`);
+    show(keep, seg(st[3], .75, 1), .5);
   };
 }
 
 // ---------- loop ----------
-const HT = { hero, network, sweep, creds, proof, scale, sieve, race, fan, week, sheet, path };
+const HT = { hero, network, sweep, creds, proof, scale, sieve, race, fan, week, sheet, flow };
 // still frame for reduced motion, per the storyboard: the payoff state of each scene
 const STILL = { hero: .8, sheet: .45 };
 const list = [...document.querySelectorAll('[data-scene]')].map(el => ({ el, k: el.dataset.scene, f: HT[el.dataset.scene](el) }));
