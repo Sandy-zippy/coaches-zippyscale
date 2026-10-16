@@ -38,7 +38,7 @@ function stage({ pad, dy = 0, fit, fitP, dir = [10, 11, 10], look = [0, 0, 0], d
   const sun = new THREE.DirectionalLight(0xffffff, 1.5); sun.position.set(5, 12, 4); sun.castShadow = true;
   sun.shadow.mapSize.set(1024, 1024); Object.assign(sun.shadow.camera, { left: -13, right: 13, top: 13, bottom: -13, near: 1, far: 40 });
   scene.add(sun);
-  const ground = new THREE.Mesh(new THREE.PlaneGeometry(80, 80), new THREE.ShadowMaterial({ opacity: dark ? .08 : .13 }));
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(80, 80), new THREE.ShadowMaterial({ opacity: dark ? 0 : .13 })); // dark stages: shadows read as floating black boxes
   ground.rotation.x = -Math.PI / 2; ground.position.y = groundY; ground.receiveShadow = true; scene.add(ground);
   const group = new THREE.Group(); scene.add(group);
   return LAST = { scene, cam, group, pad, dy, fit, fitP, rotP, rotL, dir: new THREE.Vector3(...dir), look: new THREE.Vector3(...look), lookP: lookP && new THREE.Vector3(...lookP) };
