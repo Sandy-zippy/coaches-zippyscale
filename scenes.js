@@ -26,8 +26,8 @@ function cursor(stage) {
     let x, y, i = keys.findIndex(k => p < k[0]);
     if (i === 0) { const [tx, ty] = pos(keys[0][1]), u = ease(seg(p, keys[0][0] - .1, keys[0][0])); x = lerp(out[0], tx, u); y = lerp(out[1], ty, u); }
     else if (i === -1) { const L = keys.at(-1), [tx, ty] = pos(L[1]), u = io(seg(p, L[0] + .12, L[0] + .2)); x = lerp(tx, out[0], u); y = lerp(ty, out[1], u); }
-    else { const [ax, ay] = pos(keys[i - 1][1]), [bx, by] = pos(keys[i][1]), u = io(seg(p, keys[i - 1][0] + .015, keys[i][0])); x = lerp(ax, bx, u); y = lerp(ay, by, u); }
-    const ck = clicks.map(t => seg(p, t, t + .035)).find(u => u > 0 && u < 1) ?? 0;
+    else { const [ax, ay] = pos(keys[i - 1][1]), [bx, by] = pos(keys[i][1]), u = io(seg(p, keys[i - 1][0] + .035, keys[i][0])); /* hold through the click */ x = lerp(ax, bx, u); y = lerp(ay, by, u); }
+    const ck = clicks.map(t => seg(p, t, t + .03)).find(u => u > 0 && u < 1) ?? 0;
     c.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) scale(${(1 - .18 * Math.sin(Math.PI * Math.min(1, ck * 2))).toFixed(3)})`;
     const ring = c.firstChild; ring.style.opacity = ck ? (1 - ck).toFixed(2) : 0; ring.style.transform = `scale(${(.4 + ck * 1.4).toFixed(2)})`;
     c.style.opacity = x > W || y > H ? 0 : 1;
@@ -61,7 +61,7 @@ function hero(el) {
     const ts = spr(seg(t, .62, .7)) * back;
     toast.style.opacity = Math.min(1, ts * 2); toast.style.transform = `translateY(${((1 - ts) * 1.2).toFixed(2)}em) scale(${(.9 + .1 * ts).toFixed(3)})`;
     slots[3].classList.toggle('on', k > .5);
-    mouse(t, [[.5, ads[W]], [.6, slots[3]]], [.54]);
+    mouse(t, [[.54, ads[W]], [.62, slots[3]]], [.54]);
   };
 }
 
@@ -76,13 +76,13 @@ function network(el) {
     tabs.forEach(b => { b.L = b.offsetLeft; b.R = b.offsetLeft + b.offsetWidth; });
     const edge = (side, d) => T.reduce((v, t, i) => v + (tabs[i + 1][side] - tabs[i][side]) * spr(seg(p, t + d, t + d + .08)), tabs[0][side]);
     const l = edge('L', .025), r = edge('R', 0); ind.style.transform = `translateX(${l.toFixed(1)}px)`; ind.style.width = (r - l).toFixed(1) + 'px';
-    mouse(p, [[.3, tabs[1]], [.62, tabs[2]]], T);
+    mouse(p, [[T[0], tabs[1]], [T[1], tabs[2]]], T);
     const m = p < .38 ? 0 : p < .7 ? 1 : 2, st = [0, .38, .7][m], f = ease(seg(p, st + .02, st + .2)), n = Math.round(plan[m].length * f);
     tabs.forEach((b, i) => b.classList.toggle('on', i === m));
     const on = new Set(plan[m].slice(0, n)); cells.forEach((c, i) => { c.classList.toggle('on', on.has(i)); const j = plan[m].indexOf(i), u = j < 0 ? 1 : seg(p, st + .02 + j / plan[m].length * .18, st + .06 + j / plan[m].length * .18); c.style.transform = j >= 0 && u < 1 ? `scale(${(.6 + .4 * spr(u)).toFixed(3)})` : ''; });
     txt(cc, String(n)); txt(ccl, n === 1 ? 'call booked' : 'calls booked');
     msgs.forEach((e, i) => show(e, seg(p, .03 + i * .07, .08 + i * .07) * (m ? .45 : 1) + 0, 0));
-    txt(bd, m ? '0' : String(msgs.filter((_, i) => p > .06 + i * .07).length));
+    txt(bd, m ? '0' : String(msgs.filter((e, i) => e.offsetParent && p > .06 + i * .07).length));
     show(quiet, seg(p, .42, .48));
   };
 }
@@ -90,11 +90,11 @@ function network(el) {
 // ---------- 4 the loop: clips become 6 ads, the week's test switches 4 off, the 2 winners get the budget and book calls ----------
 function sweep(el) {
   const rows = $$(el, '.srow'), wl = $(el, '.wl'), ft = $(el, '.s-ft'), win = [1, 4], base = [.5, .8, .6, .4, .75, .3];
-  const mouse = cursor(el), loser = [0, 2, 3, 5], CK = [.5, .55, .6, .65], tg = rows.map(r => r.querySelector('.tgl'));
+  const mouse = cursor(el), loser = [0, 2, 3, 5], CK = [.44, .5, .56, .62], tg = rows.map(r => r.querySelector('.tgl'));
   return p => {
     const dec = p > .68;
     swap(wl, p, .68, 'Week 1: testing 6 new ads', 'Week 2: budget on the winners');
-    mouse(p, loser.map((r, i) => [CK[i] - .02, tg[r]]), CK);
+    mouse(p, loser.map((r, i) => [CK[i], tg[r]]), CK);
     rows.forEach((r, i) => {
       const w = win.includes(i), u = seg(p, .02 + i * .05, .14 + i * .05), o = spr(u);
       r.style.opacity = Math.min(1, u * 3); r.style.transform = `translateX(${((1 - o) * -1.5).toFixed(2)}em)`;
@@ -216,7 +216,7 @@ function flow(el) {
   [1, 4, 8, 12].forEach(i => slots[i].classList.add('x')); // taken slots
   const mouse = cursor(el), up = $(el, '.f-up') || fp[1];
   return p => {
-    mouse(p, [[.1, slots[7]], [.3, pbs[0]], [.78, sh[1] || fp[3]]], [.11]);
+    mouse(p, [[.1, slots[7]], [.55, ads[1]], [.8, sh[1] || fp[3]]], [.1]);
     const st = [0, .24, .48, .72].map(a => seg(p, a, a + .22));
     fp.forEach((e, i) => e.classList.toggle('on', st[i] > 0 && (i === 3 || st[i + 1] === 0)));
     slots[7].classList.toggle('on', st[0] > .5); show(ok, seg(st[0], .55, .9), .5);
