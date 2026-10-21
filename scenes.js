@@ -101,7 +101,7 @@ function sweep(el) {
       const s = ease(seg(p, .26, .46)) * base[i] * .6 + (w ? spr(seg(p, .7, .84)) * (1 - base[i] * .6) : 0);
       r.querySelector('.bar i').style.transform = `scaleX(${s.toFixed(3)})`;
       const li = loser.indexOf(i); r.classList.toggle('off', li >= 0 && p > CK[li] + .012); r.classList.toggle('win', dec && w);
-      { const b = r.querySelector('.badge'), k = w ? spr(seg(p, .7, .78)) : 0; b.style.opacity = Math.min(1, k * 2); b.style.transform = `scale(${(.7 + .3 * k).toFixed(3)})`; }
+      { const b = r.querySelector('.badge'), k = w ? spr(seg(p, .7, .78)) : 0; b.style.opacity = Math.min(1, k * 2); r.classList.toggle('bdg', k > .4); b.style.transform = `scale(${(.7 + .3 * k).toFixed(3)})`; }
       txt(r.querySelector('.dots'), w ? '\u25CF'.repeat(Math.round(3 * seg(p, .76, .9))) : '');
     });
     show(ft, seg(p, .82, .9), .8);

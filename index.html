@@ -66,8 +66,8 @@ section{padding-block:var(--s11);position:relative}
 .fold{max-width:640px;margin:var(--s6) auto 0;font-size:var(--fs-lg)} .dark .fold b{color:var(--lime)}
 .perks{list-style:none;padding:0;margin:var(--s6) auto 0;display:flex;flex-wrap:wrap;justify-content:center;gap:var(--s2) var(--s3);max-width:900px} .perks li{font-size:var(--fs-small);padding:var(--s2) var(--s4);border-radius:var(--r-pill);background:var(--paper);border:1px solid var(--line);color:var(--body)} .perks b{color:var(--head)}
 .gsheet{max-width:920px;margin:var(--s7) auto 0;text-align:left} .gs-wrap{background:var(--paper);border:1px solid var(--line-2);border-radius:var(--r-inner) var(--r-inner) 0 0;overflow:hidden;position:relative;max-height:22em} .gs-wrap::after{content:"";position:absolute;inset:auto 0 0;height:5em;background:linear-gradient(transparent,var(--paper))}
-.gsheet table{width:100%;min-width:0;border-collapse:collapse;font-size:var(--fs-small);table-layout:fixed} .gsheet th,.gsheet td{border:1px solid var(--line);padding:.45em .6em;height:1.2em;white-space:nowrap;overflow:hidden} .gsheet thead th{background:var(--sand);font:600 var(--fs-small)/1.2 var(--sans);color:var(--head);text-align:left} .gsheet tbody th{width:2.6em;background:var(--sand);color:var(--muted);font-weight:400;text-align:center} .gsheet thead th:first-child{width:2.6em}
-.gsheet td i{display:block;height:.75em;border-radius:3px;background:var(--charcoal);opacity:.82;max-width:100%} .gsheet td.af{color:var(--head);font-weight:600} .gsheet th:last-child{width:8.5em}
+.gsheet table{width:100%;min-width:0;border-collapse:collapse;font-size:var(--fs-small);table-layout:fixed} .gsheet th,.gsheet td{border:1px solid var(--line);padding:.45em .6em;height:1.2em;line-height:1.2em;vertical-align:middle;white-space:nowrap;overflow:hidden} .gsheet thead th{background:var(--sand);font:600 var(--fs-small)/1.2 var(--sans);color:var(--head);text-align:left} .gsheet tbody th{width:2.6em;background:var(--sand);color:var(--muted);font-weight:400;text-align:center} .gsheet thead th:first-child{width:2.6em}
+.gsheet td i{display:block;height:.75em;margin:.225em 0;border-radius:3px;background:var(--charcoal);opacity:.82;max-width:100%} .gsheet td.af{color:var(--head);font-weight:600} .gsheet th:last-child{width:8.5em}
 .gs-tabs{display:flex;gap:2px;overflow:hidden;background:var(--sand-2);border:1px solid var(--line-2);border-top:0;border-radius:0 0 var(--r-inner) var(--r-inner);padding:4px 6px} .gs-tabs span{font-size:var(--fs-label);padding:.35em .8em;border-radius:4px;color:var(--muted);white-space:nowrap} .gs-tabs .on{background:var(--paper);color:var(--head);font-weight:600} .gs-tabs .more{margin-left:auto}
 .gsheet figcaption{margin-top:var(--s3);font-size:var(--fs-small);color:var(--muted);text-align:center}
 @media (max-width:640px){.gsheet .ph{display:none} .gs-tabs span:nth-child(-n+3){display:none}}
@@ -364,7 +364,7 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
 @container (orientation:portrait){
   .sx{padding:3.4em 1.2em 1.6em}
   .s-hd,.srow{grid-template-columns:1fr 2.5em 3.6em;gap:.6em} .s-hd span,.srow .bkc{display:none} .s-hd{padding-inline:.4em}
-  .srow{position:relative} .badge{position:absolute;right:.9em;left:auto;top:calc(50% - .85em);font-size:.62em}
+  .srow{position:relative} .badge{position:absolute;right:.97em;left:auto;top:calc(50% - .85em);font-size:.62em} .srow.bdg .tgl,.srow.bdg .bar{visibility:hidden}
 }
 /* 6 record: bookings stack up on a lock screen */
 .cx{display:grid;grid-template-columns:1fr auto 1fr;gap:3em;padding:2.4em 3em;align-items:center}
@@ -398,7 +398,7 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
 .xl{position:relative;height:1.1em;margin-left:3em} .xl span{position:absolute;font:700 .68em/1 var(--mono);color:var(--muted);transform:translateX(-50%);white-space:nowrap}
 .xl span:nth-child(1){left:0;transform:none} .xl span:nth-child(2){left:20.4%} .xl span:nth-child(3){left:64.8%} .xl span:nth-child(4){left:auto;right:0;transform:none}
 .chart2 figcaption{position:absolute;left:1.6em;right:1.6em;bottom:1em;font-size:clamp(11px,1.15cqw,14px);color:var(--muted);line-height:1.4}
-@container (orientation:portrait){.px{padding:1.2em 1.2em 0 1em;bottom:5.4em} .p-top{flex-direction:column;align-items:flex-start} .p-tk{text-align:left} .bars{gap:.12em} .xl span:nth-child(2){display:none} .chart2 figcaption{left:1em;right:1em}}
+@container (orientation:portrait){.px{padding:1.2em 1.2em 0 1em;bottom:6.2em} .p-top{flex-direction:column;align-items:flex-start} .p-tk{text-align:left} .bars{gap:.12em} .xl span:nth-child(2){display:none} .chart2 figcaption{left:1em;right:1em}}
 /* 9 guarantee: 25 held calls fill a 90-day tracker */
 .gx{display:grid;align-content:center;gap:1.2em;padding:4.2em 4em 3em;color:var(--cream)}
 .g-hd{display:flex;justify-content:space-between;align-items:flex-end} .g-hd small{font:700 .72em/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--body-dark)}
