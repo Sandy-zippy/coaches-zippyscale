@@ -42,7 +42,7 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-body{margin:0;background:var(--cream);color:var(--body);font:400 var(--fs-body)/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{margin:0;background:var(--cream);color:var(--body);font:400 var(--fs-body)/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden;text-wrap:pretty}
 h1,h2,.h2{font-family:var(--display);font-weight:800;letter-spacing:-.018em} h3{font-family:var(--display);font-weight:700} h1,h2,h3,.h2{color:var(--head);line-height:1.05;margin:0;text-wrap:balance}
 h1{font-size:var(--fs-h1)} h2{font-size:var(--fs-h2);max-width:24ch;margin-inline:auto}
 p{margin:0;text-wrap:pretty}
@@ -110,7 +110,7 @@ section{padding-block:var(--s11);position:relative}
 .dark .lab{color:var(--cream);text-shadow:0 0 4px var(--charcoal),0 0 2px var(--charcoal)}
 .cnt{position:absolute;left:24px;top:20px;z-index:3;text-align:left;font:700 clamp(36px,6vw,72px)/1 var(--display);color:var(--head);max-width:min(300px,60%)}
 .cnt small{display:block;font:600 var(--fs-small)/1.4 var(--sans);color:var(--muted);margin-top:6px}
-.ex{position:absolute;left:16px;top:16px;z-index:3} .chip.ex::before{background:var(--line-2);box-shadow:none}
+.ex{position:absolute;left:16px;top:16px;z-index:3} .chip.ex::before,.chip.eg::before{background:var(--line-2);box-shadow:none}
 .pause{position:absolute;right:16px;bottom:16px;z-index:3;pointer-events:auto;font:600 var(--fs-small)/1 var(--sans);background:var(--paper);color:var(--charcoal);border:1px solid var(--line-2);border-radius:var(--r-pill);padding:10px 18px;cursor:pointer;min-height:44px;min-width:44px}
 html:not(.js) .stage{display:none}
 
@@ -319,14 +319,12 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
 .rec::before{content:"";width:.7em;height:.7em;border-radius:50%;background:#E5484D}
 .tm{font:700 1.5em/1 var(--mono)}
 .wav{display:flex;gap:.22em;height:2.6em;align-items:center} .wav i{width:.28em;height:100%;background:var(--lime);border-radius:1em;transform:scaleY(.25)}
-.h-ads{display:grid;grid-template-columns:repeat(5,1fr);gap:.8em;position:relative} .h-ads .cap{grid-column:1/-1;margin-top:.4em}
+.h-ads{display:grid;grid-template-columns:repeat(3,1fr);gap:.8em;position:relative} .h-ads .cap{grid-column:1/-1;margin-top:.4em}
 .ad{background:var(--paper);border:1px solid var(--charcoal);border-radius:.7em;padding:.45em;display:grid;gap:.35em;position:relative}
 .ad .th{aspect-ratio:4/5;background:var(--sand-2);border-radius:.4em;display:grid;place-items:center} .ad .th svg{width:1.6em;fill:var(--charcoal)}
-.ad .ln{height:.45em;background:var(--line-2);border-radius:1em;display:block} .ad .ln.s{width:60%}
-.ad .bk{font:600 .6em/1 var(--sans);white-space:nowrap;overflow:hidden;background:var(--charcoal);color:var(--cream);border-radius:1em;text-align:center;padding:.4em 0}
 .ad .sp{height:.42em;background:var(--sand);border-radius:1em;overflow:hidden} .ad .sp i{display:block;height:100%;width:100%;background:var(--charcoal);transform-origin:0 50%;transform:scaleX(0)}
 .ad .st{position:absolute;top:-.85em;right:-.4em;font:600 .7em/1 var(--sans);border:1px solid var(--charcoal);border-radius:1em;padding:.3em .6em;background:var(--paper);opacity:0}
-.ad.off{filter:grayscale(1)} .ad.off .th,.ad.off .ln,.ad.off .bk{opacity:.4}
+.ad.off{filter:grayscale(1)} .ad.off .th{opacity:.4}
 .ad.win{box-shadow:0 0 0 .22em var(--lime)} .ad.win .st{background:var(--lime)} .ad.win .sp i{background:var(--lime-text)}
 .h-cal{background:var(--paper);border:1px solid var(--line-2);border-radius:.9em;padding:.8em;position:relative;box-shadow:var(--sh-card)}
 .h-cal .hd{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.6em} .h-cal .hd b{font-size:.9em} .h-cal .hd span{font-size:.72em;color:var(--muted)}
@@ -339,10 +337,10 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
   .hx{grid-template-columns:1fr;grid-template-rows:auto 2.4em auto 1.6em auto;gap:.5em;padding:max(4.4em,64px) 1.6em max(5.4em,76px);align-content:center}
   .arw{--r:90deg;width:1.4em;justify-self:center;transform-origin:50% 50%}
   .h-ph{grid-template-columns:auto auto;align-items:center;justify-content:center;gap:1em} .h-ph .scr{aspect-ratio:auto;width:auto;max-width:none;padding:.6em 1em;grid-auto-flow:column;gap:.8em;border-radius:.8em} .wav{display:none}
-  .ad .bk,.ad .ln.s{display:none} .h-ads{gap:.5em} .ad .st{font-size:.62em;right:-.2em}
+  .h-ads{gap:.5em;width:100%;max-width:calc((100cqh - 400px) * 2.4 + 1em);justify-self:center} .ad .st{font-size:.62em;right:-.2em} /* 3 ads as large as the stage height allows */
   .h-cal .gr{grid-template-columns:repeat(5,1fr)} .h-cal .gr i{height:1.2em} 
 }
-@container (min-aspect-ratio:5/4) and (max-width:900px){.ad .bk{display:none} .h-cal .hd span{display:none}}
+@container (min-aspect-ratio:5/4) and (max-width:900px){.h-cal .hd span{display:none}}
 /* 2 problem: referrals stop, the month empties */
 .nx{display:grid;grid-template-columns:1fr 1.6fr;gap:2.4em;padding:4.4em 3.4em 3em;align-items:center;color:var(--cream)}
 .n-in,.n-cal{background:var(--card-dark);border:1px solid var(--border-dark);border-radius:.9em;padding:1em}
@@ -359,7 +357,7 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
 .sx{display:grid;align-content:center;gap:.45em;padding:4.2em 3em 2.6em}
 .s-hd,.srow{display:grid;grid-template-columns:2.4fr 4.6em 3fr 4.5em 7em;gap:1em;align-items:center} .s-hd span{white-space:nowrap}
 .s-hd{padding:0 .6em .3em;border:1px solid transparent;border-block:0} .s-hd span{font:700 .7em/1.2 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)} .s-hd .wl{font:700 1em/1.2 var(--display);color:var(--head)}
-.srow{background:var(--paper);border:1px solid var(--line-2);border-radius:.6em;padding:.4em .6em;opacity:0}
+.srow{background:var(--paper);border:1px solid var(--line-2);border-radius:.6em;padding:.4em .6em}
 .srow .nm{display:flex;gap:.6em;align-items:center;font-weight:600;font-size:.9em} .srow .nm small{display:block;font:700 .75em/1.2 var(--mono);color:var(--muted)}
 .srow .th{width:1.9em;height:2.5em;border-radius:.3em;background:var(--sand-2);display:grid;place-items:center;flex:none} .srow .th svg{width:.9em;fill:var(--charcoal)}
 .tgl{width:2.5em;height:1.4em;border-radius:1em;background:var(--lime);border:1px solid var(--charcoal);position:relative}
@@ -388,7 +386,7 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
 .yl span:nth-child(1){bottom:90%} .yl span:nth-child(2){bottom:60%} .yl span:nth-child(3){bottom:30%} .yl span:nth-child(4){bottom:0}
 .grid{position:absolute;inset:0 0 0 3em} .grid i{position:absolute;left:0;right:0;height:1px;background:var(--line)} .grid i:nth-child(1){bottom:90%} .grid i:nth-child(2){bottom:60%} .grid i:nth-child(3){bottom:30%} .grid i:nth-child(4){bottom:0;background:var(--line-2)}
 .bars{position:absolute;inset:0 0 0 3em;display:flex;align-items:flex-end;gap:.25em}
-.bars i{flex:1;height:var(--h);background:var(--charcoal);border-radius:.18em .18em 0 0;transform-origin:50% 100%;transform:scaleY(0);position:relative} .bars i.pen{background:var(--lime-text)}
+.bars i{flex:1;height:var(--h);background:var(--charcoal);border-radius:.18em .18em 0 0;transform-origin:50% 100%;transform:scaleY(0);position:relative} .bars i.pen{background:var(--lime-text)} .bars.gh i{background:var(--line);transform:none} .bars.gh b{display:none}
 .bars b{position:absolute;left:0;right:0;bottom:100%;height:var(--rh);background:var(--lime);border:1px solid var(--charcoal);border-bottom:0;border-radius:.18em .18em 0 0;transform-origin:50% 100%;transform:scaleY(0)}
 .rep{position:absolute;right:0;top:calc(8.8% - 1.9em);font:700 .7em/1 var(--mono);color:var(--lime-text);letter-spacing:.04em;opacity:0}
 .xl{position:relative;height:1.1em;margin-left:3em} .xl span{position:absolute;font:700 .68em/1 var(--mono);color:var(--muted);transform:translateX(-50%);white-space:nowrap}
@@ -410,14 +408,31 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
 .vx{display:grid;grid-template-rows:auto 6.4em 1em 2.6em 8.8em auto;align-content:center;padding:2.6em 3.4em}
 .v-lb{font:700 .72em/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:center} .v-lb.top{margin-bottom:.8em} .v-lb.bot{grid-row:6;margin-top:.4em}
 .v-row{grid-row:2;display:grid;grid-template-columns:repeat(5,1fr);gap:1em;position:relative;z-index:1}
-.vc{background:var(--paper);border:1px solid var(--charcoal);border-radius:.7em;padding:.7em;display:grid;align-content:space-between;justify-items:start;gap:.4em;font-weight:600;font-size:.95em;opacity:0}
+.vc{background:var(--paper);border:1px solid var(--charcoal);border-radius:.7em;padding:.7em;display:grid;align-content:space-between;justify-items:start;gap:.4em;font-weight:600;font-size:.95em}
 .vc .stamp{font:700 .68em/1 var(--mono);letter-spacing:.05em;text-transform:uppercase;border:1px solid var(--charcoal);border-radius:1em;padding:.35em .6em;opacity:0}
-.vc.ok{background:var(--lime);color:var(--charcoal)} .vc.ok .stamp{background:var(--charcoal);color:var(--lime);border-color:var(--charcoal)} .vc.no{background:var(--sand);color:var(--muted);border-color:var(--line-2)} .vc.no span{text-decoration:line-through} .vc.no .stamp{border-color:var(--muted)}
+.vc.is-ok{background:var(--lime);color:var(--charcoal)} .vc.is-ok .stamp{background:var(--charcoal);color:var(--lime);border-color:var(--charcoal)} .vc.is-no{background:var(--sand);color:var(--muted);border-color:var(--line-2)} .vc.is-no span{text-decoration:line-through} .vc.is-no .stamp{border-color:var(--muted)}
 .v-bar{grid-row:4;border:1.5px dashed var(--charcoal);border-radius:.6em;display:grid;place-items:center;background:var(--sand)} .v-bar span{font:600 .8em/1.2 var(--sans);background:var(--paper);padding:.3em .7em;border-radius:1em;text-align:center}
 @container (orientation:portrait){
   .vx{grid-template-rows:auto auto auto;gap:.8em;padding:2em 1.4em;align-content:center} .v-bar{grid-row:1;padding:.6em} .v-lb.top{grid-row:2;margin:0} .v-lb.bot{display:none}
   .v-row{grid-row:3;grid-template-columns:1fr;gap:.5em} .vc{grid-template-columns:1fr auto;align-items:center;padding:.6em .8em}
 }
+/* 11 free ad by email: your links tick in, one ad is cut from them, it lands in your inbox (plays in place, no pin) */
+#st11{max-width:760px;aspect-ratio:5/2;margin-top:var(--s6)}
+.mx{position:absolute;inset:0;display:grid;grid-template-columns:1.25fr auto .7fr auto 1.25fr;align-items:center;gap:.9em;padding:3.4em 1.6em 1.4em;font-size:clamp(11px,1.85cqw,15px);line-height:1.25;color:var(--head);text-align:left}
+.mx .ui-box{aspect-ratio:auto}
+.m-arw{width:1.7em;height:1.7em;border-radius:50%;border:1px solid var(--line-2);background:var(--paper);display:grid;place-items:center;color:var(--charcoal);transition:background .2s var(--ease)} .m-arw svg{width:.9em;height:.9em} .m-arw.on{background:var(--lime);border-color:var(--charcoal)}
+.m-ad{display:grid;gap:.45em;justify-items:center} .m-ad .th{width:100%;aspect-ratio:4/5;border-radius:.5em;border:1px solid var(--charcoal);background:var(--sand-2) url(ads/b.webp) 50% 0/cover} .m-ad .pb{width:100%;margin:0}
+.m-st{font:700 .68em/1 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding:.3em .55em;border-radius:1em} .m-st.on{background:var(--lime);color:var(--charcoal)}
+.m-n{font:700 .75em/1 var(--mono);min-width:1.7em;height:1.7em;padding:0 .45em;border-radius:1em;background:var(--sand);display:grid;place-items:center} .m-n.on{background:var(--lime)}
+.m-box{position:relative;min-height:6.4em}
+.m-slot{position:absolute;inset:0;border:1px dashed var(--line-2);border-radius:.5em;display:grid;place-items:center;font-size:.8em;color:var(--muted)}
+.mrow{position:absolute;inset:0;display:grid;grid-template-columns:2.1em minmax(0,1fr) auto;align-content:center;align-items:center;column-gap:.6em;row-gap:.45em;border:1px solid var(--charcoal);border-radius:.5em;padding:.55em .6em;background:var(--paper);opacity:0}
+.m-av{width:2.1em;height:2.1em;border-radius:50%;background:var(--charcoal) url(assets/apple-touch-icon.png) 50%/cover}
+.m-tx{display:grid;gap:.15em;min-width:0} .m-tx b{font-size:.85em} .m-tx small{font-size:.75em;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m-new{font:700 .62em/1 var(--mono);font-style:normal;text-transform:uppercase;letter-spacing:.04em;background:var(--lime);border:1px solid var(--charcoal);border-radius:1em;padding:.35em .55em;transform:scale(0)}
+.m-att{grid-column:2/-1;justify-self:start;display:inline-flex;align-items:center;gap:.45em;font:600 .68em/1 var(--mono);border:1px solid var(--line-2);border-radius:.4em;padding:.25em .5em .25em .25em} .m-att i{width:1.5em;height:1.9em;border-radius:.2em;background:var(--sand-2) url(ads/b.webp) 50% 0/cover}
+@container (max-width:520px){.mx{grid-template-columns:auto auto minmax(0,1fr);align-content:center;gap:.8em .9em;padding:4.9em 1em 1em} .m-links{grid-column:1/-1;display:flex;flex-wrap:wrap;justify-content:center;gap:.4em;padding:0;border:0;background:none} .m-links .hd,.m-links .fl .th,.m-links .pb,.m-links+.m-arw{display:none} .m-links .fl{grid-template-columns:auto auto;padding:.35em .5em;gap:.4em} .m-ad{width:5.2em} .m-box{min-height:7.2em}}
+@media (max-width:640px){#st11{aspect-ratio:4/3}}
 /* 13 P.S.: the next client scrolls, taps your ad, books */
 .rx{display:grid;grid-template-columns:auto auto;justify-content:center;align-items:center;gap:4em;padding:2.4em 3em}
 .r-st{list-style:none;margin:0;padding:0;justify-self:end;display:grid;gap:.6em}
@@ -441,14 +456,16 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
 /* example ad creatives inside the scenes */
 .ad .th,.srow .th,.fad .th,.share i,.post.you .img{background-size:cover;background-position:50% 0}
 .ad .th svg,.srow .th svg,.fad .th svg,.share i svg,.post.you .img svg{display:none}
-.h-ads .ad:nth-child(1) .th{background-image:url(ads/a.webp)} .h-ads .ad:nth-child(2) .th{background-image:url(ads/d.webp)} .h-ads .ad:nth-child(3) .th{background-image:url(ads/b.webp)} .h-ads .ad:nth-child(4) .th{background-image:url(ads/c.webp)} .h-ads .ad:nth-child(5) .th{background-image:url(ads/f.webp)}
-.srow:nth-child(2) .th{background-image:url(ads/b.webp)} .srow:nth-child(3) .th{background-image:url(ads/e.webp)} .srow:nth-child(4) .th{background-image:url(ads/a.webp)} .srow:nth-child(5) .th{background-image:url(ads/d.webp)} .srow:nth-child(6) .th{background-image:url(ads/c.webp)} .srow:nth-child(7) .th{background-image:url(ads/f.webp)}
+.h-ads .ad:nth-child(1) .th{background-image:url(ads/g.webp)} .h-ads .ad:nth-child(2) .th{background-image:url(ads/b.webp)} .h-ads .ad:nth-child(3) .th{background-image:url(ads/c.webp)}
+.srow:nth-child(2) .th{background-image:url(ads/g.webp)} .srow:nth-child(3) .th{background-image:url(ads/b.webp)} .srow:nth-child(4) .th{background-image:url(ads/h.webp)} .srow:nth-child(5) .th{background-image:url(ads/c.webp)} .srow:nth-child(6) .th{background-image:url(ads/e.webp)} .srow:nth-child(7) .th{background-image:url(ads/i.webp)}
 .fad:nth-child(1) .th,.share i:nth-child(1){background-image:url(ads/b.webp)} .fad:nth-child(2) .th,.share i:nth-child(2){background-image:url(ads/c.webp)} .fad:nth-child(3) .th,.share i:nth-child(3){background-image:url(ads/e.webp)}
-.post.you .img{background-image:url(ads/a.webp);aspect-ratio:4/5}
+.post.you .img{background-image:url(ads/b.webp);aspect-ratio:4/5}
 .adrow{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3);margin:var(--s3) 0 var(--s2)} @media (max-width:640px){.adrow{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:72%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none} .adrow::-webkit-scrollbar{display:none} .row.ad3{scroll-snap-align:start}} .row.ad3{grid-template-columns:auto 1fr;border-top:0;padding:0;gap:var(--s2)} .row.ad3 img{grid-column:1/-1;width:100%;height:auto;aspect-ratio:4/5;border-radius:10px;display:block;box-shadow:0 6px 18px rgba(26,26,46,.18)} .row.ad3 .d{justify-self:end}
-.wall{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin:var(--s5) auto 0;max-width:1000px} .wall img{width:100%;height:auto;aspect-ratio:4/5;border-radius:12px;display:block;box-shadow:0 8px 24px rgba(0,0,0,.35);outline:1px solid rgba(255,253,247,.14);outline-offset:-1px} @media (max-width:640px){.wall{display:flex;gap:var(--s3);overflow-x:auto;scroll-snap-type:x mandatory;margin-inline:-20px;padding:0 20px var(--s2);scroll-padding-inline:20px;scrollbar-width:none} .wall::-webkit-scrollbar{display:none} .wall img{flex:0 0 74%;scroll-snap-align:center}}
+.row.ad3 .pg{grid-column:1/-1;height:4px;border-radius:2px;background:var(--line);overflow:hidden} .row.ad3 .pg b{display:block;height:100%;background:var(--lime-text);transform-origin:0 50%} html.js .row.ad3 .pg b{transform:scaleX(0);background:var(--charcoal)} .row.ad3.done .pg b{background:var(--lime-text)} .row.ad3 .tg{background:var(--lime)} html.js .row.ad3:not(.done) .tg{background:var(--paper)} .sheet .chip.eg{margin:6px 0 var(--s4)}
+.pager{display:none} @media (max-width:640px){.pager{display:flex;justify-content:center;gap:6px;margin:var(--s2) 0 var(--s3)} .pager i{width:6px;height:6px;border-radius:3px;background:var(--line-2);transition:width .2s var(--ease),background .2s} .pager i.on{width:18px;background:var(--charcoal)} .dark .pager i{background:var(--border-dark)} .dark .pager i.on{background:var(--lime)}}
+.wallcap{margin-top:var(--s3)}
+.wall{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin:var(--s5) auto 0;max-width:1000px} .wall img{width:100%;height:auto;aspect-ratio:4/5;border-radius:12px;display:block;box-shadow:0 8px 24px rgba(0,0,0,.35);outline:1px solid rgba(255,253,247,.14);outline-offset:-1px} @media (max-width:640px){.wall{display:flex;gap:var(--s3);overflow-x:auto;scroll-snap-type:x mandatory;margin-inline:-20px;padding:0 20px var(--s2);scroll-padding-inline:20px;scrollbar-width:none} .wall::-webkit-scrollbar{display:none} .wall img{flex:0 0 74%;min-width:0;scroll-snap-align:center}}
 html.js .h-ads .ad{opacity:0}
-@media (max-width:640px){.h-ads{grid-template-columns:repeat(3,1fr)} .h-ads .ad:nth-child(1),.h-ads .ad:nth-child(5){display:none}}
 </style>
 <script>document.documentElement.classList.add('js')</script>
 </head>
@@ -465,7 +482,7 @@ html.js .h-ads .ad{opacity:0}
       <p class="lede">We build your funnel, turn your phone videos into Meta ads you fund, and book the calls. Under 25 qualified calls show up in your first 90 days of ads? Your setup fee and first 3 monthly payments come back.</p>
       <div class="ask" style="margin-top:0">
         <a class="btn" href="#cal">Book a free call, get 3 ads</a>
-        <ul class="prow rv"><li><b>912</b> sales calls booked for one coaching company</li><li><b>$250</b> to <b>$70</b> per booked call</li></ul>
+        <ul class="prow rv"><li><b>912</b> sales calls booked for one coaching&nbsp;company</li><li><b>$250</b> to <b>$70</b> per booked call</li></ul>
         <a class="alt" href="#sample">Or get 1 free ad first, no call</a>
       </div>
     </div>
@@ -473,7 +490,7 @@ html.js .h-ads .ad{opacity:0}
       <div class="hx" role="img" aria-label="Your phone records a 20-minute shoot. It becomes new ads. The weekly test pauses the weaker ones and keeps the winner. A qualified call lands on your calendar.">
         <div class="h-ph"><div class="scr"><span class="rec">REC</span><b class="tm">00:00</b><div class="wav"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><span class="cap">Your 20-min shoot</span></div>
         <i class="arw"></i>
-        <div class="h-ads"><div class="ad"><div class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><i class="ln"></i><i class="ln s"></i><span class="bk">Book a call</span><div class="sp"><i></i></div><span class="st">Paused</span></div><div class="ad"><div class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><i class="ln"></i><i class="ln s"></i><span class="bk">Book a call</span><div class="sp"><i></i></div><span class="st">Paused</span></div><div class="ad"><div class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><i class="ln"></i><i class="ln s"></i><span class="bk">Book a call</span><div class="sp"><i></i></div><span class="st">Paused</span></div><div class="ad"><div class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><i class="ln"></i><i class="ln s"></i><span class="bk">Book a call</span><div class="sp"><i></i></div><span class="st">Paused</span></div><div class="ad"><div class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><i class="ln"></i><i class="ln s"></i><span class="bk">Book a call</span><div class="sp"><i></i></div><span class="st">Paused</span></div><span class="cap">This week's new ads</span></div>
+        <div class="h-ads"><div class="ad"><div class="th"></div><div class="sp"><i></i></div><span class="st">Paused</span></div><div class="ad"><div class="th"></div><div class="sp"><i></i></div><span class="st">Paused</span></div><div class="ad"><div class="th"></div><div class="sp"><i></i></div><span class="st">Paused</span></div><span class="cap">This week's new ads</span></div>
         <i class="arw"></i>
         <div class="h-cal"><div class="hd"><b>Your calendar</b><span>This week</span></div><div class="gr"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="toast"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg><b>Call booked</b><span>Passed your qualifier</span></div></div>
       </div>
@@ -513,7 +530,7 @@ html.js .h-ads .ad{opacity:0}
     <div class="stage ui" id="st4" data-scene="sweep" role="img" aria-label="Your clips become six ads in a test. After the week, four are switched off and the two winners get the budget. Their bookings pass your qualifier and show up as calls.">
       <div class="sx">
         <div class="s-hd"><b class="wl">Week 1: testing 6 new ads</b><span>Status</span><span>Spend</span><span class="bkc">Booked</span></div>
-        <div class="srow"><span class="nm"><i class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i><span>Kitchen clip<small>0:42</small></span></span><i class="tgl"></i><span class="bar"><i></i></span><span class="bkc dots"></span><b class="badge">Budget up</b></div><div class="srow"><span class="nm"><i class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i><span>Client story<small>1:10</small></span></span><i class="tgl"></i><span class="bar"><i></i></span><span class="bkc dots"></span><b class="badge">Budget up</b></div><div class="srow"><span class="nm"><i class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i><span>Your why<small>0:35</small></span></span><i class="tgl"></i><span class="bar"><i></i></span><span class="bkc dots"></span><b class="badge">Budget up</b></div><div class="srow"><span class="nm"><i class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i><span>Myth buster<small>0:51</small></span></span><i class="tgl"></i><span class="bar"><i></i></span><span class="bkc dots"></span><b class="badge">Budget up</b></div><div class="srow"><span class="nm"><i class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i><span>Q&amp;A answer<small>0:28</small></span></span><i class="tgl"></i><span class="bar"><i></i></span><span class="bkc dots"></span><b class="badge">Budget up</b></div><div class="srow"><span class="nm"><i class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i><span>Day in coaching<small>1:04</small></span></span><i class="tgl"></i><span class="bar"><i></i></span><span class="bkc dots"></span><b class="badge">Budget up</b></div>
+        <div class="srow"><span class="nm"><i class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i><span>Monday restarts<small>Image</small></span></span><i class="tgl"></i><span class="bar"><i></i></span><span class="bkc dots"></span><b class="badge">Budget up</b></div><div class="srow"><span class="nm"><i class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i><span>Diet myth<small>Reel 0:20</small></span></span><i class="tgl"></i><span class="bar"><i></i></span><span class="bkc dots"></span><b class="badge">Budget up</b></div><div class="srow"><span class="nm"><i class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i><span>3pm crash<small>Image</small></span></span><i class="tgl"></i><span class="bar"><i></i></span><span class="bkc dots"></span><b class="badge">Budget up</b></div><div class="srow"><span class="nm"><i class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i><span>3 habits<small>Podcast 0:30</small></span></span><i class="tgl"></i><span class="bar"><i></i></span><span class="bkc dots"></span><b class="badge">Budget up</b></div><div class="srow"><span class="nm"><i class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i><span>Client story<small>Zoom 1:10</small></span></span><i class="tgl"></i><span class="bar"><i></i></span><span class="bkc dots"></span><b class="badge">Budget up</b></div><div class="srow"><span class="nm"><i class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i><span>No counting<small>Image</small></span></span><i class="tgl"></i><span class="bar"><i></i></span><span class="bkc dots"></span><b class="badge">Budget up</b></div>
         <div class="s-ft"><span class="q"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Passed qualifier</span><span class="arr"></span><span class="q l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Showed up</span></div>
       </div>
       <span class="chip ex">Example</span>
@@ -531,14 +548,14 @@ html.js .h-ads .ad{opacity:0}
 <!-- 6 CREDENTIALS -->
 <section class="paper" id="record">
   <div class="wrap center">
-    <h2>10+ coaches, one with 912 calls</h2>
+    <h2>912 calls for one coaching company</h2>
     <figure class="gsheet" data-scene="ledger">
       <div class="gs-wrap" aria-hidden="true"><table>
         <thead><tr><th></th><th>Name</th><th class="ph">Phone</th><th>Email</th><th class="ph">Appt</th><th class="ph">Time</th><th class="ph">Closer</th><th>Can afford</th></tr></thead>
         <tbody><tr><th>2</th><td><i style="width:4.1em"></i></td><td class="ph"><i style="width:4.4em"></i></td><td><i style="width:8.2em"></i></td><td class="ph"><i style="width:5.3em"></i></td><td class="ph"><i style="width:3.2em"></i></td><td class="ph"><i style="width:3.2em"></i></td><td><i style="width:1.4em"></i></td></tr><tr><th>3</th><td><i style="width:5.0em"></i></td><td class="ph"><i style="width:4.3em"></i></td><td><i style="width:7.5em"></i></td><td class="ph"><i style="width:5.2em"></i></td><td class="ph"><i style="width:2.9em"></i></td><td class="ph"><i style="width:3.3em"></i></td><td><i style="width:1.8em"></i></td></tr><tr><th>4</th><td><i style="width:3.0em"></i></td><td class="ph"><i style="width:4.4em"></i></td><td><i style="width:8.1em"></i></td><td class="ph"><i style="width:5.9em"></i></td><td class="ph"><i style="width:3.2em"></i></td><td class="ph"><i style="width:3.2em"></i></td><td><i style="width:1.9em"></i></td></tr><tr><th>5</th><td><i style="width:2.6em"></i></td><td class="ph"><i style="width:4.8em"></i></td><td><i style="width:7.0em"></i></td><td class="ph"><i style="width:5.3em"></i></td><td class="ph"><i style="width:2.9em"></i></td><td class="ph"><i style="width:3.0em"></i></td><td><i style="width:1.8em"></i></td></tr><tr><th>6</th><td><i style="width:3.3em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:8.2em"></i></td><td class="ph"><i style="width:5.5em"></i></td><td class="ph"><i style="width:3.2em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td><i style="width:1.4em"></i></td></tr><tr><th>7</th><td><i style="width:3.5em"></i></td><td class="ph"><i style="width:4.7em"></i></td><td><i style="width:7.5em"></i></td><td class="ph"><i style="width:5.4em"></i></td><td class="ph"><i style="width:3.2em"></i></td><td class="ph"><i style="width:3.4em"></i></td><td><i style="width:1.5em"></i></td></tr><tr><th>8</th><td><i style="width:6.5em"></i></td><td class="ph"><i style="width:4.7em"></i></td><td><i style="width:6.8em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3.2em"></i></td><td class="ph"><i style="width:4.5em"></i></td><td><i style="width:1.8em"></i></td></tr><tr><th>9</th><td><i style="width:3.9em"></i></td><td class="ph"><i style="width:4.9em"></i></td><td><i style="width:6.4em"></i></td><td class="ph"><i style="width:5.5em"></i></td><td class="ph"><i style="width:3.3em"></i></td><td class="ph"><i style="width:2.6em"></i></td><td><i style="width:1.6em"></i></td></tr><tr><th>10</th><td><i style="width:2.6em"></i></td><td class="ph"><i style="width:4.7em"></i></td><td><i style="width:8.6em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3.4em"></i></td><td class="ph"><i style="width:3.0em"></i></td><td><i style="width:1.7em"></i></td></tr><tr><th>11</th><td><i style="width:5.5em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:7.6em"></i></td><td class="ph"><i style="width:5.8em"></i></td><td class="ph"><i style="width:3.5em"></i></td><td class="ph"><i style="width:3.4em"></i></td><td><i style="width:1.7em"></i></td></tr><tr><th>12</th><td><i style="width:2.7em"></i></td><td class="ph"><i style="width:4.7em"></i></td><td><i style="width:8.2em"></i></td><td class="ph"><i style="width:5.9em"></i></td><td class="ph"><i style="width:3.4em"></i></td><td class="ph"><i style="width:2.9em"></i></td><td><i style="width:1.6em"></i></td></tr><tr><th>13</th><td><i style="width:5.9em"></i></td><td class="ph"><i style="width:4.3em"></i></td><td><i style="width:7.6em"></i></td><td class="ph"><i style="width:5.3em"></i></td><td class="ph"><i style="width:2.9em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td><i style="width:1.8em"></i></td></tr><tr><th>14</th><td><i style="width:3.1em"></i></td><td class="ph"><i style="width:4.4em"></i></td><td><i style="width:7.3em"></i></td><td class="ph"><i style="width:5.8em"></i></td><td class="ph"><i style="width:2.9em"></i></td><td class="ph"><i style="width:3.4em"></i></td><td><i style="width:1.7em"></i></td></tr><tr><th>15</th><td><i style="width:7.0em"></i></td><td class="ph"><i style="width:4.8em"></i></td><td><i style="width:8.9em"></i></td><td class="ph"><i style="width:5.4em"></i></td><td class="ph"><i style="width:3.1em"></i></td><td class="ph"><i style="width:3.1em"></i></td><td><i style="width:1.8em"></i></td></tr></tbody>
       </table></div>
       <div class="gs-tabs" aria-hidden="true"><div class="gs-strip"><span>Initial 2024</span><span>Repeat 2024</span><span>Initial Jan 2025</span><span>Repeat Jan 2025</span><span>Initial Feb 2025</span><span>Repeat Feb 2025</span><span>Initial Mar 2025</span><span>Repeat Mar 2025</span><span>Initial Apr 2025</span><span>Repeat Apr 2025</span><span>Initial May 2025</span><span>Repeat May 2025</span><span>Initial Jun 2025</span><span>Repeat Jun 2025</span><span>Initial Jul 2025</span><span>Repeat Jul 2025</span><span>Initial Aug 2025</span><span>Repeat Aug 2025</span><span>Initial Sep 2025</span><span>Repeat Sep 2025</span><span>Initial Oct 2025</span><span>Repeat Oct 2025</span><span>Initial Nov 2025</span><span>Repeat Nov 2025</span><span>Initial Dec 2025</span><span>Repeat Dec 2025</span><span>Initial Jan 2026</span><span>Repeat Jan 2026</span><span>Initial Feb 2026</span><span>Repeat Feb 2026</span><span>Initial Mar 2026</span><span>Repeat Mar 2026</span><span>Initial Apr 2026</span><span>Repeat Apr 2026</span><span>Initial May 2026</span><span>Repeat May 2026</span><span>Initial Jun 2026</span><span>Repeat Jun 2026</span><span>Initial Jul 2026</span><span>Repeat Jul 2026</span><span>Initial Aug 2026</span><span>Repeat Aug 2026</span><span>Initial Sep 2026</span><span>Repeat Sep 2026</span><span class="on">Initial Oct 2026</span><span>Repeat Oct 2026</span></div></div>
-      <figcaption>The client's booking sheet since Aug 2024, with tabs for first and repeat calls. Personal details hidden.</figcaption>
+      <figcaption>The client's booking sheet since Aug 2024. Each row is one booked call. Personal details&nbsp;hidden.</figcaption>
     </figure>
   </div>
 </section>
@@ -548,12 +565,12 @@ html.js .h-ads .ad{opacity:0}
   <div class="wrap center">
     <h2>No empty month since 2024</h2>
     <figure class="stage ui chart2" id="st7" data-scene="proof">
-      <div class="px" role="img" aria-label="First calls booked each month for one coaching company, Aug 2024 to Oct 2026. Every month had calls, and the slowest 3 months had 37. Repeat calls bring the total to 912. Cost per booked call went from 250 dollars to 70 dollars.">
-        <div class="p-top"><div class="p-run"><b class="num">912</b><small>sales calls booked, Aug 2024 to Oct 2026</small></div><div class="p-tk"><small>Cost per booked call</small><div class="ck"><span>Start</span><i></i><b>$250</b></div><div class="ck now"><span>Now</span><i style="--w:28%"></i><b class="cpl">$70</b></div></div></div>
+      <div class="px" role="img" aria-label="First calls booked each month for one coaching company, Aug 2024 to Oct 2026. Every month had calls, and the slowest 3 months in a row had 37. Repeat calls bring the total to 912. Cost per booked call went from 250 dollars to 70 dollars.">
+        <div class="p-top"><div class="p-run"><b class="num">912</b><small>sales calls booked, Aug 2024 to Oct 2026</small></div><div class="p-tk"><small>Cost per booked call</small><div class="ck"><span>Start</span><i></i><b>$250</b></div><div class="ck now"><span>Later</span><i style="--w:28%"></i><b class="cpl">$70</b></div></div></div>
         <div class="p-plot"><div class="yl"><span>60</span><span>40</span><span>20</span><span>0</span></div><div class="grid"><i></i><i></i><i></i><i></i></div><div class="bars"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div></div>
         <div class="xl"><span>Aug 2024</span><span>Jan 2025</span><span>Jan 2026</span><span>Oct 2026</span></div>
       </div>
-      <figcaption>Each bar is one month of first calls for one coaching company. Even the slowest 3 months had 37. Repeat calls bring the total to 912.</figcaption>
+      <figcaption>Each bar is one month of first calls for one coaching company. Even the slowest 3 months in a row had&nbsp;37. Repeat calls bring the total to&nbsp;912.</figcaption>
     </figure>
     <div class="ask">
       <a class="btn" href="#cal">Book a free call, get 3 ads</a>
@@ -568,13 +585,13 @@ html.js .h-ads .ad{opacity:0}
     <div class="sheetwrap" id="sheet" data-scene="sheet">
       <div class="sheet">
         <span class="yk">Yours to keep</span>
-        <h3>3 ads from your videos</h3><p class="label">Your footage · example</p>
+        <h3>3 ads from your videos</h3><span class="chip eg">Example</span>
         <div class="adrow">
-          <div class="row ad3"><img src="ads/b.webp" alt="Example reel ad" width="252" height="315" loading="lazy"><span class="tg l">Reel</span></div>
-          <div class="row ad3"><img src="ads/c.webp" alt="Example podcast clip ad" width="252" height="315" loading="lazy"><span class="tg">Podcast</span></div>
-          <div class="row ad3"><img src="ads/e.webp" alt="Example client story ad" width="252" height="315" loading="lazy"><span class="tg">Zoom</span></div>
+          <div class="row ad3"><img src="ads/b.webp" alt="Example reel ad" width="252" height="315" loading="lazy"><i class="pg"><b></b></i><span class="tg">Reel</span></div>
+          <div class="row ad3"><img src="ads/c.webp" alt="Example podcast clip ad" width="252" height="315" loading="lazy"><i class="pg"><b></b></i><span class="tg">Podcast</span></div>
+          <div class="row ad3"><img src="ads/e.webp" alt="Example client story ad" width="252" height="315" loading="lazy"><i class="pg"><b></b></i><span class="tg">Zoom</span></div>
         </div>
-        <div class="row"><span class="tg">Funnel</span><span>Where your bookings leak</span><span class="d">1 page</span></div>
+        <div class="row"><span class="tg">Funnel</span><span>Where your bookings&nbsp;leak</span><span class="d">1 page</span></div>
       </div>
     </div>
     <p class="lede" style="margin-top:var(--s6)">The 3 ads and the funnel page are <b>yours even if you never hire us.</b></p>
@@ -586,15 +603,15 @@ html.js .h-ads .ad{opacity:0}
   <div class="wrap center">
     <h2>Your ads, built and refreshed</h2>
     <div class="cards c5">
-      <div class="rv" style="--i:0"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><rect x="5" y="5" width="38" height="38" rx="3"/><path class="a-gx" style="--d:.2s" d="M11 13h26" stroke-width="3"/><path class="a-dr" pathLength="1" style="--d:.4s" d="M11 21h18M11 27h14"/><rect class="f a-pp" style="--d:.8s" x="11" y="33" width="16" height="5" rx="2"/></svg><strong>The Booked-Call Page</strong><span>Page, qualifier, calendar.</span></div>
+      <div class="rv" style="--i:0"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><rect x="5" y="5" width="38" height="38" rx="3"/><path class="a-gx" style="--d:.2s" d="M11 13h26" stroke-width="3"/><path class="a-dr" pathLength="1" style="--d:.4s" d="M11 21h18M11 27h14"/><rect class="f a-pp" style="--d:.8s" x="11" y="33" width="16" height="5" rx="2"/></svg><strong>The Booked&#8209;Call Page</strong><span>Page, qualifier, calendar.</span></div>
       <div class="rv" style="--i:1"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><rect x="3" y="8" width="12" height="12" rx="2"/><path class="a-dr" pathLength="1" style="--d:.2s" d="M15 14c8 0 8 20 16 20"/><rect x="31" y="27" width="14" height="14" rx="2"/><path class="a-dr" pathLength="1" style="--d:.8s" d="M34 34l3 3 5-5"/></svg><strong>The Call Tracker</strong><span>Which ad booked which call.</span></div>
       <div class="rv" style="--i:2"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18"/><g class="a-sp" style="--d:.2s;transform-origin:24px 24px;transform-box:view-box"><path class="f" d="M24 10l4 14h-8z"/><path d="M24 38l4-14h-8z"/></g></svg><strong>The Angle Map</strong><span>Other coaches' ads, turned into tests.</span></div>
       <div class="rv" style="--i:3"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><g class="a-pp" style="--d:0.0s"><rect x="5" y="8" width="11" height="14" rx="2"/></g><g class="a-pp" style="--d:0.1s"><rect x="18" y="8" width="11" height="14" rx="2"/></g><g class="a-pp" style="--d:0.2s"><rect x="31" y="8" width="11" height="14" rx="2"/></g><g class="a-pp" style="--d:0.3s"><rect x="5" y="25" width="11" height="14" rx="2"/><path d="M9 29l4 3-4 3z"/></g><g class="a-pp" style="--d:0.4s"><rect x="18" y="25" width="11" height="14" rx="2"/><path d="M22 29l4 3-4 3z"/></g><g class="a-pp" style="--d:0.5s"><rect x="31" y="25" width="11" height="14" rx="2"/><path d="M35 29l4 3-4 3z"/></g></svg><strong>The Launch Batch</strong><span>20 image and 10 video ads.</span></div>
       <div class="rv" style="--i:4"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><g class="a-wg" style="--d:.1s;transform-origin:18px 8px;transform-box:view-box"><path d="M8 32V22a10 10 0 0120 0v10l3 3H5z"/><path d="M14 39h8"/></g><g class="a-pp" style="--d:.8s"><path class="f" d="M28 6h17v12h-9l-4 4v-4h-4z"/></g></svg><strong>The Show-Up System</strong><span>Email and text reminders. WhatsApp in Dubai.</span></div>
     </div>
     <p class="lede" style="margin-top:var(--s5)">Then monthly: 30 new ads and weekly tests.</p>
-    <div class="wall"><img src="ads/a.webp" alt="Example referrals static ad" width="252" height="315" loading="lazy"><img src="ads/b.webp" alt="Example reel ad" width="252" height="315" loading="lazy"><img src="ads/c.webp" alt="Example podcast clip ad" width="252" height="315" loading="lazy"><img src="ads/d.webp" alt="Example career static ad" width="252" height="315" loading="lazy"><img src="ads/e.webp" alt="Example client story ad" width="252" height="315" loading="lazy"><img src="ads/f.webp" alt="Example habits static ad" width="252" height="315" loading="lazy"></div>
-    <p class="note" style="margin-top:var(--s2)">Example ads</p>
+    <div class="wall"><img src="ads/a.webp" alt="Example business coaching ad: still waiting on referrals?" width="252" height="315" loading="lazy"><img src="ads/g.webp" alt="Example health coaching ad: starting over every Monday?" width="252" height="315" loading="lazy"><img src="ads/d.webp" alt="Example career coaching ad: same job title for 3 years?" width="252" height="315" loading="lazy"><img src="ads/h.webp" alt="Example health coaching ad: out of energy by 3pm?" width="252" height="315" loading="lazy"><img src="ads/f.webp" alt="Example mindset coaching ad: know what to do, but still don't do it?" width="252" height="315" loading="lazy"><img src="ads/b.webp" alt="Example health coaching reel ad: why your diet dies in week 2" width="252" height="315" loading="lazy"></div>
+    <span class="chip eg wallcap">Example ads across 4 coaching niches</span>
     <div class="guar">
       <strong>Under 25 qualified calls show up in your first 90 days of ads? Your setup fee and first 3 monthly payments come back.</strong>
       <p>Counts calls that show up from people who pass your qualifier. You keep the page, ads and data either way.</p>
@@ -643,7 +660,7 @@ html.js .h-ads .ad{opacity:0}
   <div class="wrap center">
     <h2>Questions coaches ask first</h2>
     <div class="faq rv">
-      <details open><summary><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span>I've been burned by an agency. Why is this different?</summary><p>We count calls that show up, not leads. We make the ads ourselves, and your ad team joins your weekly call. Under 25 in your first 90 days of ads, and your setup fee and first 3 monthly payments come back.</p></details>
+      <details open><summary><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span>I've been burned by an agency. Why is this different?</summary><p>We count calls that show up, not leads. We make the ads ourselves, and your ad team joins your weekly call. Under 25 qualified calls show up in your first 90 days of ads? Your setup fee and first 3 monthly payments come back.</p></details>
       <details><summary><span class="ic"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg></span>I hate making content. Do I have to film?</summary><p>Yes, 20 minutes a month from a shot list we send. Your 3 free ads can come from old reels or Zoom clips.</p></details>
       <details><summary><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M9 15l2 2 4-4"/></svg></span>What counts as a qualified call?</summary><p>Passed your budget and fit questions, booked, and showed up. You set the questions.</p></details>
       <details><summary><span class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg></span>How does payment work?</summary><p>A one-time setup fee, then monthly from day 30. At day 30 you see your numbers and choose to stay or stop. No lock-in. Stop then, and the setup fee isn't refunded: the guarantee needs the full 90 days. Numbers on the call.</p></details>
@@ -674,6 +691,16 @@ html.js .h-ads .ad{opacity:0}
   <div class="wrap center">
     <h2>Not ready for a call?</h2>
     <p class="lede" style="margin-top:var(--s4)">Send up to 3 video links. We cut one into an ad and email it back. No call, no card.</p>
+    <div class="stage ui" id="st11" data-scene="mail" data-nopin role="img" aria-label="You paste up to 3 video links. We cut one into an ad. It lands in your inbox with no call.">
+      <div class="mx">
+        <div class="ui-box m-links"><div class="hd"><b>Your links</b></div><div class="fl"><i class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i><span>Instagram reel<span class="pb"><i></i></span></span><i class="dn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg></i></div><div class="fl"><i class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i><span>YouTube video<span class="pb"><i></i></span></span><i class="dn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg></i></div><div class="fl"><i class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i><span>Drive clip<span class="pb"><i></i></span></span><i class="dn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg></i></div></div>
+        <i class="m-arw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i>
+        <div class="m-ad"><div class="th"></div><span class="pb"><i></i></span><b class="m-st">Cutting</b></div>
+        <i class="m-arw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i>
+        <div class="ui-box m-mail"><div class="hd"><b>Your inbox</b><span class="m-n">0</span></div><div class="m-box"><span class="m-slot">Your ad lands here</span><div class="mrow"><i class="m-av"></i><span class="m-tx"><b>ZippyScale</b><small>Your ad is ready</small></span><em class="m-new">New</em><span class="m-att"><i></i>ad.mp4</span></div></div></div>
+      </div>
+      <span class="chip ex">Example</span>
+    </div>
     <form class="sform" method="post" novalidate>
       <label>Your name<input name="name" autocomplete="name" required></label>
       <label>Email for the ad<input name="email" type="email" autocomplete="email" required></label>
@@ -759,6 +786,17 @@ const CAL_LINK = "sandy-kadyan/coaches-strategy-call"; // cal.com event 7510512
       .catch(()=>{ b.disabled=false; st.classList.add('err'); st.textContent='That didn\'t send. Try again in a minute, or book a call above.'; });
   });
 })();
+</script>
+<script>
+// phone carousels: dots under the 3-ad card and the ad wall show which ad is in view
+document.querySelectorAll('.adrow, .wall').forEach(row => {
+  const items = [...row.children], pg = document.createElement('div'); pg.className = 'pager'; pg.setAttribute('aria-hidden', 'true');
+  pg.innerHTML = items.map(() => '<i></i>').join(''); row.after(pg);
+  const upd = () => { const R = row.getBoundingClientRect(), c = R.left + R.width / 2; let k = 0, d = Infinity;
+    items.forEach((it, i) => { const r = it.getBoundingClientRect(), x = Math.abs(r.left + r.width / 2 - c); if (x < d) { d = x; k = i; } });
+    [...pg.children].forEach((e, i) => e.classList.toggle('on', i === k)); };
+  row.addEventListener('scroll', upd, { passive: true }); addEventListener('resize', upd); upd();
+});
 </script>
 <script>
 // arrival gate for per-point motion; count-ups run once on arrival (final numbers are in the HTML)

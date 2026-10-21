@@ -35,35 +35,35 @@ function cursor(stage) {
   };
 }
 
-// ---------- 1 hero: your phone shoot becomes 5 ads, the test pauses 4, the winner books a call (time loop) ----------
+// ---------- 1 hero: your phone shoot becomes 3 ads, the test pauses 2, the winner books a call (time loop) ----------
 function hero(el) {
-  const hx = $(el, '.hx'), tm = $(el, '.tm'), wav = $$(el, '.wav i'), ads = $$(el, '.ad'), arw = $$(el, '.arw'), slots = $$(el, '.gr i'), toast = $(el, '.toast'), W = 2;
-  const spend = [.55, .7, 1, .45, .35];
+  const tm = $(el, '.tm'), wav = $$(el, '.wav i'), ads = $$(el, '.ad'), arw = $$(el, '.arw'), slots = $$(el, '.gr i'), toast = $(el, '.toast'), W = 1;
+  const spend = [.6, 1, .45];
   slots.forEach((s, i) => s.classList.toggle('on', i === 0 || i === 6)); // calls already booked this week
   const mouse = cursor(el);
   return t => {
-    // the loop fades out and back in, so the reset (ads leaving, the booked slot clearing) is never seen
-    hx.style.opacity = Math.min(seg(t, 0, .04), 1 - seg(t, .93, .98)).toFixed(2);
-    const rec = seg(t, .02, .26);
+    // never a blank frame and no fade: last week's ads wait greyed while the shoot records, this week's cuts spring in over them,
+    // and at the end of the loop every decided state eases back to grey, so the wrap from t = 1 to t = 0 is seamless
+    const rec = seg(t, .02, .26), back = seg(t, .9, .98), on = 1 - back;
     txt(tm, String(Math.round(20 * rec)).padStart(2, '0') + ':00');
     wav.forEach((w, i) => w.style.transform = `scaleY(${(rec > 0 && rec < 1 ? .3 + .7 * Math.abs(Math.sin(t * 90 + i * 1.7)) : .25).toFixed(2)})`);
-    arw[0].style.setProperty('--k', ease(seg(t, .24, .3)));
-    const dec = t > .545;
+    arw[0].style.setProperty('--k', ease(seg(t, .24, .3)) * on);
+    const dec = t > .545 && back < .5;
     ads.forEach((a, i) => {
-      const u = seg(t, .26 + i * .02, .34 + i * .02), sp = spr(u); // each new cut springs up as the shoot ends; hidden until then
-      a.style.opacity = Math.min(1, u * 4).toFixed(2);
+      const u = seg(t, .26 + i * .03, .34 + i * .03), sp = spr(u), nw = Math.min(1, u * 3) * on; // nw: 0 = last week's ad (grey), 1 = this week's cut
+      a.style.opacity = (.45 + .55 * nw).toFixed(2);
+      a.style.filter = `grayscale(${(dec && i !== W ? 1 : 1 - nw).toFixed(2)})` + (u > 0 && u < .3 ? ` blur(${((.3 - u) * 8).toFixed(1)}px)` : '');
       a.classList.toggle('fresh', u > 0 && u < 1);
-      a.style.transform = u > 0 && u < 1 ? `translateY(${((1 - sp) * 1.4).toFixed(2)}em) ` : (i === W && dec ? `scale(${(1 + .06 * (1 - spr(seg(t, .55, .63)))).toFixed(3)})` : '');
-      a.style.filter = u > 0 && u < .3 ? `blur(${((.3 - u) * 8).toFixed(1)}px)` : '';
-      const s = i === W ? ease(seg(t, .34, .5)) * .55 + ease(seg(t, .56, .66)) * .45 : ease(seg(t, .34, .5)) * spend[i] * .55;
+      a.style.transform = u > 0 && u < 1 ? `translateY(${((1 - sp) * 1.4).toFixed(2)}em)` : (i === W && dec ? `scale(${(1 + .06 * (1 - spr(seg(t, .55, .63)))).toFixed(3)})` : '');
+      const s = (i === W ? ease(seg(t, .34, .5)) * .55 + ease(seg(t, .56, .66)) * .45 : ease(seg(t, .34, .5)) * spend[i] * .55) * on;
       a.querySelector('.sp i').style.transform = `scaleX(${s.toFixed(3)})`;
       a.classList.toggle('off', dec && i !== W); a.classList.toggle('win', dec && i === W);
       const st = a.querySelector('.st'); txt(st, i === W ? 'Winner' : 'Paused'); st.style.opacity = dec ? 1 : 0;
     });
-    arw[1].style.setProperty('--k', ease(seg(t, .58, .62)));
+    arw[1].style.setProperty('--k', ease(seg(t, .58, .62)) * on);
     const k = ease(seg(t, .62, .67)), ts = spr(seg(t, .62, .7));
-    toast.style.opacity = Math.min(1, ts * 2); toast.style.transform = `translateY(${((1 - ts) * 1.2).toFixed(2)}em) scale(${(.9 + .1 * ts).toFixed(3)})`;
-    slots[3].classList.toggle('on', k > .5);
+    toast.style.opacity = (Math.min(1, ts * 2) * on).toFixed(2); toast.style.transform = `translateY(${((1 - ts) * 1.2).toFixed(2)}em) scale(${(.9 + .1 * ts).toFixed(3)})`;
+    slots[3].classList.toggle('on', k > .5 && back < .5);
     mouse(t, [[.54, ads[W]], [.62, slots[3]]], [.54]);
   };
 }
@@ -84,7 +84,7 @@ function network(el) {
     const m = p < T[0] + .02 ? 0 : p < T[1] + .02 ? 1 : 2, s0 = [.02, T[0] + .02, T[1] + .02][m], win = m ? .06 : .18, len = plan[m].length;
     const n = Math.round(len * ease(seg(p, s0, s0 + win + .02)));
     tabs.forEach((b, i) => b.classList.toggle('on', i === m));
-    const on = new Set(plan[m].slice(0, n)); cells.forEach((c, i) => { c.classList.toggle('on', on.has(i)); const j = plan[m].indexOf(i), u = j < 0 ? 1 : seg(p, s0 + j / len * win, s0 + .04 + j / len * win); c.style.transform = j >= 0 && u < 1 ? `scale(${(.6 + .4 * spr(u)).toFixed(3)})` : ''; });
+    const on = new Set(plan[m].slice(0, n)); cells.forEach((c, i) => { c.classList.toggle('on', on.has(i)); const j = plan[m].indexOf(i), u = j < 0 ? 1 : seg(p, s0 + j / len * win, s0 + .04 + j / len * win); c.style.transform = on.has(i) && u < 1 ? `scale(${(.6 + .4 * spr(u)).toFixed(3)})` : ''; }); // only a booked cell springs: empty cells stay full size, so the grid never shows the plan early
     // the count is the month's total: it counts up while month 1 fills, then switches straight to 5 and 1 (never back through 0)
     const total = m ? len : n; txt(cc, String(total)); txt(ccl, total === 1 ? 'call booked' : 'calls booked');
     // referrals arrive in month 1; from month 2 the inbox is empty
@@ -104,9 +104,8 @@ function sweep(el) {
     swap(wl, p, .68, 'Week 1: testing 6 new ads', 'Week 2: budget on the winners');
     mouse(p, loser.map((r, i) => [CK[i], tg[r]]), CK);
     rows.forEach((r, i) => {
-      const w = win.includes(i), u = seg(p, .02 + i * .05, .14 + i * .05), o = spr(u);
-      r.style.opacity = Math.min(1, u * 3); r.style.transform = `translateX(${((1 - o) * -1.5).toFixed(2)}em)`;
-      const s = ease(seg(p, .26, .46)) * base[i] * .6 + (w ? spr(seg(p, .7, .84)) * (1 - base[i] * .6) : 0);
+      // every row is there from the first frame (never an empty table while the panel arrives); the test starts as spend fills in
+      const w = win.includes(i), s = ease(seg(p, .04 + i * .03, .3 + i * .03)) * base[i] * .6 + (w ? spr(seg(p, .7, .84)) * (1 - base[i] * .6) : 0);
       r.querySelector('.bar i').style.transform = `scaleX(${s.toFixed(3)})`;
       const li = loser.indexOf(i); r.classList.toggle('off', li >= 0 && p > CK[li] + .012); r.classList.toggle('win', dec && w);
       { const b = r.querySelector('.badge'), k = w ? spr(seg(p, .7, .78)) : 0; b.style.opacity = Math.min(1, k * 2); r.classList.toggle('bdg', k > .4); b.style.transform = `scale(${(.7 + .3 * k).toFixed(3)})`; }
@@ -134,13 +133,14 @@ function ledger(el) {
 // ---------- 7 proof: the client's own booking sheet, month by month; cost per call ticks from $250 to $70 ----------
 const MONTHS = [21, 31, 45, 40, 33, 57, 51, 12, 34, 17, 22, 34, 28, 21, 26, 13, 7, 38, 9, 16, 23, 8, 6, 29, 11, 11, 24]; // first calls per month, Aug 2024 to Oct 2026
 function proof(el) {
-  const bars = $$(el, '.bars i'), now = $(el, '.ck.now i');
+  const bars = $$(el, '.bars i');
   bars.forEach((b, i) => b.style.setProperty('--h', (MONTHS[i] / 60 * 90).toFixed(2) + '%')); // 60 sits on the top gridline (90%)
+  // faint full-height bars sit behind, so the chart never opens as an empty grid: scrolling fills each month in
+  const gh = bars[0].parentNode.cloneNode(true); gh.classList.add('gh'); gh.setAttribute('aria-hidden', 'true'); bars[0].parentNode.before(gh);
   return p => {
     let last = -1;
     bars.forEach((b, i) => { const u = spr(seg(p, .02 + i * .026, .1 + i * .026)); b.style.transform = `scaleY(${u.toFixed(3)})`; if (u > .5) last = i; });
     bars.forEach((b, i) => b.classList.toggle('pen', i === last && p < .8));
-    if (now) now.style.transform = `scaleX(${lerp(1 / .28, 1, ease(seg(p, .8, .92))).toFixed(3)})`;
   };
 }
 
@@ -162,13 +162,13 @@ function sieve(el) {
   return p => {
     const pt = port();
     cards.forEach((c, i) => {
-      const ok = c.dataset.ok === '1', a = ease(seg(p, .02 + i * .05, .14 + i * .05)), j = seg(p, .3 + i * .1, .38 + i * .1), fall = ok ? 0 : ease(j);
-      c.style.opacity = a;
+      // all five applicants are there from the first frame; each is judged in turn and the misfits drop through the filter
+      const ok = c.dataset.ok === '1', j = seg(p, .06 + i * .13, .14 + i * .13);
       const fj = ok ? 0 : j * j, land = ok ? 0 : seg(j, .85, 1), sq = Math.sin(Math.PI * land) * .08;
-      c.style.transform = pt ? `translateY(${((1 - a) * -1).toFixed(2)}em)` : `translateY(${((1 - a) * -2 + fj * 11.4).toFixed(2)}em) rotate(${(fj * (i % 2 ? 4 : -4)).toFixed(1)}deg) scale(${(1 + sq).toFixed(3)},${(1 - sq).toFixed(3)})`;
+      c.style.transform = pt ? '' : `translateY(${(fj * 11.4).toFixed(2)}em) rotate(${(fj * (i % 2 ? 4 : -4)).toFixed(1)}deg) scale(${(1 + sq).toFixed(3)},${(1 - sq).toFixed(3)})`;
       c.style.filter = !pt && !ok && j > .2 && j < .9 ? `blur(${(j * 3).toFixed(1)}px)` : '';
       if (ok && j > 0 && j < 1) c.style.transform += ` scale(${(1 + .08 * Math.sin(Math.PI * j)).toFixed(3)})`;
-      c.classList.toggle('ok', ok && j > .5); c.classList.toggle('no', !ok && j > .5);
+      c.classList.toggle('is-ok', ok && j > .5); c.classList.toggle('is-no', !ok && j > .5); // not 'ok': a page-wide .ok rule sets opacity 0
       c.querySelector('.stamp').style.opacity = seg(j, .5, 1);
     });
   };
@@ -214,8 +214,14 @@ function week(el) {
   };
 }
 function sheet(el) {
-  const rows = [...el.querySelectorAll('.row')];
-  return p => rows.forEach((r, i) => { const o = seg(p, .05 + i * .1, .16 + i * .1); r.style.opacity = o; r.style.transform = `translateX(${((1 - o) * -16).toFixed(1)}px)`; });
+  // the 3 ads are on the card from the first frame as raw grey cuts; each one's edit bar fills, it takes its colour and its tag turns lime
+  const ads = $$(el, '.row.ad3');
+  return p => ads.forEach((r, i) => {
+    const u = seg(p, .06 + i * .26, .3 + i * .26);
+    r.querySelector('.pg b').style.transform = `scaleX(${ease(u).toFixed(3)})`;
+    r.querySelector('img').style.filter = u >= 1 ? '' : `grayscale(${(1 - seg(u, .7, 1)).toFixed(2)})`;
+    r.classList.toggle('done', u >= 1);
+  });
 }
 // ---------- 12 the call: pick a time, upload 3 videos, 3 ads get made, the call shows them ----------
 function flow(el) {
@@ -234,15 +240,37 @@ function flow(el) {
   };
 }
 
+// ---------- 11 free ad: your links tick in, one ad is cut from them, it lands in your inbox ----------
+// not pinned (data-nopin): it plays in place on the way to the form and is finished by the time the form is mid-screen
+function mail(el) {
+  const rows = $$(el, '.fl'), arw = $$(el, '.m-arw'), th = $(el, '.m-ad .th'), pb = $(el, '.m-ad .pb i'), st = $(el, '.m-st'),
+    row = $(el, '.mrow'), slot = $(el, '.m-slot'), n = $(el, '.m-n'), nw = $(el, '.m-new'), att = $(el, '.m-att i');
+  return p => {
+    rows.forEach((r, i) => {
+      const u = seg(p, .02 + i * .09, .11 + i * .09);
+      r.querySelector('.pb i').style.transform = `scaleX(${ease(u).toFixed(3)})`;
+      r.querySelector('.dn').style.transform = `scale(${spr(seg(u, .75, 1)).toFixed(3)})`;
+    });
+    const c = seg(p, .32, .5), g = c >= 1 ? '' : `grayscale(${(1 - seg(c, .5, 1)).toFixed(2)})`;
+    arw[0].classList.toggle('on', p > .3); pb.style.transform = `scaleX(${ease(c).toFixed(3)})`; th.style.filter = g; att.style.filter = g;
+    swap(st, p, .5, 'Cutting', 'Ready'); st.classList.toggle('on', c >= 1);
+    const m = seg(p, .52, .64), k = spr(m), o = Math.min(1, m * 3);
+    arw[1].classList.toggle('on', p > .52);
+    row.style.opacity = o.toFixed(2); row.style.transform = `translateY(${((1 - k) * 1.2).toFixed(2)}em)`; slot.style.opacity = (1 - o).toFixed(2); slot.style.visibility = o >= 1 ? 'hidden' : '';
+    txt(n, m > .3 ? '1' : '0'); n.classList.toggle('on', m > .3);
+    nw.style.transform = `scale(${spr(seg(p, .62, .72)).toFixed(3)})`;
+  };
+}
+
 // ---------- loop ----------
-const HT = { hero, network, sweep, ledger, proof, scale, sieve, race, fan, week, sheet, flow };
+const HT = { hero, network, sweep, ledger, proof, scale, sieve, race, fan, week, sheet, flow, mail };
 // still frame for reduced motion, per the storyboard: the payoff state of each scene
 const STILL = { hero: .8 };
 const list = [...document.querySelectorAll('[data-scene]')].map(el => ({ el, k: el.dataset.scene, f: HT[el.dataset.scene](el) }));
 
 // hero clock: only advances while the hero is on screen and not paused
 const pauseBtn = document.querySelector('.pause');
-let heroPaused = RM, heroMs = 320, heroLast = null;
+let heroPaused = RM, heroMs = 3360, heroLast = null; // first frame (t = .42) already shows the 5 new ads, never a near-empty card
 if (RM) pauseBtn.hidden = true;
 pauseBtn.addEventListener('click', () => {
   heroPaused = !heroPaused; pauseBtn.textContent = heroPaused ? 'Play' : 'Pause';
@@ -253,18 +281,22 @@ const Q = new URLSearchParams(location.search), FREEZE = Q.get('p'), HERO_T = Q.
 // p runs 0..1 over the first 85% of the hold and stays 0 while the panel slides in (rejected in review, 16 Oct: motion played
 // before the panel arrived). The hold is short (0.7 of a screen, 0.55 on phones) so the page never feels stuck.
 const PIN = !RM && FREEZE === null;
-if (PIN) for (const s of list) if (s.k !== 'hero') {
+if (PIN) for (const s of list) if (s.k !== 'hero' && !s.el.hasAttribute('data-nopin')) {
   const head = []; for (let e = s.el.previousElementSibling; e && head.length < 3 && e.matches('h2, .label, .lede, .guar'); e = e.previousElementSibling) head.unshift(e);
   const first = head[0] || s.el, w = document.createElement('div'), box = document.createElement('div');
-  w.className = 'pin'; box.className = 'pinbox'; first.before(w); w.appendChild(box); box.append(...head, s.el); s.pin = w; s.box = box;
-  w.style.marginTop = getComputedStyle(first).marginTop; first.style.marginTop = '0';
+  w.className = 'pin'; box.className = 'pinbox'; first.before(w); w.appendChild(box); box.append(...head, s.el); s.pin = w; s.box = box; s.head = head; s.mt = [...head, s.el].map(e => e.style.marginTop); // inline margins to restore
 }
 function pinSize() {
-  const vh = innerHeight, hold = vh * (innerWidth < 641 ? .55 : .7);
+  // phones: the sticky book bar (52px, 12px off the bottom) owns the bottom strip, so a pinned scene centres in the space above it
+  const vh = innerHeight, ph = innerWidth < 641, hold = vh * (ph ? .55 : .7), room = vh - (ph ? 76 : 0);
   for (const s of list) if (s.pin) {
-    const hb = s.box.offsetHeight, on = s.el.offsetHeight < vh * .9;
+    // the heading group rides along only while heading + scene fit; if it would sit cut off at the top it stays in the page and scrolls away
+    [...s.head, s.el].forEach((e, i) => e.style.marginTop = s.mt[i]); s.box.prepend(...s.head);
+    if (s.head.length && s.box.offsetHeight > room - 24) s.pin.before(...s.head);
+    const first = s.box.firstElementChild; s.pin.style.marginTop = getComputedStyle(first).marginTop; first.style.marginTop = '0'; // the gap above moves to the wrapper
+    const hb = s.box.offsetHeight, on = s.el.offsetHeight < room * .9;
     s.pinOn = on; s.hold = hold;
-    s.pinTop = hb <= vh - 24 ? (vh - hb) / 2 : vh - hb - 12; // heading too tall to fit: it scrolls off the top, the scene stays in full view
+    s.pinTop = hb <= room - 24 ? (room - hb) / 2 : room - hb - 12; // scene alone too tall: it sits on the bottom edge, fully in view
     s.pin.style.height = on ? hb + hold + 'px' : '';
     s.box.style.position = on ? 'sticky' : ''; s.box.style.top = on ? s.pinTop + 'px' : '';
   }
