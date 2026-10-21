@@ -90,7 +90,7 @@ section{padding-block:var(--s11);position:relative}
 /* transparent so the fixed WebGL canvas underneath shows through; labels sit above it */
 .stage{position:relative;width:100%;max-width:1100px;margin:var(--s7) auto 0;aspect-ratio:16/9;border-radius:var(--r-card);border:1px solid var(--line);overflow:hidden;isolation:isolate}
 .dark .stage{border-color:var(--border-dark)}
-@media (max-width:640px){.stage{aspect-ratio:4/5}#st12{aspect-ratio:3/4.6}.stage .nm{display:none}#st9 .nm{display:block;font-size:12px}}
+@media (max-width:640px){.stage{aspect-ratio:4/5}#st12{aspect-ratio:3/4.6}#st1{aspect-ratio:3/4.3}.stage .nm{display:none}#st9 .nm{display:block;font-size:12px}}
 .stage .ov{position:absolute;inset:0;z-index:2;pointer-events:none}
 .stage .ov svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .stage .ov line,.stage .ov path{stroke:var(--charcoal);stroke-width:1;fill:none}
@@ -326,7 +326,7 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
 .toast{position:relative;margin-top:.7em;background:var(--charcoal);color:var(--cream);border-radius:.8em;padding:.6em .8em;display:grid;grid-template-columns:1.8em 1fr;column-gap:.6em;align-items:center;opacity:0;box-shadow:0 .6em 1.4em rgba(26,26,46,.25)}
 .toast svg{grid-row:span 2;width:1.8em;height:1.8em;padding:.35em;border-radius:50%;background:var(--lime);color:var(--charcoal)} .toast b{font-size:.9em} .toast span{font-size:.72em;color:var(--body-dark)}
 @container (max-aspect-ratio:5/4){
-  .hx{grid-template-columns:1fr;grid-template-rows:auto 2.4em auto 1.6em auto;gap:.5em;padding:4.4em 1.6em 5.4em;align-content:center}
+  .hx{grid-template-columns:1fr;grid-template-rows:auto 2.4em auto 1.6em auto;gap:.5em;padding:max(4.4em,64px) 1.6em max(5.4em,76px);align-content:center}
   .arw{--r:90deg;width:1.4em;justify-self:center;transform-origin:50% 50%}
   .h-ph{grid-template-columns:auto auto;align-items:center;justify-content:center;gap:1em} .h-ph .scr{aspect-ratio:auto;width:auto;max-width:none;padding:.6em 1em;grid-auto-flow:column;gap:.8em;border-radius:.8em} .wav{display:none}
   .ad .bk,.ad .ln.s{display:none} .h-ads{gap:.5em} .ad .st{font-size:.62em;right:-.2em}
@@ -348,7 +348,7 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
 /* 4 the loop: an ads table, losers switched off, winners get the budget */
 .sx{display:grid;align-content:center;gap:.45em;padding:4.2em 3em 2.6em}
 .s-hd,.srow{display:grid;grid-template-columns:2.4fr 4.6em 3fr 4.5em 7em;gap:1em;align-items:center} .s-hd span{white-space:nowrap}
-.s-hd{font:700 .7em/1.2 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding:0 .6em .3em} .s-hd .wl{font:700 1.45em/1.2 var(--display);letter-spacing:0;text-transform:none;color:var(--head)}
+.s-hd{padding:0 .6em .3em;border:1px solid transparent;border-block:0} .s-hd span{font:700 .7em/1.2 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)} .s-hd .wl{font:700 1em/1.2 var(--display);color:var(--head)}
 .srow{background:var(--paper);border:1px solid var(--line-2);border-radius:.6em;padding:.4em .6em;opacity:0}
 .srow .nm{display:flex;gap:.6em;align-items:center;font-weight:600;font-size:.9em} .srow .nm small{display:block;font:700 .75em/1.2 var(--mono);color:var(--muted)}
 .srow .th{width:1.9em;height:2.5em;border-radius:.3em;background:var(--sand-2);display:grid;place-items:center;flex:none} .srow .th svg{width:.9em;fill:var(--charcoal)}
@@ -364,7 +364,7 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
 @container (orientation:portrait){
   .sx{padding:3.4em 1.2em 1.6em}
   .s-hd,.srow{grid-template-columns:1fr 2.5em 3.6em;gap:.6em} .s-hd span,.srow .bkc{display:none} .s-hd{padding-inline:.4em}
-  .srow{position:relative} .badge{position:absolute;right:.6em;left:auto;top:-1.25em;font-size:.62em}
+  .srow{position:relative} .badge{position:absolute;right:.9em;left:auto;top:calc(50% - .85em);font-size:.62em}
 }
 /* 6 record: bookings stack up on a lock screen */
 .cx{display:grid;grid-template-columns:1fr auto 1fr;gap:3em;padding:2.4em 3em;align-items:center}
@@ -382,7 +382,7 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
   .c-av{grid-area:av} .c-n{grid-area:n} .c-ph{grid-area:ph;justify-self:center} .ppl{display:none} .cx .big b{font-size:2.8em} .cx .sm{font-size:.82em} .c-ph .scr{width:11.5em}
 }
 /* 7 proof: the real month-by-month chart, drawn as you scroll */
-.chart2{display:block} .px{bottom:3.4em;display:grid;grid-template-rows:auto 1fr auto;gap:.9em;padding:1.6em 2.2em 0 1.8em}
+.chart2{display:block} .px{bottom:4.4em;display:grid;grid-template-rows:auto 1fr auto;gap:.9em;padding:1.6em 2.2em 0 1.8em}
 .p-top{display:flex;justify-content:space-between;align-items:flex-end;gap:1em}
 .p-run b{font:700 3em/1 var(--display);color:var(--head)} .p-run .mo{font:700 .78em/1 var(--mono);color:var(--muted);margin-left:.6em;letter-spacing:.04em} .p-run small{display:block;color:var(--muted);font-size:.82em;margin-top:.3em}
 .p-tk{text-align:right} .p-tk small{display:block;color:var(--muted);font-size:.82em;margin-bottom:.3em} .p-tk s{font:700 1.3em/1 var(--display);color:var(--muted);margin-right:.4em}
@@ -533,7 +533,7 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
     </div>
     <figure class="gsheet">
       <div class="gs-wrap"><table>
-        <thead><tr><th></th><th>Name</th><th class="ph">Phone</th><th>Email</th><th class="ph">Appointment</th><th class="ph">Time</th><th class="ph">Closer</th><th>Can afford</th></tr></thead>
+        <thead><tr><th></th><th>Name</th><th class="ph">Phone</th><th>Email</th><th class="ph">Appt</th><th class="ph">Time</th><th class="ph">Closer</th><th>Can afford</th></tr></thead>
         <tbody><tr><th>2</th><td><i style="width:6.3em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:9.0em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">Yes</td></tr><tr><th>3</th><td><i style="width:6.7em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:9.0em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">Yes</td></tr><tr><th>4</th><td><i style="width:6.3em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:9.0em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">Yes</td></tr><tr><th>5</th><td><i style="width:7.5em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:8.4em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">Yes</td></tr><tr><th>6</th><td><i style="width:6.7em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:9.0em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">Yes</td></tr><tr><th>7</th><td><i style="width:7.1em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:7.1em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">Yes</td></tr><tr><th>8</th><td><i style="width:2.5em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:9.0em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">Yes</td></tr><tr><th>9</th><td><i style="width:3.8em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:7.6em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">Yes</td></tr><tr><th>10</th><td><i style="width:1.7em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:7.1em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">Yes</td></tr><tr><th>11</th><td><i style="width:5.9em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:9.0em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">Yes</td></tr><tr><th>12</th><td><i style="width:5.9em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:9.0em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">Yes</td></tr><tr><th>13</th><td><i style="width:6.3em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:6.3em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">Yes</td></tr><tr><th>14</th><td><i style="width:7.5em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:8.4em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">Yes</td></tr><tr><th>15</th><td><i style="width:4.6em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:9.0em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">No</td></tr></tbody>
       </table></div>
       <div class="gs-tabs"><span>Initial 2024</span><span>Repeat 2024</span><span>&hellip;</span><span>Repeat Oct 2026</span><span class="on">Initial Oct 2026</span><span class="more">48 tabs</span></div>
