@@ -15,17 +15,18 @@
 <link rel="icon" href="assets/favicon-64.png">
 <link rel="preconnect" href="https://app.cal.com">
 <link rel="preconnect" href="https://cal.com">
-<link rel="preload" href="fonts/space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-@font-face{font-family:"Space Grotesk";src:url(fonts/space-grotesk-700.woff2) format("woff2");font-weight:700;font-display:swap}
-@font-face{font-family:"Inter";src:url(fonts/inter-400.woff2) format("woff2");font-weight:400 700;font-display:swap}
-@font-face{font-family:"JetBrains Mono";src:url(fonts/jetbrains-mono-700.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Bricolage Grotesque";src:url(fonts/bricolage-latin.woff2) format("woff2");font-weight:200 800;font-stretch:75% 100%;font-display:swap}
+@font-face{font-family:"Geist";src:url(fonts/geist-latin.woff2) format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Space Mono";src:url(fonts/spacemono-400-latin.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Space Mono";src:url(fonts/spacemono-700-latin.woff2) format("woff2");font-weight:700;font-display:swap}
 :root{
   --cream:#FFFDF7; --paper:#FFFFFF; --sand:#F5F2E8; --sand-2:#EFEBDD; --line:#E7E3D6; --line-2:#D6D1C1;
   --charcoal:#2A2A35; --card-dark:#33333F; --border-dark:#44444F; --lime:#D5EB4B; --lime-text:#6B7C10;
   --head:#1A1A2E; --body:#4A5568; --muted:#5B6270; --body-dark:#C9CBD6;
-  --display:"Space Grotesk",system-ui,sans-serif; --sans:"Inter",Arial,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+  --display:"Bricolage Grotesque",system-ui,sans-serif; --sans:"Geist","Inter",Arial,sans-serif; --mono:"Space Mono",ui-monospace,monospace;
   --fs-h1:64px; --fs-h2:48px; --fs-icp:24px; --fs-card:22px; --fs-lg:20px; --fs-body:17px; --fs-small:14px; --fs-note:16px; --fs-label:12px;
   --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:40px; --s8:48px; --s9:64px; --s10:80px; --s11:104px;
   --r-card:20px; --r-inner:12px; --r-pill:999px;
@@ -38,7 +39,7 @@
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{margin:0;background:var(--cream);color:var(--body);font:400 var(--fs-body)/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
-h1,h2,h3,.h2{font-family:var(--display);font-weight:700;color:var(--head);line-height:1.1;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1,h2,.h2{font-family:var(--display);font-weight:800;letter-spacing:-.025em} h3{font-family:var(--display);font-weight:700} h1,h2,h3,.h2{color:var(--head);line-height:1.05;margin:0;text-wrap:balance}
 h1{font-size:var(--fs-h1)} h2{font-size:var(--fs-h2);max-width:24ch;margin-inline:auto}
 p{margin:0}
 a{color:inherit}
@@ -442,6 +443,16 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
 @container (orientation:portrait){.fad em,.post .sp,.srow small{display:none} .tap{left:95%}}
 @container (orientation:portrait) and (max-width:480px){.ad.off .st{display:none}}
 .fad .bk{display:none}
+
+/* example ad creatives inside the scenes */
+.ad .th,.srow .th,.fad .th,.share i,.post.you .img{background-size:cover;background-position:50% 0}
+.ad .th svg,.srow .th svg,.fad .th svg,.share i svg,.post.you .img svg{display:none}
+.h-ads .ad:nth-child(1) .th{background-image:url(ads/a.webp)} .h-ads .ad:nth-child(2) .th{background-image:url(ads/d.webp)} .h-ads .ad:nth-child(3) .th{background-image:url(ads/b.webp)} .h-ads .ad:nth-child(4) .th{background-image:url(ads/c.webp)} .h-ads .ad:nth-child(5) .th{background-image:url(ads/f.webp)}
+.srow:nth-child(2) .th{background-image:url(ads/b.webp)} .srow:nth-child(3) .th{background-image:url(ads/e.webp)} .srow:nth-child(4) .th{background-image:url(ads/a.webp)} .srow:nth-child(5) .th{background-image:url(ads/d.webp)} .srow:nth-child(6) .th{background-image:url(ads/c.webp)} .srow:nth-child(7) .th{background-image:url(ads/f.webp)}
+.fad:nth-child(1) .th,.share i:nth-child(1){background-image:url(ads/b.webp)} .fad:nth-child(2) .th,.share i:nth-child(2){background-image:url(ads/c.webp)} .fad:nth-child(3) .th,.share i:nth-child(3){background-image:url(ads/e.webp)}
+.post.you .img{background-image:url(ads/a.webp);aspect-ratio:4/5}
+.adrow{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3);margin:var(--s3) 0 var(--s2)} .row.ad3{grid-template-columns:auto 1fr;border-top:0;padding:0;gap:var(--s2)} .row.ad3 img{grid-column:1/-1;width:100%;height:auto;aspect-ratio:4/5;border-radius:10px;display:block;box-shadow:0 6px 18px rgba(26,26,46,.18)} .row.ad3 .d{justify-self:end}
+.wall{display:grid;grid-template-columns:repeat(6,1fr);gap:var(--s3);margin-top:var(--s4)} .wall img{width:100%;height:auto;aspect-ratio:4/5;border-radius:10px;display:block;box-shadow:0 8px 24px rgba(0,0,0,.35)} @media (max-width:640px){.wall{grid-template-columns:repeat(3,1fr);gap:var(--s2)}}
 </style>
 <script>document.documentElement.classList.add('js')</script>
 </head>
@@ -454,10 +465,10 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
     <div class="stack" style="margin-top:var(--s4)">
       <p class="icp">For <mark>coaches</mark> who sell a high-ticket program on sales calls, in the US and Dubai</p>
       <h1>25 qualified sales calls in 90 days, from 20 minutes of phone video a month.</h1>
-      <p class="lede">We build your funnel, turn your footage into ads, test new ones every week and book the calls. Under 25 qualified calls held in your first 90 days of ads? Your setup fee and first 3 monthly payments come back.</p>
+      <p class="lede">We build the funnel, turn your footage into ads, test new ones weekly and book the calls. Under 25 held in 90 days? Setup fee and 3 monthly payments back.</p>
       <div class="ask" style="margin-top:0">
-        <a class="btn" href="#book">Book my free call and get 3 ads from my videos</a>
-        <a class="alt" href="#sample">Not ready for a call? Get 1 free ad first</a>
+        <a class="btn" href="#book">Book a free call, get 3 ads</a>
+        <a class="alt" href="#sample">Or get 1 free ad first, no call</a>
         <ul class="prow rv"><li><b>912</b> sales calls booked for one coaching company</li><li><b>$250</b> to <b>$70</b> per call</li><li><b>10+</b> coaches helped</li></ul>
       </div>
     </div>
@@ -487,13 +498,12 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
       <span class="chip ex">Example</span>
     </div>
     <ul class="bul">
-      <li class="rv" style="--i:0"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="9" width="36" height="32" rx="3"/><path d="M6 17h36M15 5v7M33 5v7"/><circle class="k a-out" style="--d:0.5s" cx="15" cy="25" r="3"/><circle class="k a-out" style="--d:0.7s" cx="24" cy="25" r="3"/><circle class="k a-out" style="--d:0.9s" cx="33" cy="25" r="3"/><circle class="k a-out" style="--d:1.1s" cx="15" cy="34" r="3"/><circle class="k a-out" style="--d:1.3s" cx="24" cy="34" r="3"/><circle class="k a-out" style="--d:1.5s" cx="33" cy="34" r="3"/></svg>Most clients came from referrals and DMs. Then they dried up.</li>
-      <li class="rv" style="--i:1"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="9" width="36" height="32" rx="3"/><path d="M6 17h36"/><g class="a-gh" style="--d:.2s"><circle cx="24" cy="25" r="4"/><path d="M16 37c1-5 4-7 8-7s7 2 8 7"/></g><g class="a-pp" style="--d:1.1s"><circle cx="39" cy="9" r="7"/><path d="M36 6l6 6M42 6l-6 6"/></g></svg>The ones who book don't show: "Getting people to actually show up for discovery calls after they book them is brutal."</li>
-      <li class="rv" style="--i:2"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="5" width="28" height="38" rx="3"/><path class="a-dr" pathLength="1" style="--d:.2s" d="M14 14h16"/><path class="a-dr" pathLength="1" style="--d:.35s" d="M14 21h16"/><path class="a-dr" pathLength="1" style="--d:.5s" d="M14 28h10"/><path class="a-dr" pathLength="1" style="--d:.7s" d="M14 36l3 3 6-6"/><g class="a-pp" style="--d:1.3s"><circle class="f" cx="36" cy="35" r="9"/><path class="ink" d="M32 31l8 8M40 31l-8 8"/></g></svg>The ones who show "were unqualified even though they completed a tough application."</li>
+      <li class="rv" style="--i:0"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="9" width="36" height="32" rx="3"/><path d="M6 17h36M15 5v7M33 5v7"/><circle class="k a-out" style="--d:0.5s" cx="15" cy="25" r="3"/><circle class="k a-out" style="--d:0.7s" cx="24" cy="25" r="3"/><circle class="k a-out" style="--d:0.9s" cx="33" cy="25" r="3"/><circle class="k a-out" style="--d:1.1s" cx="15" cy="34" r="3"/><circle class="k a-out" style="--d:1.3s" cx="24" cy="34" r="3"/><circle class="k a-out" style="--d:1.5s" cx="33" cy="34" r="3"/></svg>Referrals and DMs dried up.</li>
+      <li class="rv" style="--i:1"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="9" width="36" height="32" rx="3"/><path d="M6 17h36"/><g class="a-gh" style="--d:.2s"><circle cx="24" cy="25" r="4"/><path d="M16 37c1-5 4-7 8-7s7 2 8 7"/></g><g class="a-pp" style="--d:1.1s"><circle cx="39" cy="9" r="7"/><path d="M36 6l6 6M42 6l-6 6"/></g></svg>The ones who book don't show.</li>
+      <li class="rv" style="--i:2"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="5" width="28" height="38" rx="3"/><path class="a-dr" pathLength="1" style="--d:.2s" d="M14 14h16"/><path class="a-dr" pathLength="1" style="--d:.35s" d="M14 21h16"/><path class="a-dr" pathLength="1" style="--d:.5s" d="M14 28h10"/><path class="a-dr" pathLength="1" style="--d:.7s" d="M14 36l3 3 6-6"/><g class="a-pp" style="--d:1.3s"><circle class="f" cx="36" cy="35" r="9"/><path class="ink" d="M32 31l8 8M40 31l-8 8"/></g></svg>The ones who show can't afford it.</li>
 </ul>
-    <p class="fold">Ran ads yourself, posted daily, hired an agency, tried setters, bought a VSL funnel. <b>Same empty calendar.</b></p>
-    <p class="punch">You're great on the call. You just need more of the right people on it.</p>
-    <p class="note" style="margin-top:var(--s4)">Quotes from coaches in public forums.</p>
+    <p class="fold">DIY ads, daily posting, agencies, setters. <b>Same empty calendar.</b></p>
+    <p class="punch">You close on calls. You need more of the right people on them.</p>
   </div>
 </section>
 
@@ -501,7 +511,7 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
 <section class="sand" id="loop">
   <div class="wrap center">
     <h2>Film once, test all month</h2>
-    <p class="lede" style="margin-top:var(--s4)">The Footage Loop: ads wear out in weeks, so every month we make new ones and only winners get budget.</p>
+    <p class="lede" style="margin-top:var(--s4)">The Footage Loop: new ads every month, budget only on winners.</p>
     <div class="stage ui" id="st4" data-scene="sweep" role="img" aria-label="Your clips become six ads in a test. After the week, four are switched off and the two winners get the budget. Their bookings pass your qualifier and land as calls held.">
       <div class="sx">
         <div class="s-hd"><b class="wl">Week 1: testing 6 new ads</b><span>Status</span><span>Spend</span><span class="bkc">Booked</span></div>
@@ -511,12 +521,12 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
       <span class="chip ex">Example</span>
     </div>
     <ol class="steps">
-      <li class="rv" style="--i:0"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><rect x="3" y="12" width="28" height="24" rx="3"/><path d="M31 20l12-6v20l-12-6"/><circle class="f a-pp" style="--d:.2s" cx="11" cy="20" r="3"/><path d="M8 30h18" opacity=".15" stroke-width="4"/><path class="a-gx" style="--d:.5s" d="M8 30h18" stroke-width="4"/></svg><b>Film.</b> 20 minutes a month on your phone, or clips you already have.</li>
-      <li class="rv" style="--i:1"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><rect class="a-out" style="--d:.2s" x="4" y="18" width="40" height="12" rx="2"/><rect class="a-pp" style="--d:0.60s" x="4" y="10" width="12" height="28" rx="2"/><rect class="a-pp" style="--d:0.75s" x="18" y="10" width="12" height="28" rx="2"/><rect class="a-pp" style="--d:0.90s" x="32" y="10" width="12" height="28" rx="2"/></svg><b>Edit.</b> We cut it into video and static ads.</li>
-      <li class="rv" style="--i:2"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><path d="M4 42h40"/><rect class="f a-ri" style="--d:.2s" x="8" y="12" width="8" height="30"/><rect class="a-out" style="--d:.8s" x="20" y="26" width="8" height="16"/><rect class="a-out" style="--d:1s" x="32" y="30" width="8" height="12"/></svg><b>Test.</b> New ads weekly. Winners get the budget.</li>
-      <li class="rv" style="--i:3"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><path d="M6 6h28l-10 12v8l-8 4V18z"/><circle class="f a-dn" style="--d:.2s;--y:-22px" cx="20" cy="36" r="3"/><rect x="28" y="28" width="16" height="16" rx="2"/><path class="a-dr" pathLength="1" style="--d:1s" d="M31 36l3 3 6-6"/></svg><b>Book.</b> Budget and fit questions first, then reminders so they show.</li>
+      <li class="rv" style="--i:0"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><rect x="3" y="12" width="28" height="24" rx="3"/><path d="M31 20l12-6v20l-12-6"/><circle class="f a-pp" style="--d:.2s" cx="11" cy="20" r="3"/><path d="M8 30h18" opacity=".15" stroke-width="4"/><path class="a-gx" style="--d:.5s" d="M8 30h18" stroke-width="4"/></svg><b>Film.</b> 20 minutes a month, on your phone.</li>
+      <li class="rv" style="--i:1"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><rect class="a-out" style="--d:.2s" x="4" y="18" width="40" height="12" rx="2"/><rect class="a-pp" style="--d:0.60s" x="4" y="10" width="12" height="28" rx="2"/><rect class="a-pp" style="--d:0.75s" x="18" y="10" width="12" height="28" rx="2"/><rect class="a-pp" style="--d:0.90s" x="32" y="10" width="12" height="28" rx="2"/></svg><b>Edit.</b> We cut video and static ads.</li>
+      <li class="rv" style="--i:2"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><path d="M4 42h40"/><rect class="f a-ri" style="--d:.2s" x="8" y="12" width="8" height="30"/><rect class="a-out" style="--d:.8s" x="20" y="26" width="8" height="16"/><rect class="a-out" style="--d:1s" x="32" y="30" width="8" height="12"/></svg><b>Test.</b> New ads weekly.</li>
+      <li class="rv" style="--i:3"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><path d="M6 6h28l-10 12v8l-8 4V18z"/><circle class="f a-dn" style="--d:.2s;--y:-22px" cx="20" cy="36" r="3"/><rect x="28" y="28" width="16" height="16" rx="2"/><path class="a-dr" pathLength="1" style="--d:1s" d="M31 36l3 3 6-6"/></svg><b>Book.</b> Qualified, reminded, shown up.</li>
     </ol>
-    <ul class="perks rv"><li><b>Ads live by day 14</b>, in writing</li><li><b>Live scoreboard:</b> cost per call held, per ad</li><li><b>The builder</b> runs your 15-minute weekly call</li></ul>
+    <ul class="perks rv"><li><b>Ads live by day 14</b></li><li><b>Cost per call</b>, per ad, live</li><li><b>15-min weekly call</b> with your builder</li></ul>
   </div>
 </section>
 
@@ -537,7 +547,7 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
         <tbody><tr><th>2</th><td><i style="width:6.3em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:9.0em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">Yes</td></tr><tr><th>3</th><td><i style="width:6.7em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:9.0em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">Yes</td></tr><tr><th>4</th><td><i style="width:6.3em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:9.0em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">Yes</td></tr><tr><th>5</th><td><i style="width:7.5em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:8.4em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">Yes</td></tr><tr><th>6</th><td><i style="width:6.7em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:9.0em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">Yes</td></tr><tr><th>7</th><td><i style="width:7.1em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:7.1em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">Yes</td></tr><tr><th>8</th><td><i style="width:2.5em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:9.0em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">Yes</td></tr><tr><th>9</th><td><i style="width:3.8em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:7.6em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">Yes</td></tr><tr><th>10</th><td><i style="width:1.7em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:7.1em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">Yes</td></tr><tr><th>11</th><td><i style="width:5.9em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:9.0em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">Yes</td></tr><tr><th>12</th><td><i style="width:5.9em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:9.0em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">Yes</td></tr><tr><th>13</th><td><i style="width:6.3em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:6.3em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">Yes</td></tr><tr><th>14</th><td><i style="width:7.5em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:8.4em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">Yes</td></tr><tr><th>15</th><td><i style="width:4.6em"></i></td><td class="ph"><i style="width:4.6em"></i></td><td><i style="width:9.0em"></i></td><td class="ph"><i style="width:5.6em"></i></td><td class="ph"><i style="width:3em"></i></td><td class="ph"><i style="width:2.4em"></i></td><td class="af">No</td></tr></tbody>
       </table></div>
       <div class="gs-tabs"><span>Initial 2024</span><span>Repeat 2024</span><span>&hellip;</span><span>Repeat Oct 2026</span><span class="on">Initial Oct 2026</span><span class="more">48 tabs</span></div>
-      <figcaption>The client's booking sheet since Aug 2024: first and repeat calls, tracked by month across 48 tabs. Personal details hidden.</figcaption>
+      <figcaption>The client's booking sheet since Aug 2024, 48 monthly tabs. Personal details hidden.</figcaption>
     </figure>
   </div>
 </section>
@@ -552,10 +562,10 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
         <div class="p-plot"><div class="yl"><span>60</span><span>40</span><span>20</span><span>0</span></div><div class="grid"><i></i><i></i><i></i><i></i></div><div class="bars"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div></div>
         <div class="xl"><span>Aug 2024</span><span>Jan 2025</span><span>Jan 2026</span><span>Oct 2026</span></div>
       </div>
-      <figcaption>Sales calls booked for one coaching company, from the client's booking sheet. Each bar is one month of first calls booked. 912 in total, including repeat calls.</figcaption>
+      <figcaption>Each bar is one month of first calls. 912 total, including repeat calls.</figcaption>
     </figure>
     <div class="ask">
-      <a class="btn" href="#book">Book my free call and get 3 ads from my videos</a>
+      <a class="btn" href="#book">Book a free call, get 3 ads</a>
     </div>
   </div>
 </section>
@@ -568,13 +578,15 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
       <div class="sheet">
         <span class="yk">Yours to keep</span>
         <h3>3 ads from your videos</h3><p class="label">Your footage · example</p>
-        <div class="row"><span class="tg l">Reel</span><span>Cut to a 20-second hook ad</span><span class="d">Ad 1</span></div>
-        <div class="row"><span class="tg">Podcast</span><span>Best 30 seconds, captioned</span><span class="d">Ad 2</span></div>
-        <div class="row"><span class="tg">Zoom</span><span>Client win, told in your words</span><span class="d">Ad 3</span></div>
+        <div class="adrow">
+          <div class="row ad3"><img src="ads/b.webp" alt="Example reel ad" width="252" height="315" loading="lazy"><span class="tg l">Reel</span></div>
+          <div class="row ad3"><img src="ads/c.webp" alt="Example podcast clip ad" width="252" height="315" loading="lazy"><span class="tg">Podcast</span></div>
+          <div class="row ad3"><img src="ads/e.webp" alt="Example client story ad" width="252" height="315" loading="lazy"><span class="tg">Zoom</span></div>
+        </div>
         <div class="row"><span class="tg">Funnel</span><span>Where your bookings leak</span><span class="d">1 page</span></div>
       </div>
     </div>
-    <p class="lede" style="margin-top:var(--s6)">3 finished ads from videos you already have, your funnel marked up, and your first 90 days mapped. <b>Yours to keep, even if you never hire us.</b></p>
+    <p class="lede" style="margin-top:var(--s6)">Plus your funnel marked up and your first 90 days mapped. <b>Yours even if you never hire us.</b></p>
   </div>
 </section>
 
@@ -583,31 +595,33 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
   <div class="wrap center">
     <h2>Your ads, built and refreshed</h2>
     <div class="cards c5">
-      <div class="rv" style="--i:0"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><rect x="5" y="5" width="38" height="38" rx="3"/><path class="a-gx" style="--d:.2s" d="M11 13h26" stroke-width="3"/><path class="a-dr" pathLength="1" style="--d:.4s" d="M11 21h18M11 27h14"/><rect class="f a-pp" style="--d:.8s" x="11" y="33" width="16" height="5" rx="2"/></svg><strong>The Booked-Call Page</strong><span>Landing page, qualifier and calendar.</span></div>
-      <div class="rv" style="--i:1"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><rect x="3" y="8" width="12" height="12" rx="2"/><path class="a-dr" pathLength="1" style="--d:.2s" d="M15 14c8 0 8 20 16 20"/><rect x="31" y="27" width="14" height="14" rx="2"/><path class="a-dr" pathLength="1" style="--d:.8s" d="M34 34l3 3 5-5"/></svg><strong>The Call Tracker</strong><span>Shows which ad booked which call.</span></div>
-      <div class="rv" style="--i:2"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18"/><g class="a-sp" style="--d:.2s;transform-origin:24px 24px;transform-box:view-box"><path class="f" d="M24 10l4 14h-8z"/><path d="M24 38l4-14h-8z"/></g></svg><strong>The Angle Map</strong><span>Rivals' ads turned into angles to test.</span></div>
-      <div class="rv" style="--i:3"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><g class="a-pp" style="--d:0.0s"><rect x="5" y="8" width="11" height="14" rx="2"/></g><g class="a-pp" style="--d:0.1s"><rect x="18" y="8" width="11" height="14" rx="2"/></g><g class="a-pp" style="--d:0.2s"><rect x="31" y="8" width="11" height="14" rx="2"/></g><g class="a-pp" style="--d:0.3s"><rect x="5" y="25" width="11" height="14" rx="2"/><path d="M9 29l4 3-4 3z"/></g><g class="a-pp" style="--d:0.4s"><rect x="18" y="25" width="11" height="14" rx="2"/><path d="M22 29l4 3-4 3z"/></g><g class="a-pp" style="--d:0.5s"><rect x="31" y="25" width="11" height="14" rx="2"/><path d="M35 29l4 3-4 3z"/></g></svg><strong>The Launch Batch</strong><span>20 static ads and 10 video ads from your footage.</span></div>
-      <div class="rv" style="--i:4"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><g class="a-wg" style="--d:.1s;transform-origin:18px 8px;transform-box:view-box"><path d="M8 32V22a10 10 0 0120 0v10l3 3H5z"/><path d="M14 39h8"/></g><g class="a-pp" style="--d:.8s"><path class="f" d="M28 6h17v12h-9l-4 4v-4h-4z"/></g></svg><strong>The Show-Up System</strong><span>Email and text reminders. WhatsApp in Dubai.</span></div>
+      <div class="rv" style="--i:0"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><rect x="5" y="5" width="38" height="38" rx="3"/><path class="a-gx" style="--d:.2s" d="M11 13h26" stroke-width="3"/><path class="a-dr" pathLength="1" style="--d:.4s" d="M11 21h18M11 27h14"/><rect class="f a-pp" style="--d:.8s" x="11" y="33" width="16" height="5" rx="2"/></svg><strong>The Booked-Call Page</strong><span>Page, qualifier, calendar.</span></div>
+      <div class="rv" style="--i:1"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><rect x="3" y="8" width="12" height="12" rx="2"/><path class="a-dr" pathLength="1" style="--d:.2s" d="M15 14c8 0 8 20 16 20"/><rect x="31" y="27" width="14" height="14" rx="2"/><path class="a-dr" pathLength="1" style="--d:.8s" d="M34 34l3 3 5-5"/></svg><strong>The Call Tracker</strong><span>Which ad booked which call.</span></div>
+      <div class="rv" style="--i:2"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18"/><g class="a-sp" style="--d:.2s;transform-origin:24px 24px;transform-box:view-box"><path class="f" d="M24 10l4 14h-8z"/><path d="M24 38l4-14h-8z"/></g></svg><strong>The Angle Map</strong><span>Rivals' ads, turned into tests.</span></div>
+      <div class="rv" style="--i:3"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><g class="a-pp" style="--d:0.0s"><rect x="5" y="8" width="11" height="14" rx="2"/></g><g class="a-pp" style="--d:0.1s"><rect x="18" y="8" width="11" height="14" rx="2"/></g><g class="a-pp" style="--d:0.2s"><rect x="31" y="8" width="11" height="14" rx="2"/></g><g class="a-pp" style="--d:0.3s"><rect x="5" y="25" width="11" height="14" rx="2"/><path d="M9 29l4 3-4 3z"/></g><g class="a-pp" style="--d:0.4s"><rect x="18" y="25" width="11" height="14" rx="2"/><path d="M22 29l4 3-4 3z"/></g><g class="a-pp" style="--d:0.5s"><rect x="31" y="25" width="11" height="14" rx="2"/><path d="M35 29l4 3-4 3z"/></g></svg><strong>The Launch Batch</strong><span>20 static and 10 video ads.</span></div>
+      <div class="rv" style="--i:4"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><g class="a-wg" style="--d:.1s;transform-origin:18px 8px;transform-box:view-box"><path d="M8 32V22a10 10 0 0120 0v10l3 3H5z"/><path d="M14 39h8"/></g><g class="a-pp" style="--d:.8s"><path class="f" d="M28 6h17v12h-9l-4 4v-4h-4z"/></g></svg><strong>The Show-Up System</strong><span>Email, text and WhatsApp reminders.</span></div>
     </div>
-    <p class="lede" style="margin-top:var(--s5)">Then every month: 30 new ads, weekly tests, a live scoreboard.</p>
+    <p class="lede" style="margin-top:var(--s5)">Then monthly: 30 new ads and weekly tests.</p>
+    <div class="wall"><img src="ads/a.webp" alt="Example referrals static ad" width="252" height="315" loading="lazy"><img src="ads/b.webp" alt="Example reel ad" width="252" height="315" loading="lazy"><img src="ads/c.webp" alt="Example podcast clip ad" width="252" height="315" loading="lazy"><img src="ads/d.webp" alt="Example career static ad" width="252" height="315" loading="lazy"><img src="ads/e.webp" alt="Example client story ad" width="252" height="315" loading="lazy"><img src="ads/f.webp" alt="Example habits static ad" width="252" height="315" loading="lazy"></div>
+    <p class="note" style="margin-top:var(--s2)">Example ads</p>
     <div class="stage ui" id="st9" data-scene="scale" role="img" aria-label="A 90-day tracker of qualified calls held. Each held call fills one of 25 slots. When all 25 fill, the target is hit. If they don't by day 90, your setup fee and first 3 monthly payments come back.">
       <div class="gx">
         <div class="g-hd"><div><small>Qualified calls held</small><p><b class="num">0</b><span>/ 25</span></p></div><div class="dy"><small>Day</small><p><b class="dnum">1</b><span>/ 90</span></p></div></div>
         <div class="g-tr"><i class="fill"></i><span style="left:33.3%">Day 30</span><span style="left:66.6%">Day 60</span><span style="left:100%">Day 90</span></div>
         <div class="g25"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="g-ft"><span class="hit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Target hit</span><span class="rule">Under 25 by day 90? Your setup fee and first 3 monthly payments come back.</span></div>
+        <div class="g-ft"><span class="hit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Target hit</span><span class="rule">Under 25 by day 90: money back</span></div>
       </div>
       <span class="chip ex">Example</span>
     </div>
     <div class="guar">
       <strong>Under 25 qualified calls held in your first 90 days of ads? Your setup fee and first 3 monthly payments come back.</strong>
-      <p>Calls that happen, with people who passed your qualifier. Covers the full 90 days of ads. You keep the page, ads and data either way.</p>
+      <p>Held calls with people who passed your qualifier. You keep the page, ads and data either way.</p>
     </div>
-    <div class="bonus rv"><svg class="ico-d" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="18" height="12" rx="1"/><path d="M3 13h18M12 9v12M12 9c-1.5-4-6-4-6-1.5S12 9 12 9s6 .5 6-1.5-4.5-2.5-6 1.5"/></svg><div><strong>Bonus: the Close Review</strong><span>Send 2 recorded sales calls a month. We send back notes on where the call lost them.</span></div></div>
-    <div class="seats rv"><span style="--i:0"><svg class="ico-d" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg></span><span style="--i:1"><svg class="ico-d" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg></span><span style="--i:2"><svg class="ico-d" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg></span><span style="--i:3"><svg class="ico-d" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg></span><p><b>4 new coaches a month.</b> So the person building your ads has time for yours.</p></div>
+    <div class="bonus rv"><svg class="ico-d" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="18" height="12" rx="1"/><path d="M3 13h18M12 9v12M12 9c-1.5-4-6-4-6-1.5S12 9 12 9s6 .5 6-1.5-4.5-2.5-6 1.5"/></svg><div><strong>Bonus: the Close Review</strong><span>Send 2 call recordings a month. We show where the sale slipped.</span></div></div>
+    <div class="seats rv"><span style="--i:0"><svg class="ico-d" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg></span><span style="--i:1"><svg class="ico-d" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg></span><span style="--i:2"><svg class="ico-d" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg></span><span style="--i:3"><svg class="ico-d" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg></span><p><b>4 new coaches a month</b>, so your builder has time for you.</p></div>
     <div class="ask">
-      <p class="note">Your side: fund your Meta ads, film 20 minutes a month, approve ads in 48 hours, take the calls.</p>
-      <a class="btn" href="#book">Book my free call and get 3 ads from my videos</a>
+      <p class="note">Your side: fund Meta ads, film 20 minutes a month, approve ads in 48 hours.</p>
+      <a class="btn" href="#book">Book a free call, get 3 ads</a>
     </div>
   </div>
 </section>
@@ -626,8 +640,8 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
       <span class="chip ex">Example</span>
     </div>
     <ul class="bul">
-      <li class="rv" style="--i:1"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><rect x="4" y="18" width="32" height="24" rx="3"/><path d="M28 26h10v8H28z"/><ellipse class="a-out" style="--d:0.30s" cx="18" cy="14" rx="7" ry="2.5"/><ellipse class="a-out" style="--d:0.45s" cx="18" cy="9" rx="7" ry="2.5"/><ellipse class="a-out" style="--d:0.60s" cx="18" cy="4" rx="7" ry="2.5"/><g class="a-pp" style="--d:1.1s"><circle cx="39" cy="9" r="7"/><path d="M36 6l6 6M42 6l-6 6"/></g></svg>Coaches who can't fund a steady monthly ad budget, paid to Meta.</li>
-      <li class="rv" style="--i:3"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><circle cx="21" cy="27" r="16"/><path d="M21 13v3M21 38v3M7 27h3M32 27h3"/><line class="a-sp" style="--d:.2s;transform-origin:21px 27px;transform-box:view-box" x1="21" y1="27" x2="21" y2="17"/><g class="a-pp" style="--d:1.1s"><circle cx="39" cy="9" r="7"/><path d="M36 6l6 6M42 6l-6 6"/></g></svg>Coaches who can't take new calls within 48 hours.</li>
+      <li class="rv" style="--i:1"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><rect x="4" y="18" width="32" height="24" rx="3"/><path d="M28 26h10v8H28z"/><ellipse class="a-out" style="--d:0.30s" cx="18" cy="14" rx="7" ry="2.5"/><ellipse class="a-out" style="--d:0.45s" cx="18" cy="9" rx="7" ry="2.5"/><ellipse class="a-out" style="--d:0.60s" cx="18" cy="4" rx="7" ry="2.5"/><g class="a-pp" style="--d:1.1s"><circle cx="39" cy="9" r="7"/><path d="M36 6l6 6M42 6l-6 6"/></g></svg>Can't fund a monthly Meta budget.</li>
+      <li class="rv" style="--i:3"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><circle cx="21" cy="27" r="16"/><path d="M21 13v3M21 38v3M7 27h3M32 27h3"/><line class="a-sp" style="--d:.2s;transform-origin:21px 27px;transform-box:view-box" x1="21" y1="27" x2="21" y2="17"/><g class="a-pp" style="--d:1.1s"><circle cx="39" cy="9" r="7"/><path d="M36 6l6 6M42 6l-6 6"/></g></svg>Can't take new calls within 48 hours.</li>
     </ul>
   </div>
 </section>
@@ -637,10 +651,10 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
   <div class="wrap center">
     <h2>Questions coaches ask first</h2>
     <div class="faq rv">
-      <details open><summary><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span>I've been burned by an agency. Why is this different?</summary><p>We count calls held, not leads. We make the ads, not just run the budget. The person building them is on your weekly call. And the 25-call guarantee puts our fee on it.</p></details>
-      <details><summary><span class="ic"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg></span>I hate making content. Do I have to film?</summary><p>20 minutes a month on your phone, from our shot list. No daily posting. Old reels and Zoom clips work too.</p></details>
-      <details><summary><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M9 15l2 2 4-4"/></svg></span>What counts as a qualified call?</summary><p>Someone who passed your budget and fit questions, booked, and showed up. A no-show doesn't count. You set the questions.</p></details>
-      <details><summary><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="8" rx="2"/><path d="M12 8v8"/></svg></span>How does payment work?</summary><p>A one-time build, then monthly from day 30. At day 30 you see your cost per call and choose to continue or stop; stop then and the build isn't refunded. Numbers on the call.</p></details>
+      <details open><summary><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span>I've been burned by an agency. Why is this different?</summary><p>We count calls held, not leads. We make the ads ourselves. Your builder is on your weekly call. And the guarantee puts our fee on it.</p></details>
+      <details><summary><span class="ic"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg></span>I hate making content. Do I have to film?</summary><p>20 minutes a month from our shot list. Old reels and Zoom clips work too.</p></details>
+      <details><summary><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M9 15l2 2 4-4"/></svg></span>What counts as a qualified call?</summary><p>Passed your budget and fit questions, booked, and showed up. You set the questions.</p></details>
+      <details><summary><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="8" rx="2"/><path d="M12 8v8"/></svg></span>How does payment work?</summary><p>A one-time build, then monthly from day 30. Stop at day 30 and the build isn't refunded. Numbers on the call.</p></details>
       <details><summary><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>Do you work with coaches in Dubai?</summary><p>Yes. Bookings and reminders run over WhatsApp there.</p></details>
     </div>
   </div>
@@ -667,7 +681,7 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
 <section class="sand" id="sample">
   <div class="wrap center">
     <h2>Not ready for a call?</h2>
-    <p class="lede" style="margin-top:var(--s4)">Send links to 3 videos you've already posted. We cut one into an ad and email it back. No call, no card.</p>
+    <p class="lede" style="margin-top:var(--s4)">Send 3 video links. We cut one into an ad and email it back. No call, no card.</p>
     <form class="sform" novalidate>
       <label>Your name<input name="name" autocomplete="name" required></label>
       <label>Email for the ad<input name="email" type="email" autocomplete="email" required></label>
@@ -695,9 +709,9 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
       <span class="chip ex">Example</span>
     </div>
     <div class="stack" style="margin-top:var(--s6)">
-      <p class="lede">Book a call, leave with 3 finished ads. Skip it, and next month is referrals again.</p>
+      <p class="lede">Leave the call with 3 ads. Skip it, and next month is referrals again.</p>
       <div class="ask" style="margin-top:0">
-        <a class="btn" href="#cal">Book my free call and get 3 ads from my videos</a>
+        <a class="btn" href="#cal">Book a free call, get 3 ads</a>
       </div>
     </div>
   </div>
