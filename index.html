@@ -9,7 +9,7 @@
 <meta property="og:url" content="https://coaches.zippyscale.com/">
 <meta property="og:title" content="ZippyScale for coaches: 25 qualified calls in 90 days">
 <meta property="og:description" content="We build your funnel, turn your phone videos into Meta ads and book qualified sales calls. Under 25 qualified calls show up in your first 90 days of ads? Your setup fee and first 3 monthly payments come back.">
-<meta property="og:image" content="https://coaches.zippyscale.com/og-v3.png">
+<meta property="og:image" content="https://coaches.zippyscale.com/og-v4.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Your phone shoot becomes ads, the weekly test keeps the winner, and a qualified call lands on your calendar.">
@@ -98,6 +98,8 @@ section{padding-block:var(--s11);position:relative}
 .dark .stage{border-color:var(--border-dark)}
 @media (min-width:900px){#st4,#st13{aspect-ratio:2/1} #st9,#st10,#st12{aspect-ratio:16/7} #st9{max-width:900px}}
 @media (max-width:640px){.stage{aspect-ratio:4/5}#st12{aspect-ratio:3/4.6}#st1{aspect-ratio:3/5}.stage .nm{display:none}#st9 .nm{display:block;font-size:12px}}
+/* 521-640px (split windows, small tablets): keep the phone's scene size so tall scenes fit the screen and pin */
+@media (min-width:521px) and (max-width:640px){.stage{max-width:480px}#st1{max-width:400px}#st12{max-width:420px}}
 .stage .ov{position:absolute;inset:0;z-index:2;pointer-events:none}
 .stage .ov svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .stage .ov line,.stage .ov path{stroke:var(--charcoal);stroke-width:1;fill:none}
@@ -111,6 +113,7 @@ section{padding-block:var(--s11);position:relative}
 .cnt{position:absolute;left:24px;top:20px;z-index:3;text-align:left;font:700 clamp(36px,6vw,72px)/1 var(--display);color:var(--head);max-width:min(300px,60%)}
 .cnt small{display:block;font:600 var(--fs-small)/1.4 var(--sans);color:var(--muted);margin-top:6px}
 .ex{position:absolute;left:16px;top:16px;z-index:3} .chip.ex::before,.chip.eg::before{background:var(--line-2);box-shadow:none}
+@media (max-width:389px){.chip.ex{left:10px;top:10px;font-size:12px;line-height:1.2;padding:3px 9px;gap:6px} .chip.ex::before{width:6px;height:6px}} /* narrow stages keep 11px scene text, so the full-size chip landed on the race phone, Referrals panel and filter box */
 .pause{position:absolute;right:16px;bottom:16px;z-index:3;pointer-events:auto;font:600 var(--fs-small)/1 var(--sans);background:var(--paper);color:var(--charcoal);border:1px solid var(--line-2);border-radius:var(--r-pill);padding:10px 18px;cursor:pointer;min-height:44px;min-width:44px}
 html:not(.js) .stage{display:none}
 
@@ -165,8 +168,8 @@ td:first-child{font-weight:600;color:var(--head)}
 .cards.c4{grid-template-columns:repeat(4,1fr)} .cards.c5{grid-template-columns:repeat(5,1fr)}
 @media (max-width:1024px){.cards,.cards.c4,.cards.c5{grid-template-columns:1fr 1fr}}
 @media (max-width:520px){.cards,.cards.c4,.cards.c5{grid-template-columns:1fr}}
-@media (min-width:769px){.cards.c5{grid-template-columns:repeat(6,1fr)} .cards.c5>div{grid-column:span 2} .cards.c5>div:nth-child(4){grid-column:2/4} .cards.c5>div:nth-child(5){grid-column:4/6}}
-@media (min-width:521px) and (max-width:768px){.cards.c5>div:nth-child(5){grid-column:1/-1}}
+@media (min-width:960px){.cards.c5{grid-template-columns:repeat(6,1fr)} .cards.c5>div{grid-column:span 2} .cards.c5>div:nth-child(4){grid-column:2/4} .cards.c5>div:nth-child(5){grid-column:4/6}}
+@media (min-width:521px) and (max-width:959px){.cards.c5>div:nth-child(5){grid-column:1/-1}}
 .cards>div{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-inner);padding:var(--s5);display:grid;gap:var(--s2);align-content:start}
 .cards strong{font:700 var(--fs-card)/1.2 var(--display);color:var(--head)}
 .cards .n{font-size:44px}
@@ -189,7 +192,7 @@ td:first-child{font-weight:600;color:var(--head)}
 .sheet{position:relative;background:var(--paper);border:1px solid var(--charcoal);border-radius:var(--r-inner);padding:var(--s5);box-shadow:var(--sh-card);text-align:left}
 .sheet h3{font-size:22px} .sheet .label{margin:4px 0 var(--s4)}
 .row{display:grid;grid-template-columns:auto 1fr auto;gap:var(--s3);align-items:center;padding:var(--s2) 0;border-top:1px solid var(--line);font-size:var(--fs-note)}
-.row .tg{padding:4px 10px} .row .d{color:var(--muted);font-family:var(--mono);font-size:var(--fs-label);font-weight:700}
+.row .tg{padding:4px 10px} .row .d{color:var(--muted);font-family:var(--mono);font-size:var(--fs-label);font-weight:700;white-space:nowrap}
 .sheet .yk{display:inline-block;margin-bottom:var(--s3);font:700 var(--fs-label)/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;background:var(--charcoal);color:var(--lime);border-radius:var(--r-pill);padding:8px 12px;bottom:auto;left:auto;border:0}
 
 /* offer: guarantee */
@@ -241,7 +244,7 @@ td:first-child{font-weight:600;color:var(--head)}
 .share i{aspect-ratio:9/13;border-radius:.3em;background:var(--sand-2);display:grid;place-items:center;transform:scale(0)} .share svg{width:.9em;fill:var(--charcoal)}
 .keep{position:absolute;right:.4em;bottom:-.8em;font:600 .68em/1 var(--sans);background:var(--lime);color:var(--charcoal);border:1px solid var(--charcoal);border-radius:1em;padding:.35em .6em;opacity:0}
 .tiles{display:grid;grid-template-columns:1fr 1fr;gap:.4em;margin-top:.5em} .tiles i{aspect-ratio:1.5/1;border-radius:.4em;background:var(--sand);display:grid;place-items:center} .tiles svg{width:1.4em;fill:none;stroke:var(--charcoal);stroke-width:1.8}
-@container (orientation:portrait){.fx2{grid-template-columns:1fr 1fr;gap:1em .8em;padding:3.6em 1em 1.2em;align-content:center} .ui-box{aspect-ratio:1/1;padding:.6em;gap:.35em} .fp{gap:.5em} .fp>p{font-size:.85em} .fl{padding:.3em;font-size:.65em} .fl .th{height:1.8em}}
+@container (orientation:portrait){.fx2{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1em .8em;padding:4.9em 1em 1.2em;align-content:center} .ui-box{aspect-ratio:1/1;padding:.6em;gap:.35em} .fx2 .ui-box{min-width:0} .fp{gap:.5em} .fp>p{font-size:.85em} .fl{padding:.3em;font-size:.65em} .fl .th{height:1.8em}}
 #cal{max-width:1000px;margin:var(--s6) auto 0;min-height:560px;border:1px dashed var(--line-2);border-radius:var(--r-card);display:grid;place-items:center;background:var(--paper)}
 #cal>p{color:var(--muted);padding:var(--s6)}
 #cal:has(iframe){border:0;display:block} #cal:has(iframe)>p{display:none}
@@ -370,7 +373,7 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
 .q{display:inline-flex;align-items:center;gap:.4em;font:600 .85em/1 var(--sans);border:1px solid var(--charcoal);border-radius:1em;padding:.45em .8em;background:var(--paper)} .q svg{width:1em;height:1em} .q.l{background:var(--lime)}
 .s-ft .arr{width:2.6em;height:2px;background:var(--charcoal);position:relative} .s-ft .arr::after{content:"";position:absolute;right:-1px;top:-5px;border:6px solid transparent;border-left:8px solid var(--charcoal);border-right:0}
 @container (orientation:portrait){
-  .sx{padding:3.4em 1.2em 1.6em}
+  .sx{padding:4.9em 1.2em 1.6em}
   .s-hd,.srow{grid-template-columns:1fr 2.5em 3.6em;gap:.6em} .s-hd span,.srow .bkc{display:none} .s-hd{padding-inline:.4em}
   .srow{position:relative} .badge{position:absolute;right:.97em;left:auto;top:calc(50% - .85em);font-size:.62em} .srow.bdg .tgl,.srow.bdg .bar{visibility:hidden}
 }
@@ -396,14 +399,15 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
 /* 9 guarantee: 25 held calls fill a 90-day tracker */
 .gx{display:grid;align-content:center;gap:1.2em;padding:4.2em 4em 3em;color:var(--cream)}
 .g-hd{display:flex;justify-content:space-between;align-items:flex-end} .g-hd small{font:700 .72em/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--body-dark)}
-.g-hd p b{font:700 3em/1 var(--display);color:var(--cream)} .g-hd p span{font-size:1.2em;color:var(--body-dark);margin-left:.3em} .dy{text-align:right}
+.g-hd p b{font:700 3em/1 var(--display);color:var(--cream)} .g-hd p span{font-size:1.2em;color:var(--body-dark);margin-left:.3em}
+.g-hd p{white-space:nowrap} .dy{text-align:right}
 .g-tr{position:relative;height:.5em;border-radius:1em;background:var(--border-dark);margin-bottom:1.4em} .g-tr .fill{position:absolute;inset:0 auto 0 0;width:100%;border-radius:1em;background:var(--lime);transform-origin:0 50%;transform:scaleX(0)}
 .g-tr span{position:absolute;top:1.2em;font:700 .68em/1 var(--mono);color:var(--body-dark);transform:translateX(-50%);white-space:nowrap} .g-tr span:last-child{transform:translateX(-100%)}
 .g25{display:grid;grid-template-columns:repeat(25,1fr);gap:.3em} .g25 i{aspect-ratio:1/1.3;border-radius:.3em;border:1px solid var(--border-dark)} .g25 i.on{background:var(--lime);border-color:var(--lime)}
 .g-ft{display:flex;justify-content:space-between;align-items:center;gap:1em;margin-top:.4em}
 .hit{display:inline-flex;align-items:center;gap:.4em;font:600 .9em/1 var(--sans);background:var(--lime);color:var(--charcoal);border-radius:1em;padding:.5em .9em;opacity:0} .hit svg{width:1em;height:1em}
 .rule{font-size:.85em;color:var(--body-dark);max-width:30em;text-align:right}
-@container (orientation:portrait){.gx{padding:3.4em 1.6em 1.6em} .g25{grid-template-columns:repeat(5,1fr)} .g25 i{aspect-ratio:2.2/1} .g-ft{flex-direction:column;align-items:flex-start} .rule{text-align:left}}
+@container (orientation:portrait){.gx{padding:4.9em 1.6em 1.6em} .g25{grid-template-columns:repeat(5,1fr)} .g25 i{aspect-ratio:2.2/1} .g-ft{flex-direction:column;align-items:flex-start} .rule{text-align:left}}
 /* 10 not for: applicants hit the filter; low-ticket drops through */
 .vx{display:grid;grid-template-rows:auto 6.4em 1em 2.6em 8.8em auto;align-content:center;padding:2.6em 3.4em}
 .v-lb{font:700 .72em/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:center} .v-lb.top{margin-bottom:.8em} .v-lb.bot{grid-row:6;margin-top:.4em}
@@ -432,7 +436,10 @@ html.js .faq.rv:not(.in) details[open] .ic svg *{animation-play-state:paused}
 .m-new{font:700 .62em/1 var(--mono);font-style:normal;text-transform:uppercase;letter-spacing:.04em;background:var(--lime);border:1px solid var(--charcoal);border-radius:1em;padding:.35em .55em;transform:scale(0)}
 .m-att{grid-column:2/-1;justify-self:start;display:inline-flex;align-items:center;gap:.45em;font:700 .68em/1 var(--mono);border:1px solid var(--line-2);border-radius:.4em;padding:.25em .5em .25em .25em} .m-att i{width:1.5em;height:1.9em;border-radius:.2em;background:var(--sand-2) url(ads/b.webp) 50% 0/cover}
 @container (max-width:520px){.mx{grid-template-columns:auto auto minmax(0,1fr);align-content:center;gap:.8em .9em;padding:4.9em 1em 1em} .m-links{grid-column:1/-1;display:flex;flex-wrap:wrap;justify-content:center;gap:.4em;padding:0;border:0;background:none} .m-links .hd,.m-links .fl .th,.m-links .pb,.m-links+.m-arw{display:none} .m-links .fl{grid-template-columns:auto auto;padding:.35em .5em;gap:.4em} .m-ad{width:5.2em} .m-box{min-height:7.2em}}
+@container (min-width:521px) and (max-width:600px){.m-tx small{white-space:normal} .m-box{min-height:7.2em}}
 @media (max-width:640px){#st11{aspect-ratio:4/3}}
+@media (max-width:389px){#st11{aspect-ratio:8/7}} /* link pills wrap to 2 rows here; 4:3 pushed the content up under the Example chip */
+@media (max-width:353px){#st12{aspect-ratio:4/7}} @media (min-width:341px) and (max-width:389px){#st4,#st13{aspect-ratio:3/4}} @media (min-width:641px) and (max-width:767px){#st4,#st13{aspect-ratio:4/3}} @media (min-width:641px) and (max-width:699px){#st12{aspect-ratio:3/4.6;max-width:420px}} /* at the 11px text floor these scenes outgrew the default shape in these bands: content slid under the Example chip or past the edge */
 /* 13 P.S.: the next client scrolls, taps your ad, books */
 .rx{display:grid;grid-template-columns:auto auto;justify-content:center;align-items:center;gap:4em;padding:2.4em 3em}
 .r-st{list-style:none;margin:0;padding:0;justify-self:end;display:grid;gap:.6em}
@@ -539,7 +546,6 @@ html.js .h-ads .ad{opacity:0}
 <!-- 4 MECHANISM -->
 <section class="sand" id="loop">
   <div class="wrap center">
-    <p class="label">The Footage Loop</p>
     <h2>Film once, test all month</h2>
     <p class="lede" style="margin-top:var(--s4)">One shoot a month. New ads tested every week. Budget only on winners.</p>
     <div class="stage ui" id="st4" data-scene="sweep" role="img" aria-label="Your clips become six ads in a test. After the week, four are switched off and the two winners get the budget. Their bookings pass your qualifier and show up as calls.">
@@ -563,7 +569,7 @@ html.js .h-ads .ad{opacity:0}
 <!-- 6 CREDENTIALS -->
 <section class="paper" id="record">
   <div class="wrap center">
-    <h2>912 calls for one coaching company</h2>
+    <h2>912 calls, one coaching company</h2>
     <figure class="gsheet" data-scene="ledger">
       <div class="gs-wrap" aria-hidden="true"><table>
         <thead><tr><th></th><th>Name</th><th class="ph">Phone</th><th>Email</th><th class="ph">Appt</th><th class="ph">Time</th><th class="ph">Closer</th><th>Can afford</th></tr></thead>
@@ -620,8 +626,8 @@ html.js .h-ads .ad{opacity:0}
     <div class="cards c5">
       <div class="rv" style="--i:0"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><rect x="5" y="5" width="38" height="38" rx="3"/><path class="a-gx" style="--d:.2s" d="M11 13h26" stroke-width="3"/><path class="a-dr" pathLength="1" style="--d:.4s" d="M11 21h18M11 27h14"/><rect class="f a-pp" style="--d:.8s" x="11" y="33" width="16" height="5" rx="2"/></svg><strong>The Booked&#8209;Call Page</strong><span>Page, qualifier, calendar.</span></div>
       <div class="rv" style="--i:1"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><rect x="3" y="8" width="12" height="12" rx="2"/><path class="a-dr" pathLength="1" style="--d:.2s" d="M15 14c8 0 8 20 16 20"/><rect x="31" y="27" width="14" height="14" rx="2"/><path class="a-dr" pathLength="1" style="--d:.8s" d="M34 34l3 3 5-5"/></svg><strong>The Call Tracker</strong><span>Which ad booked which call.</span></div>
-      <div class="rv" style="--i:2"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18"/><g class="a-sp" style="--d:.2s;transform-origin:24px 24px;transform-box:view-box"><path class="f" d="M24 10l4 14h-8z"/><path d="M24 38l4-14h-8z"/></g></svg><strong>The Angle Map</strong><span>Other coaches' ads, turned into tests.</span></div>
-      <div class="rv" style="--i:3"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><g class="a-pp" style="--d:0.0s"><rect x="5" y="8" width="11" height="14" rx="2"/></g><g class="a-pp" style="--d:0.1s"><rect x="18" y="8" width="11" height="14" rx="2"/></g><g class="a-pp" style="--d:0.2s"><rect x="31" y="8" width="11" height="14" rx="2"/></g><g class="a-pp" style="--d:0.3s"><rect x="5" y="25" width="11" height="14" rx="2"/><path d="M9 29l4 3-4 3z"/></g><g class="a-pp" style="--d:0.4s"><rect x="18" y="25" width="11" height="14" rx="2"/><path d="M22 29l4 3-4 3z"/></g><g class="a-pp" style="--d:0.5s"><rect x="31" y="25" width="11" height="14" rx="2"/><path d="M35 29l4 3-4 3z"/></g></svg><strong>The Launch Batch</strong><span>20 image and 10 video ads.</span></div>
+      <div class="rv" style="--i:2"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18"/><g class="a-sp" style="--d:.2s;transform-origin:24px 24px;transform-box:view-box"><path class="f" d="M24 10l4 14h-8z"/><path d="M24 38l4-14h-8z"/></g></svg><strong>The Test Plan</strong><span>Other coaches' ads, turned into tests.</span></div>
+      <div class="rv" style="--i:3"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><g class="a-pp" style="--d:0.0s"><rect x="5" y="8" width="11" height="14" rx="2"/></g><g class="a-pp" style="--d:0.1s"><rect x="18" y="8" width="11" height="14" rx="2"/></g><g class="a-pp" style="--d:0.2s"><rect x="31" y="8" width="11" height="14" rx="2"/></g><g class="a-pp" style="--d:0.3s"><rect x="5" y="25" width="11" height="14" rx="2"/><path d="M9 29l4 3-4 3z"/></g><g class="a-pp" style="--d:0.4s"><rect x="18" y="25" width="11" height="14" rx="2"/><path d="M22 29l4 3-4 3z"/></g><g class="a-pp" style="--d:0.5s"><rect x="31" y="25" width="11" height="14" rx="2"/><path d="M35 29l4 3-4 3z"/></g></svg><strong>The First 30 Ads</strong><span>20 image and 10 video ads.</span></div>
       <div class="rv" style="--i:4"><svg class="v" viewBox="0 0 48 48" aria-hidden="true"><g class="a-wg" style="--d:.1s;transform-origin:18px 8px;transform-box:view-box"><path d="M8 32V22a10 10 0 0120 0v10l3 3H5z"/><path d="M14 39h8"/></g><g class="a-pp" style="--d:.8s"><path class="f" d="M28 6h17v12h-9l-4 4v-4h-4z"/></g></svg><strong>The Show-Up System</strong><span>Email and text reminders. WhatsApp in Dubai.</span></div>
     </div>
     <p class="lede" style="margin-top:var(--s5)">Then monthly: 30 new ads and weekly tests.</p>
@@ -796,8 +802,9 @@ const CAL_LINK = "sandy-kadyan/coaches-strategy-call"; // cal.com event 7510512
     // "instagram.com/reel/..." is a fine link: add the https:// the browser's url check wants
     f.querySelectorAll('input[type=url]').forEach(i=>{ const v=i.value.trim(); if(v&&!/^[a-z][a-z0-9+.-]*:/i.test(v)) i.value='https://'+v; });
     const bad=[...f.querySelectorAll('input')].filter(i=>!i.checkValidity()); f.querySelectorAll('input').forEach(i=>i.classList.toggle('bad',bad.includes(i)));
-    if(bad.length){ const nm={name:'your name',email:'your email',link1:'a video link',link2:'video link 2',link3:'video link 3'}, m=bad.map(i=>(i.value?'fix ':'add ')+nm[i.name]).join(' and ');
-      st.classList.add('err'); st.textContent=m[0].toUpperCase()+m.slice(1)+'.'; bad[0].focus(); return; }
+    if(bad.length){ const nm={name:'your name',email:'your email',link1:'a video link',link2:'video link 2',link3:'video link 3'}, g={Add:[],Fix:[]}, ls=a=>a.length>1?a.slice(0,-1).join(', ')+' and '+a[a.length-1]:a[0];
+      bad.forEach(i=>g[i.value?'Fix':'Add'].push(nm[i.name])); const m=Object.keys(g).filter(k=>g[k].length).map(k=>k+' '+ls(g[k])+'.').join(' ');
+      st.classList.add('err'); st.textContent=m; bad[0].focus(); return; }
     if(f.elements.website.value){ st.textContent='Got it.'; return; } // honeypot: only bots fill the hidden field
     const q=new URLSearchParams(location.search), d=Object.fromEntries(new FormData(f)); delete d.website;
     Object.assign(d,{form:'coach-sample-ad',r:q.get('r')||'',utm_source:q.get('utm_source')||'',utm_campaign:q.get('utm_campaign')||'',page_url:location.href});

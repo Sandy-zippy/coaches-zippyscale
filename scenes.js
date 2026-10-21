@@ -340,7 +340,7 @@ function frame(now) {
       heroLast = now; p = RM ? STILL.hero : HERO_T !== null ? +HERO_T : (heroMs % 8000) / 8000;
     } else if (RM || FREEZE !== null) p = RM ? (STILL[s.k] ?? 1) : +FREEZE;
     else if (s.pinOn) p = clamp((s.pinTop - s.pin.getBoundingClientRect().top) / (s.hold * .85)); // 0 until the box is pinned; last 15% of the hold shows the end state
-    else p = clamp((.85 * vh - r.top) / (.7 * vh));
+    else p = clamp((.85 * vh - (innerWidth < 641 ? 76 : 0) - r.top) / (.7 * vh)); // phones: start past the book bar strip (as in pinSize), so its key moment plays above the bar
     if (p !== s.last) { s.f(p); s.last = p; }
   }
 }
