@@ -8,7 +8,8 @@ const ease = t => 1 - Math.pow(1 - t, 3);
 const lerp = (a, b, t) => a + (b - a) * t;
 const $ = (el, s) => el.querySelector(s), $$ = (el, s) => [...el.querySelectorAll(s)];
 const show = (e, o, y = 0, unit = 'em') => { e.style.opacity = o; e.style.transform = y ? `translateY(${(y * (1 - o)).toFixed(2)}${unit})` : ''; };
-const txt = (e, t) => { if (e.textContent !== t) e.textContent = t; };
+// text set by a scene gets the same 11px floor as text present at load (textFloor below only sees text that exists when it runs)
+const txt = (e, t) => { if (e.textContent === t) return; e.textContent = t; if (t && !e.style.fontSize && parseFloat(getComputedStyle(e).fontSize) < 11) e.style.fontSize = '11px'; };
 // motion grammar (prompt-motion skill): closed-form springs with a small overshoot, a cursor that makes the real clicks,
 // blur that follows speed, text that swaps through a short blur. Every value is a pure function of p.
 const spr = x => x <= 0 ? 0 : x >= 1 ? 1 : 1 - Math.exp(-7 * x) * Math.cos(7 * x); // about 4% overshoot, settles by x = 1
@@ -73,25 +74,24 @@ function network(el) {
   const msgs = $$(el, '.msg'), quiet = $(el, '.quiet'), bd = $(el, '.bd'), tabs = $$(el, '.tabs b'), cells = $$(el, '.mc i'), cc = $(el, '.cc b'), ccl = $(el, '.cc span');
   const plan = [[0, 1, 3, 4, 6, 7, 8, 10, 11, 13, 15, 16, 18], [2, 8, 12, 17, 19], [11]]; // booked slots per month
   const bar = $(el, '.tabs'), ind = document.createElement('i'); ind.className = 'ind'; bar.prepend(ind);
-  const mouse = cursor(el), T = [.36, .68];
+  const mouse = cursor(el), T = [.3, .64];
   return p => {
     // indicator edges: leading edge springs first, trailing edge follows, so it stretches as it travels
     tabs.forEach(b => { b.L = b.offsetLeft; b.R = b.offsetLeft + b.offsetWidth; });
     const edge = (side, d) => T.reduce((v, t, i) => v + (tabs[i + 1][side] - tabs[i][side]) * spr(seg(p, t + d, t + d + .08)), tabs[0][side]);
     const l = edge('L', .025), r = edge('R', 0); ind.style.transform = `translateX(${l.toFixed(1)}px)`; ind.style.width = (r - l).toFixed(1) + 'px';
     mouse(p, [[T[0], tabs[1]], [T[1], tabs[2]]], T);
-    // month 1 fills as the referrals arrive; months 2 and 3 land right after their tab is clicked
-    const m = p < T[0] + .02 ? 0 : p < T[1] + .02 ? 1 : 2, s0 = [.02, T[0] + .02, T[1] + .02][m], win = m ? .06 : .18, len = plan[m].length;
-    const n = Math.round(len * ease(seg(p, s0, s0 + win + .02)));
+    // the first frame is a full month 1 (never an empty calendar, 22 Oct review); each tab click swaps in the whole month at once,
+    // so the count always matches the lit cells, and only the newly booked cells spring
+    const m = p < T[0] + .02 ? 0 : p < T[1] + .02 ? 1 : 2, s0 = m ? T[m - 1] + .02 : 0, len = plan[m].length;
     tabs.forEach((b, i) => b.classList.toggle('on', i === m));
-    const on = new Set(plan[m].slice(0, n)); cells.forEach((c, i) => { c.classList.toggle('on', on.has(i)); const j = plan[m].indexOf(i), u = j < 0 ? 1 : seg(p, s0 + j / len * win, s0 + .04 + j / len * win); c.style.transform = on.has(i) && u < 1 ? `scale(${(.6 + .4 * spr(u)).toFixed(3)})` : ''; }); // only a booked cell springs: empty cells stay full size, so the grid never shows the plan early
-    // the count is the month's total: it counts up while month 1 fills, then switches straight to 5 and 1 (never back through 0)
-    const total = m ? len : n; txt(cc, String(total)); txt(ccl, total === 1 ? 'call booked' : 'calls booked');
-    // referrals arrive in month 1; from month 2 the inbox is empty
-    const out = 1 - seg(p, T[0] + .02, T[0] + .08);
-    msgs.forEach((e, i) => show(e, seg(p, .03 + i * .07, .08 + i * .07) * out, 0));
-    txt(bd, m ? '0' : String(msgs.filter((e, i) => e.offsetParent && p > .06 + i * .07).length));
-    show(quiet, seg(p, T[0] + .06, T[0] + .12));
+    cells.forEach((c, i) => { const j = plan[m].indexOf(i), u = m && j >= 0 ? seg(p, s0 + j * .012, s0 + .04 + j * .012) : 1; c.classList.toggle('on', j >= 0); c.style.transform = u < 1 ? `scale(${(.6 + .4 * spr(u)).toFixed(3)})` : ''; });
+    txt(cc, String(len)); txt(ccl, len === 1 ? 'call booked' : 'calls booked');
+    // referrals are all there in month 1; after the month 2 click they leave one by one and the badge counts down with them
+    const gone = i => seg(p, T[0] + .03 + i * .025, T[0] + .06 + i * .025);
+    msgs.forEach((e, i) => show(e, 1 - gone(i), 0));
+    txt(bd, String(msgs.filter((e, i) => e.offsetParent && gone(i) < 1).length));
+    show(quiet, seg(p, T[0] + .11, T[0] + .15));
   };
 }
 
@@ -262,8 +262,24 @@ function mail(el) {
   };
 }
 
+// ---------- 14 FAQ: the scoreboard climbs to day 30, then it's your call: stay or stop, no lock-in ----------
+// not pinned (data-nopin): it plays in place, so the questions below are not pushed down
+function score(el) {
+  const day = $(el, '.d-n'), vs = $$(el, '.d-v'), bar = $(el, '.d-bar i'), ch = $(el, '.d-ch'), lb = $(el, '.d-lb'), stay = $(el, '.d-stay'), ok = $(el, '.d-ok');
+  const from = [11, 8, 7], to = [14, 11, 9], mouse = cursor(el); // example pace: 9 qualified by day 30 is on track for 25 by day 90
+  return p => {
+    const k = ease(seg(p, .04, .4));
+    txt(day, String(Math.round(lerp(24, 30, k))));
+    vs.forEach((v, i) => txt(v, String(Math.round(lerp(from[i], to[i], k)))));
+    bar.style.transform = `scaleX(${(lerp(7, 9, k) / 25).toFixed(3)})`;
+    ch.classList.toggle('on', p > .42); swap(lb, p, .44, 'Opens on day 30', 'Day 30: your call');
+    mouse(p, [[.64, stay]], [.64]); stay.classList.toggle('d-pick', p > .65);
+    const t = spr(seg(p, .67, .77)); ok.style.opacity = Math.min(1, t * 2).toFixed(2); ok.style.transform = `translateY(${((1 - t) * 1).toFixed(2)}em)`;
+  };
+}
+
 // ---------- loop ----------
-const HT = { hero, network, sweep, ledger, proof, scale, sieve, race, fan, week, sheet, flow, mail };
+const HT = { hero, network, sweep, ledger, proof, scale, sieve, race, fan, week, sheet, flow, mail, score };
 // still frame for reduced motion, per the storyboard: the payoff state of each scene
 const STILL = { hero: .8 };
 const list = [...document.querySelectorAll('[data-scene]')].map(el => ({ el, k: el.dataset.scene, f: HT[el.dataset.scene](el) }));
@@ -302,10 +318,12 @@ function pinSize() {
   }
 }
 // scene labels never render under 11px (they are sized in em off a container-width base)
+const own = e => [...e.childNodes].some(n => n.nodeType === 3 && n.textContent.trim());
 function textFloor() {
-  const els = [...document.querySelectorAll('.stage.ui *')].filter(e => [...e.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()));
+  // also re-measure anything floored earlier by txt(), so a label that is empty right now still resets after a resize
+  const els = [...document.querySelectorAll('.stage.ui *')].filter(e => e.style.fontSize || own(e));
   els.forEach(e => e.style.fontSize = '');
-  els.forEach(e => { if (parseFloat(getComputedStyle(e).fontSize) < 11) e.style.fontSize = '11px'; });
+  els.forEach(e => { if (own(e) && parseFloat(getComputedStyle(e).fontSize) < 11) e.style.fontSize = '11px'; });
 }
 function sizeAll() { textFloor(); pinSize(); }
 sizeAll(); addEventListener('resize', sizeAll); addEventListener('load', sizeAll);
